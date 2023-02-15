@@ -3,6 +3,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
 
+// Test
+
 int main(int argc, char* argv[])
 {
     { // Run the tests
