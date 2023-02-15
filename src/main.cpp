@@ -15,16 +15,18 @@ int main(int argc, char* argv[])
     }
 
     // Actual app
-    auto ctx = p6::Context{{.title = "Simple-p6-Setup"}};
+    auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
-        ctx.background(p6::NamedColor::Blue);
-        ctx.circle(
-            p6::Center{ctx.mouse()},
-            p6::Radius{0.2f}
+        ctx.background(p6::NamedColor::RaspberryGlace);
+        ctx.square(
+            p6::Center{p6::random::number(0.f, 1.f), p6::random::number(0.f, 1.f)},
+            p6::Radius{0.1f}
         );
+
+        ctx.fill = {1.f, 0.7f, 0.2f};
     };
 
     // Should be done last. It starts the infinite loop.
