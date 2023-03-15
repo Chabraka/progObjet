@@ -33,15 +33,20 @@ int main(int argc, char* argv[])
     /*********************************
      * HERE SHOULD COME THE RENDERING CODE
      *********************************/
-    Square square(glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)), 0.05f);
+    Square square(
+        glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)), 
+        0.05f, 
+        glm::vec2(0,0), 
+        glm::vec2(0.1,0.1));
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
         drawSquare(square, ctx);
-        square.center.x += p6::random::number(-0.01f, 0.01f);
-        square.center.y += p6::random::number(-0.01f, 0.01f);
+        /*square.center.x += p6::random::number(-0.01f, 0.01f);
+        square.center.y += p6::random::number(-0.01f, 0.01f); */
+        square.updatePosition(ctx);
     };
  
 
