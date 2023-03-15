@@ -5,10 +5,6 @@
 #include "Square.hpp"
 #include "doctest/doctest.h"
 
-
-
-
-
 int main(int argc, char* argv[])
 {
     { // Run the tests
@@ -20,7 +16,6 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
     }
 
-
     // Actual app
     auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
@@ -29,15 +24,15 @@ int main(int argc, char* argv[])
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-
     /*********************************
      * HERE SHOULD COME THE RENDERING CODE
      *********************************/
     Square square(
-        glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)), 
-        0.05f, 
-        glm::vec2(0,0), 
-        glm::vec2(0.1,0.1));
+        glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
+        0.05f,
+        glm::vec2(0, 0),
+        glm::vec2(0.1, 0.1)
+    );
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
@@ -46,9 +41,6 @@ int main(int argc, char* argv[])
         drawSquare(square, ctx);
         square.updatePosition(ctx);
     };
- 
 
     ctx.start();
-
-   
 }

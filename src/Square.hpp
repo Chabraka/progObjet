@@ -7,7 +7,6 @@ class Square {
     
         glm::vec2    center;
         glm::float32 radius;
-
         glm::vec2 speed;
         glm::vec2 acc;
 
