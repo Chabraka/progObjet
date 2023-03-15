@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
         ctx.background(p6::NamedColor::RaspberryGlace);
 
         drawSquare(square, ctx);
-        square.center.x += p6::random::number(-0.001f, 0.001f)
-                               square.center.y += p6::random::number(-0.001f, 0.001f);
+        square.center.x += p6::random::number(-0.001f, 0.001f);
+        square.center.y += p6::random::number(-0.001f, 0.001f);
 
         /*
         ctx.square(
