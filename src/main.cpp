@@ -1,6 +1,8 @@
 #include <cstdlib>
+#include "glm/fwd.hpp"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
+#include "Square.hpp"
 #include "doctest/doctest.h"
 
 
@@ -26,34 +28,24 @@ int main(int argc, char* argv[])
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-    
-  
-
-      // Declare your infinite update loop.
-      ctx.update = [&]() {
-        
-
-        /*********************************
-         * HERE SHOULD COME THE RENDERING CODE
-         *********************************/
 
 
+    /*********************************
+     * HERE SHOULD COME THE RENDERING CODE
+     *********************************/
+    Square square(glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)), 0.05f);
 
-        
-        ctx.square(
-            p6::Center{p6::random::number(0.f, 1.f), p6::random::number(0.f, 1.f)},
-            p6::Radius{0.1f}
-        );
-        ctx.fill = {1.f, 0.7f, 0.2f};
+    // Declare your infinite update loop.
+    ctx.update = [&]() {
+        ctx.background(p6::NamedColor::RaspberryGlace);
 
-       
-
+        drawSquare(square, ctx);
+        square.center.x += p6::random::number(-0.01f, 0.01f);
+        square.center.y += p6::random::number(-0.01f, 0.01f);
     };
-
-    // Should be done last. It starts the infinite loop.
-
+ 
 
     ctx.start();
 
-
+   
 }
