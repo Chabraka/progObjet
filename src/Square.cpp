@@ -9,17 +9,15 @@ void drawSquare(Square sqr, p6::Context& ctx)
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
 
-void Square::updatePosition(p6::Context& ctx) {
+void Square::updatePosition(p6::Context& ctx)
+{
+    double dt = 1.0 / 60;
 
-    double dt = 1.0/60;
-    
-    std:: cout << ctx.current_canvas_width() << std::endl;
-    std:: cout << ctx.current_canvas_height() << std::endl;
- 
+    std::cout << ctx.current_canvas_width() << std::endl;
+    std::cout << ctx.current_canvas_height() << std::endl;
 
-    this->speed.x += this->acc.x*dt;
-	this->speed.y += this->acc.y*dt;
-	this->center.x += this->speed.x*dt;
-	this->center.y += this->speed.y*dt;
-
+    this->speed.x += this->acc.x * dt;
+    this->speed.y += this->acc.y * dt;
+    this->center.x += this->speed.x * dt;
+    this->center.y += this->speed.y * dt;
 }
