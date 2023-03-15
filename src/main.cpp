@@ -3,6 +3,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
 
+
+
+
+
 int main(int argc, char* argv[])
 {
     { // Run the tests
@@ -14,21 +18,42 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
     }
 
+
     // Actual app
     auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
 
-    // Declare your infinite update loop.
-    ctx.update = [&]() {
-        ctx.background(p6::NamedColor::RaspberryGlace);
+    /*********************************
+     * HERE SHOULD COME THE INITIALIZATION CODE
+     *********************************/
+    
+  
+
+      // Declare your infinite update loop.
+      ctx.update = [&]() {
+        
+
+        /*********************************
+         * HERE SHOULD COME THE RENDERING CODE
+         *********************************/
+
+
+
+        
         ctx.square(
             p6::Center{p6::random::number(0.f, 1.f), p6::random::number(0.f, 1.f)},
             p6::Radius{0.1f}
         );
-
         ctx.fill = {1.f, 0.7f, 0.2f};
+
+       
+
     };
 
     // Should be done last. It starts the infinite loop.
+
+
     ctx.start();
+
+
 }
