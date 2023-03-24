@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <vector>
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
@@ -23,12 +24,18 @@ int main(int argc, char* argv[])
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-    Square square(
-        glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
-        0.05f,
-        glm::vec2(0, 0),
-        glm::vec2(0.1, 0.1)
-    );
+    std::vector<Square> boids;
+
+    for (int i = 0; i < 50; i++)
+    {
+        Square square(
+            glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+            0.05f,
+            glm::vec2(0.02, 0.03),
+            glm::vec2(0.1, 0.1)
+        );
+        boids.push_back(square);
+    }
 
     /*********************************
      * HERE SHOULD COME THE RENDERING CODE
@@ -38,8 +45,11 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
-        drawSquare(square, ctx);
-        square.updatePosition(ctx);
+        for (int j = 0; j < 50; j++)
+        {
+            drawSquare(boids[j], ctx);
+            boids[j].updatePosition(ctx);
+        }
     };
 
     ctx.start();
