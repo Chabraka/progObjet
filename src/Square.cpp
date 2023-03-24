@@ -22,12 +22,12 @@ void Square::updatePosition(p6::Context& ctx)
         double speed_factor = 1.0;
 
         // Randomly change direction and speed up or slow down
-        if (rand() % 20 == 0)
+        if (rand() % 13 == 0)
         {
             direction_x  = -1;
             speed_factor = rand() % 3 + 1;
         }
-        else if (rand() % 20 == 1)
+        else if (rand() % 13 == 1)
         {
             direction_y  = -1;
             speed_factor = rand() % 3 + 1;
@@ -40,14 +40,14 @@ void Square::updatePosition(p6::Context& ctx)
 
         // If the square hits the left or right wall, change direction and slow down
 
-        if (this->center.x - this->radius < -1)
+        if (this->center.x - this->radius < -2)
         {
-            this->center.x = -1 + this->radius;
+            this->center.x = -2 + this->radius;
             this->speed.x  = abs(this->speed.x);
         }
-        else if (this->center.x + this->radius > 1)
+        else if (this->center.x + this->radius > 2)
         {
-            this->center.x = 1 - this->radius;
+            this->center.x = 2 - this->radius;
             this->speed.x  = -abs(this->speed.x);
         }
 
