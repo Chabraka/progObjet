@@ -23,16 +23,16 @@ int main(int argc, char* argv[])
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-
-    /*********************************
-     * HERE SHOULD COME THE RENDERING CODE
-     *********************************/
     Square square(
         glm::vec2(p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
         0.05f,
         glm::vec2(0, 0),
         glm::vec2(0.1, 0.1)
     );
+
+    /*********************************
+     * HERE SHOULD COME THE RENDERING CODE
+     *********************************/
 
     // Declare your infinite update loop.
     ctx.update = [&]() {
