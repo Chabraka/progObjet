@@ -73,4 +73,3 @@ void Square::updatePosition(p6::Context& ctx) {
    
 }
 
-
