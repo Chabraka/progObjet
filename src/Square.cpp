@@ -22,14 +22,24 @@ void Square::updatePosition(p6::Context& ctx)
         double speed_factor = 1.0;
 
         // Randomly change direction and speed up or slow down
-        if (rand() % 13 == 0)
+        if (rand() % 12 == 0)
         {
             direction_x  = -1;
             speed_factor = rand() % 3 + 1;
         }
-        else if (rand() % 13 == 1)
+        else if (rand() % 12 == 1)
         {
             direction_y  = -1;
+            speed_factor = rand() % 3 + 1;
+        }
+        else if (rand() % 12 == 2)
+        {
+            direction_x  = 1;
+            speed_factor = rand() % 3 + 1;
+        }
+        else if (rand() % 12 == 3)
+        {
+            direction_y  = 1;
             speed_factor = rand() % 3 + 1;
         }
 
@@ -62,12 +72,5 @@ void Square::updatePosition(p6::Context& ctx)
             this->speed.y  = -abs(this->speed.y);
         }
     }
-    else
-    {
-        // Reset the square's position and speed
-        this->center.x = 0.0;
-        this->center.y = 0.0;
-        this->speed.x  = 0.0;
-        this->speed.y  = 0.0;
-    }
+   
 }
