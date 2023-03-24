@@ -14,7 +14,6 @@ class Square {
         Square(glm::vec2 c, glm::float32 r, glm::vec2 s , glm::vec2 a)
             : center(c), radius(r), speed(s), acc(a) {};
 
-        
 
         void updatePosition(p6::Context& ctx);
 
