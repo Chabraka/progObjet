@@ -15,10 +15,11 @@ void Square::updatePosition()
 {
     double dt = 1.0 / 60;
 
+    // Move the square in a random direction
+    int direction_x = rand() % 2 == 0 ? -1 : 1;
+    int direction_y = rand() % 2 == 0 ? -1 : 1;
 
-        // Move the square in a random direction
-        int direction_x = rand() % 2 == 0 ? -1 : 1;
-        int direction_y = rand() % 2 == 0 ? -1 : 1;
+    double speed_factor = 1.0;
 
         // Randomly change direction and speed up or slow down
         if (rand() % 12 == 0)
@@ -38,39 +39,28 @@ void Square::updatePosition()
             direction_y  = 1;
         }
 
-        this->speed.x += direction_x * this->acc.x * dt;
-        this->speed.y += direction_y * this->acc.y * dt;
-        this->center.x += this->speed.x * dt;
-        this->center.y += this->speed.y * dt;
+    // If the square hits the walls, change direction and slow down
 
-        // If the square hits the walls, change direction and slow down    
+    if (this->center.x - this->radius < -2)
+    {
+        this->center.x = -2 + this->radius;
+        this->speed.x  = abs(this->speed.x);
+    }
 
-        if (this->center.x - this->radius < -2)
-        {
-            this->center.x = -2 + this->radius;
-            this->speed.x  = abs(this->speed.x);
-        }
+    else if (this->center.x + this->radius > 2)
+    {
+        this->center.x = 2 - this->radius;
+        this->speed.x  = -abs(this->speed.x);
+    }
 
-        else if (this->center.x + this->radius > 2)
-        {
-            this->center.x = 2 - this->radius;
-            this->speed.x  = -abs(this->speed.x);
-        }
-
-        if (this->center.y - this->radius < -1)
-        {
-            this->center.y = -1 + this->radius;
-            this->speed.y  = abs(this->speed.y);
-        }
-        else if (this->center.y + this->radius > 1)
-        {
-            this->center.y = 1 - this->radius;
-            this->speed.y  = -abs(this->speed.y);
-        }
-    
-   
+    if (this->center.y - this->radius < -1)
+    {
+        this->center.y = -1 + this->radius;
+        this->speed.y  = abs(this->speed.y);
+    }
+    else if (this->center.y + this->radius > 1)
+    {
+        this->center.y = 1 - this->radius;
+        this->speed.y  = -abs(this->speed.y);
+    }
 }
-
-
-
-       
