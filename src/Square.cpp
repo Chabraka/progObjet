@@ -19,7 +19,6 @@ void Square::updatePosition()
     int direction_x = rand() % 2 == 0 ? -1 : 1;
     int direction_y = rand() % 2 == 0 ? -1 : 1;
 
-    double speed_factor = 1.0;
 
         // Randomly change direction and speed up or slow down
         if (rand() % 12 == 0)
@@ -38,6 +37,11 @@ void Square::updatePosition()
         {
             direction_y  = 1;
         }
+
+        this->speed.x += direction_x * this->acc.x * dt;
+        this->speed.y += direction_y * this->acc.y * dt;
+        this->center.x += this->speed.x * dt;
+        this->center.y += this->speed.y * dt;
 
     // If the square hits the walls, change direction and slow down
 
