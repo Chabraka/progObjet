@@ -9,7 +9,9 @@ void drawSquare(Square sqr, p6::Context& ctx)
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
 
-void Square::updatePosition(p6::Context& ctx)
+/*Add max speed faire fonction get, set */
+
+void Square::updatePosition()
 {
     double dt = 1.0 / 60;
 
@@ -17,8 +19,6 @@ void Square::updatePosition(p6::Context& ctx)
         // Move the square in a random direction
         int direction_x = rand() % 2 == 0 ? -1 : 1;
         int direction_y = rand() % 2 == 0 ? -1 : 1;
-
-        double speed_factor = 1.0;
 
         // Randomly change direction and speed up or slow down
         if (rand() % 12 == 0)

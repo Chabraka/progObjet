@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         for (int j = 0; j < 50; j++)
         {
             drawSquare(boids[j], ctx);
-            boids[j].updatePosition(ctx);
+            boids[j].updatePosition();
         }
     };
 
