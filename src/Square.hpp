@@ -13,6 +13,12 @@ public:
         : center(c), radius(r), speed(s), acc(a){};
 
     void updatePosition();
+    void updateAcc(std::vector<Square> boids, unsigned int i);
+    void checkCollision(std::vector<Square> boids, unsigned int i);
 };
 
 void drawSquare(Square sqr, p6::Context& ctx);
+
+//poour les boids
+void updateBoidsAcc(std::vector<Square> *boids);
+void checkCollisions(std::vector<Square> *boids);

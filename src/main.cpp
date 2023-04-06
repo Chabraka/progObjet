@@ -34,11 +34,12 @@ int main(int argc, char* argv[])
         Square square(
             glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
             0.05f,
-            glm::vec2(0.02, 0.03),
-            glm::vec2(0.1, 0.1)
+            glm::vec2(p6::random::number(-0.02f, 0.02f), p6::random::number(-0.02f, 0.02f)),
+            glm::vec2(0., 0.)
         );
         boids.push_back(square);
     }
+
 
     /*********************************
      * HERE SHOULD COME THE RENDERING CODE
@@ -57,6 +58,10 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
+        
+        checkCollisions(&boids);
+        updateBoidsAcc(&boids);
+
         for (int j = 0; j < squareNumber; j++)
         {
             drawSquare(boids[j], ctx);
@@ -66,3 +71,4 @@ int main(int argc, char* argv[])
 
     ctx.start();
 }
+
