@@ -103,14 +103,6 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i)
     this->_acc = acc;
 }
 
-void updateBoidsAcc(std::vector<Square>* boids)
-{
-    for (unsigned int i = 0; i < boids->size(); i++)
-    {
-        boids->at(i).updateAcc(*boids, i);
-    }
-}
-
 void Square::checkCollision(std::vector<Square> boids, unsigned int i)
 {
     // rajouter élément dans classe square
@@ -136,10 +128,15 @@ void Square::checkCollision(std::vector<Square> boids, unsigned int i)
     }
 }
 
-void checkCollisions(std::vector<Square>* boids)
+
+void updateBoidsAcc(std::vector<Square>* boids)
 {
     for (unsigned int i = 0; i < boids->size(); i++)
     {
+        boids->at(i).updateAcc(*boids, i);
         boids->at(i).checkCollision(*boids, i);
     }
 }
+
+
+

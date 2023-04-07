@@ -25,4 +25,3 @@ void drawSquare(Square sqr, p6::Context& ctx);
 
 // poour les boids
 void updateBoidsAcc(std::vector<Square>* boids);
-void checkCollisions(std::vector<Square>* boids);

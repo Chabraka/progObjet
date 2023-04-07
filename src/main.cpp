@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
-        checkCollisions(&boids);
         updateBoidsAcc(&boids);
 
         for (int j = 0; j < squareNumber; j++)
