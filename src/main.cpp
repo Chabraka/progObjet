@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
         boids.push_back(square);
     }
 
-
     /*********************************
      * HERE SHOULD COME THE RENDERING CODE
      *********************************/
@@ -52,8 +51,8 @@ int main(int argc, char* argv[])
         // Window
         ImGui::Begin("Test");
         ImGui::SliderInt("Square number", &squareNumber, 10, 100);
-        ImGui::SliderFloat("Square speed x", &boids[1].speed.x, -0.5f, 0.5f);
-        ImGui::SliderFloat("Square speed y", &boids[1].speed.y, -0.5f, 0.5f);
+        ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
+        ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
         ImGui::End();
     };
 
@@ -61,7 +60,6 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
-        
         checkCollisions(&boids);
         updateBoidsAcc(&boids);
 
@@ -74,4 +72,3 @@ int main(int argc, char* argv[])
 
     ctx.start();
 }
-
