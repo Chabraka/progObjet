@@ -53,6 +53,8 @@ int main(int argc, char* argv[])
         ImGui::SliderInt("Square number", &squareNumber, 10, 100);
         ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
         ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
+        ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, -1.f, 1.f);
+        ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, -0.5f, 0.5f);
         ImGui::End();
     };
 
