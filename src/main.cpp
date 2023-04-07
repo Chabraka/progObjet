@@ -35,7 +35,10 @@ int main(int argc, char* argv[])
             glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
             0.05f,
             glm::vec2(p6::random::number(-0.02f, 0.02f), p6::random::number(-0.02f, 0.02f)),
-            glm::vec2(0., 0.)
+            glm::vec2(0., 0.),
+            0.3,
+            0.1
+
         );
         boids.push_back(square);
     }

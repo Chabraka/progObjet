@@ -9,9 +9,14 @@ public:
     glm::vec2    speed;
     glm::vec2    acc;
 
-    Square(glm::vec2 c, glm::float32 r, glm::vec2 s, glm::vec2 a)
-        : center(c), radius(r), speed(s), acc(a){};
+    float maxSpeed;
+    float minSpeed;
 
+
+    Square(glm::vec2 c, glm::float32 r, glm::vec2 s, glm::vec2 a, float maxS, float minS)
+        : center(c), radius(r), speed(s), acc(a), maxSpeed(maxS), minSpeed(minS){};
+
+    void restrictArea();
     void updatePosition();
     void updateAcc(std::vector<Square> boids, unsigned int i);
     void checkCollision(std::vector<Square> boids, unsigned int i);
