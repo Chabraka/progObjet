@@ -51,8 +51,12 @@ int main(int argc, char* argv[])
         // Window
         ImGui::Begin("Test");
         ImGui::SliderInt("Square number", &squareNumber, 10, 100);
+
+        /*jouer avec les valeurs repulsion + maxRepulsion et attraction, factorSpeedMean, minimal distance*/
+        
         ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
         ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
+        /*min et max speed ne doit pas être dans le négatif ni passer par 0 ! */
         ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, -1.f, 1.f);
         ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, -0.5f, 0.5f);
         ImGui::End();

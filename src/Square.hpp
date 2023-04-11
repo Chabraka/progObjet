@@ -16,14 +16,19 @@ public:
         : _center(c), _radius(r), _speed(s), _acc(a), _maxSpeed(maxS), _minSpeed(minS){};
 
     void restrictArea();
+    void restrictSpeed();
     
     void updatePosition();
     void updateAcc(std::vector<Square> boids, unsigned int i);
 
-    //void checkCollision(std::vector<Square> boids, unsigned int i);
 };
 
 void drawSquare(Square sqr, p6::Context& ctx);
 
-// poour les boids
+// a mettre dans le square pour les differents factors
+glm::vec2 attraction(glm::vec2 direction);
+glm::vec2 repulsion(glm::vec2 direction,float distance);
+glm::vec2  adjustSpeed(glm::vec2 acc,glm::vec2 sumSpeed, int numspeedboids);
+
+// pour les boids
 void updateBoidsAcc(std::vector<Square>* boids);
