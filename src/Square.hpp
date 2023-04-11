@@ -16,9 +16,11 @@ public:
         : _center(c), _radius(r), _speed(s), _acc(a), _maxSpeed(maxS), _minSpeed(minS){};
 
     void restrictArea();
+    
     void updatePosition();
     void updateAcc(std::vector<Square> boids, unsigned int i);
-    void checkCollision(std::vector<Square> boids, unsigned int i);
+
+    //void checkCollision(std::vector<Square> boids, unsigned int i);
 };
 
 void drawSquare(Square sqr, p6::Context& ctx);
