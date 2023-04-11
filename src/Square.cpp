@@ -1,4 +1,5 @@
 #include "Square.hpp"
+#include <sys/types.h>
 
 void drawSquare(Square sqr, p6::Context& ctx)
 {
@@ -54,16 +55,18 @@ void Square::updatePosition()
     {
         this->_speed = glm::normalize(this->_speed) * _maxSpeed;
     }
-    if (currentSpeed < _minSpeed)
+    /*if (currentSpeed < _minSpeed)
     {
         this->_speed = glm::normalize(this->_speed) * _minSpeed;
-    }
+    }*/
     this->restrictArea();
 }
 
 void Square::updateAcc(std::vector<Square> boids, unsigned int i)
 {
     glm::vec2 acc(0., 0.);
+    glm::vec2 sumSpeed(0., 0.);  // somme des vitesses des voisins
+    int numspeedboids = 0; // nombre de voisins concernés par l'ajustement de vitesse
 
     for (unsigned int j = 0; j < boids.size(); j++)
     {
@@ -74,36 +77,46 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i)
 
         Square* neighbour = &boids[j];
         float   distance  = glm::distance(this->_center, neighbour->_center);
-        if (distance == 0.)
+        if (distance <= 0.001)
         {
             continue;
         }
 
-        glm::vec2 speedBoids(0., 0.);
-        for (unsigned int k = 0; k < boids.size(); k++)
-        {
-            if (k == j)
-            {
-                continue;
-            }
-            speedBoids += this->_speed;
+        // on peut mettre aussi un critère de distance maximale:
+        if (distance > 0.3) {
+            continue;
         }
-        speedBoids = speedBoids / (float)boids.size() * (float)0.01;
+        
 
-        // glm::vec2 direction = (neighbour->center - this->center)/distance;
-
+        glm::vec2 direction = (neighbour->_center - this->_center)/distance;
         // comportement général grace  a une courbe attirance et séparation
-
-        // glm::vec2 force = direction*(float)(-0.02/(distance+0.01)+0.02);
-
-        glm::vec2 force = speedBoids * (float)(-0.02 / (distance + 0.01) + 0.02);
+        glm::vec2 force = direction*(float)(-0.02/(distance+0.01)+0.02);
 
         acc += force;
+
+        if (distance < 0.2) {  // distance minimale à régler.
+            // on écarte ceux qui sont trop loin
+            sumSpeed = sumSpeed + neighbour->_speed;
+            numspeedboids += 1;
+        }
+
+        
     }
+    // ajustement par rapport à la vitesse des voisins:
+    if (numspeedboids!=0){
+        glm::vec2 BoidsSpeedMean = sumSpeed / (float)numspeedboids;
+        //acc = acc + BoidsSpeedMean*(float)0.1; // paramètre à régler.
+    }
+    
+
     this->_acc = acc;
 }
 
-void Square::checkCollision(std::vector<Square> boids, unsigned int i)
+
+
+
+
+/*void Square::checkCollision(std::vector<Square> boids, unsigned int i)
 {
     // rajouter élément dans classe square
     for (unsigned int j = 0; j < boids.size(); j++)
@@ -126,7 +139,7 @@ void Square::checkCollision(std::vector<Square> boids, unsigned int i)
             neighbour->_speed -= direction * glm::dot(neighbour->_speed, direction) * 0.5f;
         }
     }
-}
+}*/
 
 
 void updateBoidsAcc(std::vector<Square>* boids)
@@ -134,7 +147,7 @@ void updateBoidsAcc(std::vector<Square>* boids)
     for (unsigned int i = 0; i < boids->size(); i++)
     {
         boids->at(i).updateAcc(*boids, i);
-        boids->at(i).checkCollision(*boids, i);
+        //boids->at(i).checkCollision(*boids, i);
     }
 }
 
