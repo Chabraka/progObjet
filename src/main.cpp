@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.004f, -0.0002f, -3.f);
+    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.0002f, -3.f);
 
     /*
     int                 squareNumber    = 50;
@@ -79,11 +79,23 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
+    Square trackSquare(
+            glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+            0.01f,
+            glm::vec2(0.,0.),
+            glm::vec2(0., 0.)
+        );
+        
+
     // Infinite update loop
     ctx.update = [&]() {
-        ctx.background(p6::NamedColor::RaspberryGlace);
+        ctx.background(p6::NamedColor::RaspberryGlace);      
 
-        boids.updateBoidsAcc();
+        drawSquare(trackSquare, ctx);
+
+        updatePositionTracker(&trackSquare);
+
+        boids.updateBoidsAcc(&trackSquare);
         boids.drawBoids(ctx);
         /*
         updateBoidsAcc(&boids);

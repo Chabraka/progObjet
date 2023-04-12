@@ -44,6 +44,6 @@ public:
     void drawBoids(p6::Context& ctx);
 
     // Updates
-    void updateBoidsAcc();
+    void updateBoidsAcc(Square* trackSquare);
 };
 

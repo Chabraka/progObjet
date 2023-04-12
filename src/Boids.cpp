@@ -33,10 +33,10 @@ void Boids::drawBoids(p6::Context& ctx)
 
 
 /* ----- Updates ----- */
-void Boids::updateBoidsAcc()
+void Boids::updateBoidsAcc(Square* trackSquare)
 {
     for (unsigned int i = 0; i < _squareNumber; i++)
     {
-        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion);
+        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion, trackSquare);
     }
 }

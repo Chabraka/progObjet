@@ -69,7 +69,7 @@ void Square::restrictSpeed(float minSpeed, float maxSpeed)
 
 void Square::updatePosition(float minSpeed, float maxSpeed)
 {
-    double dt = 1.0 / 60;
+    double dt = 1.0 / 60.;
 
     // Calcul of the position
     this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
@@ -84,7 +84,7 @@ void Square::updatePosition(float minSpeed, float maxSpeed)
     this->restrictArea();
 }
 
-void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion)
+void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare)
 {
     glm::vec2 acc(0., 0.);
     glm::vec2 sumSpeed(0., 0.);  // sum speed of neighbors
@@ -107,7 +107,7 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistan
             continue;
         }
         glm::vec2 direction = (neighbour->_center - this->_center) / distance;
-        acc += attraction(direction, factorAttraction) + repulsion(direction, distance, factorRepulsion, maxRepulsion);
+        acc += attraction(direction, distance, factorAttraction) + repulsion(direction, distance, factorRepulsion, maxRepulsion);
 
         if (distance < minDistance)
         { // minimal distance to adjust 0.7 it's a big crowd, 0.2 you have little groups
@@ -117,14 +117,16 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistan
         }
     }
 
+    acc += attractionTracker(trackSquare);
+
     this->_acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
 }
 
 /* ----- Behaviors ----- */
 
-glm::vec2 attraction(glm::vec2 direction, float factorAttraction)
+glm::vec2 attraction(glm::vec2 direction, float distance, float factorAttraction)
 {
-    return direction * factorAttraction;
+    return direction * factorAttraction / distance;
 }
 
 glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion)
@@ -142,5 +144,31 @@ glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
     }
     return acc;
 }
+
+glm::vec2 updatePositionTracker(Square* trackSquare){
+
+        double direction_x = p6::random::number(-0.07f, 0.07f);
+        double direction_y = p6::random::number(-0.07f, 0.07f);
+       
+        glm::vec2 speed(direction_x+trackSquare->_speed.x, direction_y+trackSquare->_speed.y);
+        trackSquare->_speed=speed;
+
+        trackSquare->updatePosition(0.3, 0.7);
+}
+
+glm::vec2 Square::attractionTracker(Square* trackSquare)
+{
+    float   distance  = glm::distance(this->_center, trackSquare->_center);
+    glm::vec2 attract(0.,0.);
+    // Avoid divison by 0
+    if (distance <= 0.001)
+    {
+        return attract;
+    }
+    glm::vec2 direction = (trackSquare->_center - this->_center) / distance;
+    return attraction(direction, distance, 0.15);
+
+}
+
 
 
