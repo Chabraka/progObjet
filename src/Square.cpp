@@ -11,7 +11,6 @@ void drawSquare(Square sqr, p6::Context& ctx)
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
 
-// rajouter mouvement aléatoire ?
 
 /* ----- Restrictions ----- */
 
@@ -85,7 +84,7 @@ void Square::updatePosition(float minSpeed, float maxSpeed)
     this->restrictArea();
 }
 
-void Square::updateAcc(std::vector<Square> boids, unsigned int i)
+void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion)
 {
     glm::vec2 acc(0., 0.);
     glm::vec2 sumSpeed(0., 0.);  // sum speed of neighbors
@@ -108,8 +107,8 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i)
             continue;
         }
         glm::vec2 direction = (neighbour->_center - this->_center) / distance;
-        acc += attraction(direction) + repulsion(direction, distance);
-        const float minDistance = 0.7;
+        acc += attraction(direction, factorAttraction) + repulsion(direction, distance, factorRepulsion, maxRepulsion);
+
         if (distance < minDistance)
         { // minimal distance to adjust 0.7 it's a big crowd, 0.2 you have little groups
             // exclude those who are too far away
@@ -123,16 +122,13 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i)
 
 /* ----- Behaviors ----- */
 
-glm::vec2 attraction(glm::vec2 direction)
+glm::vec2 attraction(glm::vec2 direction, float factorAttraction)
 {
-    const float factorAttraction = 0.0004;
     return direction * factorAttraction;
 }
 
-glm::vec2 repulsion(glm::vec2 direction, float distance)
+glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion)
 {
-    const float factorRepulsion = -0.0002;
-    float       maxRepulsion    = -3.;
     return direction * std::max((1 / (distance * distance)) * factorRepulsion, maxRepulsion);
 }
 
@@ -147,13 +143,4 @@ glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
     return acc;
 }
 
-/* ----- Boids ----- */
-/*
-void updateBoidsAcc(std::vector<Square>* boids)
-{
-    for (unsigned int i = 0; i < boids->size(); i++)
-    {
-        boids->at(i).updateAcc(*boids, i);
-    }
-}
-*/
+

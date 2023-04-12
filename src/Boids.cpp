@@ -19,7 +19,7 @@ Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpe
         );
         _boids.push_back(square);
     }
-};
+}
 
 /* ----- Draw ----- */
 void Boids::drawBoids(p6::Context& ctx)
@@ -31,11 +31,12 @@ void Boids::drawBoids(p6::Context& ctx)
     }
 }
 
+
 /* ----- Updates ----- */
 void Boids::updateBoidsAcc()
 {
     for (unsigned int i = 0; i < _squareNumber; i++)
     {
-        _boids.at(i).updateAcc(_boids, i);
+        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion);
     }
 }

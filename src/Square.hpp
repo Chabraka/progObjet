@@ -44,7 +44,8 @@ public:
 
     // Updates
     void updatePosition(float minSpeed, float maxSpeed);
-    void updateAcc(std::vector<Square> boids, unsigned int i);
+    //void updateAcc(std::vector<Square> boids, unsigned int i);
+    void updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion);
 };
 
 // Drawing
@@ -52,9 +53,11 @@ void drawSquare(Square sqr, p6::Context& ctx);
 
 // a mettre dans le square pour les differents factors
 // Behaviors
-glm::vec2 attraction(glm::vec2 direction);
-glm::vec2 repulsion(glm::vec2 direction, float distance);
+
+glm::vec2 attraction(glm::vec2 direction, float factorAttraction);
+glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion);
 glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids);
+
 
 /*
 // pour les boids

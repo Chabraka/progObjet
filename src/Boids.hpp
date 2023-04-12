@@ -46,3 +46,4 @@ public:
     // Updates
     void updateBoidsAcc();
 };
+
