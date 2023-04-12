@@ -11,7 +11,7 @@ void drawSquare(Square sqr, p6::Context& ctx)
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
 
-// rajouter mouvement aléatoire?
+// rajouter mouvement aléatoire ?
 
 /* ----- Restrictions ----- */
 
@@ -48,28 +48,27 @@ void Square::restrictArea()
     }
 }
 
-void Square::restrictSpeed()
+void Square::restrictSpeed(float minSpeed, float maxSpeed)
 {
-    // max speed and min speed
     float currentSpeed = glm::length(this->_speed);
 
-    // the speed need to be under 0
+    // Speed > 0
     if (currentSpeed > 0.001)
     {
-        if (currentSpeed > _maxSpeed)
+        if (currentSpeed > maxSpeed)
         {
-            this->_speed = glm::normalize(this->_speed) * _maxSpeed;
+            this->_speed = glm::normalize(this->_speed) * maxSpeed;
         }
-        if (currentSpeed < _minSpeed)
+        if (currentSpeed < minSpeed)
         {
-            this->_speed = glm::normalize(this->_speed) * _minSpeed;
+            this->_speed = glm::normalize(this->_speed) * minSpeed;
         }
     }
 }
 
 /* ----- Updates ----- */
 
-void Square::updatePosition()
+void Square::updatePosition(float minSpeed, float maxSpeed)
 {
     double dt = 1.0 / 60;
 
@@ -82,7 +81,7 @@ void Square::updatePosition()
     this->_speed.y += this->_acceleration.y * dt;
 
     // Restrict the position
-    this->restrictSpeed();
+    this->restrictSpeed(minSpeed, maxSpeed);
     this->restrictArea();
 }
 
@@ -94,12 +93,16 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i)
 
     for (unsigned int j = 0; j < boids.size(); j++)
     {
+        /* Itself */
         if (i == j)
         {
             continue;
         }
+
+        /* Neighbors */
         Square* neighbour = &boids[j];
         float   distance  = glm::distance(this->_center, neighbour->_center);
+        // Avoid divison by 0
         if (distance <= 0.001)
         {
             continue;
@@ -145,7 +148,7 @@ glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
 }
 
 /* ----- Boids ----- */
-
+/*
 void updateBoidsAcc(std::vector<Square>* boids)
 {
     for (unsigned int i = 0; i < boids->size(); i++)
@@ -153,3 +156,4 @@ void updateBoidsAcc(std::vector<Square>* boids)
         boids->at(i).updateAcc(*boids, i);
     }
 }
+*/

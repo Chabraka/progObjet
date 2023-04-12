@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <vector>
-#include "Square.hpp"
+#include "Boids.hpp"
 #include "glm/fwd.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -26,6 +26,9 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
+    Boids boids(50, 100, 0.1f, 1.f, 0.7f, 0.004f, -0.0002f, -3.f);
+
+    /*
     int                 squareNumber    = 50;
     int                 maxSquareNumber = 100;
     std::vector<Square> boids;
@@ -43,25 +46,26 @@ int main(int argc, char* argv[])
 
         );
         boids.push_back(square);
-    }
+    } */
 
     /**************************
      *     RENDERING CODE     *
      **************************/
 
     ctx.imgui = [&]() {
-        // Parameters' window
+        /* Parameters' window */
         ImGui::Begin("Test");
-        // Number of squares
-        ImGui::SliderInt("Square number", &squareNumber, 10, 100);
+        /* Number of squares */
+        // ImGui::SliderInt("Square number", &squareNumber, 10, 100);
+        ImGui::SliderInt("Square number", &boids._squareNumber, 10, boids._maxSquareNumber);
 
         /*jouer avec les valeurs repulsion + maxRepulsion et attraction, factorSpeedMean, minimal distance*/
-        ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
-        ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
+        // ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
+        // ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
 
-        // Max and min speed
-        ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, 0.5f, 1.f);
-        ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, 0.f, 0.5f);
+        /* Max and min speed */
+        // ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, 0.5f, 1.f);
+        // ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, 0.f, 0.5f);
         ImGui::End();
     };
 
@@ -69,6 +73,9 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
+        boids.updateBoidsAcc();
+        boids.drawBoids(ctx);
+        /*
         updateBoidsAcc(&boids);
 
         for (int j = 0; j < squareNumber; j++)
@@ -76,6 +83,7 @@ int main(int argc, char* argv[])
             drawSquare(boids[j], ctx);
             boids[j].updatePosition();
         }
+        */
     };
 
     ctx.start();
