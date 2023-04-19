@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f);
+    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f, 0.15f);
 
     /*
     int                 squareNumber    = 50;
@@ -68,6 +68,8 @@ int main(int argc, char* argv[])
         ImGui::SliderFloat("Repulsion", &boids._factorRepulsion, -0.2, -0.001);
 
         ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
+
+         ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
 
         /*jouer avec les valeurs repulsion + maxRepulsion et attraction, factorSpeedMean, minimal distance*/
         // ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);

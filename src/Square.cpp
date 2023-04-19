@@ -84,7 +84,7 @@ void Square::updatePosition(float minSpeed, float maxSpeed)
     this->restrictArea();
 }
 
-void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare)
+void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare,float factorAttractTracker)
 {
     glm::vec2 acc(0., 0.);
     glm::vec2 sumSpeed(0., 0.);  // sum speed of neighbors
@@ -117,7 +117,7 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistan
         }
     }
 
-    acc += attractionTracker(trackSquare);
+    acc += attractionTracker(trackSquare, factorAttractTracker);
 
     this->_acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
 }
@@ -156,7 +156,7 @@ glm::vec2 updatePositionTracker(Square* trackSquare){
         trackSquare->updatePosition(0.3, 0.7);
 }
 
-glm::vec2 Square::attractionTracker(Square* trackSquare)
+glm::vec2 Square::attractionTracker(Square* trackSquare, float factorAttractTracker)
 {
     float   distance  = glm::distance(this->_center, trackSquare->_center);
     glm::vec2 attract(0.,0.);
@@ -166,7 +166,7 @@ glm::vec2 Square::attractionTracker(Square* trackSquare)
         return attract;
     }
     glm::vec2 direction = (trackSquare->_center - this->_center) / distance;
-    return attraction(direction, distance, 0.15);
+    return attraction(direction, distance, factorAttractTracker);
 
 }
 

@@ -16,9 +16,10 @@ public:
     float               _factorAttraction;
     float               _factorRepulsion;
     float               _maxRepulsion;
+    float               _factorAttractTracker;
 
 public:
-    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion);
+    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion,float factorAttractTracker);
 
     // Getters
     int   getSquareNumber() { return _squareNumber; };

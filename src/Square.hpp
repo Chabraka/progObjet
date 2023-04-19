@@ -45,9 +45,9 @@ public:
     // Updates
     void updatePosition(float minSpeed, float maxSpeed);
     //void updateAcc(std::vector<Square> boids, unsigned int i);
-    void updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare);
+    void updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker);
 
-    glm::vec2 attractionTracker(Square* trackSquare);
+    glm::vec2 attractionTracker(Square* trackSquare, float factorAttractTracker);
 };
 
 // Drawing

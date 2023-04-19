@@ -1,8 +1,8 @@
 #include "Boids.hpp"
 
 /* ----- Constructor ----- */
-Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion)
-    : _squareNumber(squareNumber), _maxSquareNumber(maxSquareNumber), _minSpeed(minSpeed), _maxSpeed(maxSpeed), _minDistance(minDistance), _factorAttraction(factorAttraction), _factorRepulsion(factorRepulsion), _maxRepulsion(maxRepulsion)
+Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker)
+    : _squareNumber(squareNumber), _maxSquareNumber(maxSquareNumber), _minSpeed(minSpeed), _maxSpeed(maxSpeed), _minDistance(minDistance), _factorAttraction(factorAttraction), _factorRepulsion(factorRepulsion), _maxRepulsion(maxRepulsion), _factorAttractTracker(factorAttractTracker)
 {
     // Creation of boids
     for (int i = 0; i < maxSquareNumber; i++)
@@ -37,6 +37,6 @@ void Boids::updateBoidsAcc(Square* trackSquare)
 {
     for (unsigned int i = 0; i < _squareNumber; i++)
     {
-        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion, trackSquare);
+        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion, trackSquare, _factorAttractTracker);
     }
 }
