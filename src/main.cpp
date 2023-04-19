@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.0002f, -3.f);
+    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f);
 
     /*
     int                 squareNumber    = 50;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
         ImGui::SliderFloat("Attraction", &boids._factorAttraction, 0.001, 0.01);
 
-        ImGui::SliderFloat("Repulsion", &boids._factorRepulsion, -0.0001, -0.001);
+        ImGui::SliderFloat("Repulsion", &boids._factorRepulsion, -0.2, -0.001);
 
         ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
 

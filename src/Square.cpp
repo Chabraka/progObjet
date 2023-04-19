@@ -131,7 +131,7 @@ glm::vec2 attraction(glm::vec2 direction, float distance, float factorAttraction
 
 glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion)
 {
-    return direction * std::max((1 / (distance * distance)) * factorRepulsion, maxRepulsion);
+    return direction * std::max((1 / (distance * distance)) * (0.01f* factorRepulsion), maxRepulsion);
 }
 
 glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
