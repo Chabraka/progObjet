@@ -12,10 +12,6 @@ Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpe
             0.05f,
             glm::vec2(p6::random::number(-maxSpeed, maxSpeed), p6::random::number(-maxSpeed, maxSpeed)),
             glm::vec2(0., 0.)
-            /*
-            0.3,
-            0.1
-            */
         );
         _boids.push_back(square);
     }
@@ -30,7 +26,6 @@ void Boids::drawBoids(p6::Context& ctx)
         _boids[j].updatePosition(_minSpeed, _maxSpeed);
     }
 }
-
 
 /* ----- Updates ----- */
 void Boids::updateBoidsAcc(Square* trackSquare)

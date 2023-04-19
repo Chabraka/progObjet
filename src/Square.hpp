@@ -23,20 +23,12 @@ public:
     glm::float32 getRadius() { return _radius; };
     glm::vec2    getSpeed() { return _speed; };
     glm::vec2    getAcceleration() { return _acceleration; };
-    /*
-    float        getMaxSpeed() { return _maxSpeed; };
-    float        getMinSpeed() { return _minSpeed; };
-    */
 
     // Setters
     void setCenter(glm::vec2 center) { _center = center; };
     void setRadius(glm::float32 radius) { _radius = radius; };
     void setSpeed(glm::vec2 speed) { _speed = speed; };
     void setAcceleration(glm::vec2 acceleration) { _acceleration = acceleration; };
-    /*
-    void setMaxSpeed(float maxSpeed) { _maxSpeed = maxSpeed; };
-    void setMinSpeed(float minSpeed) { _minSpeed = minSpeed; };
-    */
 
     // Restrictions
     void restrictArea();
@@ -44,8 +36,7 @@ public:
 
     // Updates
     void updatePosition(float minSpeed, float maxSpeed);
-    //void updateAcc(std::vector<Square> boids, unsigned int i);
-    void updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare);
+    void updateAcc(std::vector<Square> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare);
 
     glm::vec2 attractionTracker(Square* trackSquare);
 };
@@ -61,8 +52,3 @@ glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, 
 glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids);
 
 glm::vec2 updatePositionTracker(Square* trackSquare);
-
-/*
-// pour les boids
-void updateBoidsAcc(std::vector<Square>* boids);
-*/
