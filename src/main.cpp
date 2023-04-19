@@ -28,26 +28,6 @@ int main(int argc, char* argv[])
 
     Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f, 0.15f);
 
-    /*
-    int                 squareNumber    = 50;
-    int                 maxSquareNumber = 100;
-    std::vector<Square> boids;
-
-    // Creation of boids
-    for (int i = 0; i < maxSquareNumber; i++)
-    {
-        Square square(
-            glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
-            0.05f,
-            glm::vec2(p6::random::number(-0.02f, 0.02f), p6::random::number(-0.02f, 0.02f)),
-            glm::vec2(0., 0.),
-            0.3,
-            0.1
-
-        );
-        boids.push_back(square);
-    } */
-
     /**************************
      *     RENDERING CODE     *
      **************************/
@@ -70,28 +50,20 @@ int main(int argc, char* argv[])
         ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
 
          ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
-
-        /*jouer avec les valeurs repulsion + maxRepulsion et attraction, factorSpeedMean, minimal distance*/
-        // ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
-        // ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
-
-        /* Max and min speed */
-        // ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, 0.5f, 1.f);
-        // ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, 0.f, 0.5f);
+         
         ImGui::End();
     };
 
     Square trackSquare(
-            glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
-            0.01f,
-            glm::vec2(0.,0.),
-            glm::vec2(0., 0.)
-        );
-        
+        glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+        0.01f,
+        glm::vec2(0., 0.),
+        glm::vec2(0., 0.)
+    );
 
     // Infinite update loop
     ctx.update = [&]() {
-        ctx.background(p6::NamedColor::RaspberryGlace);      
+        ctx.background(p6::NamedColor::RaspberryGlace);
 
         drawSquare(trackSquare, ctx);
 
@@ -99,15 +71,6 @@ int main(int argc, char* argv[])
 
         boids.updateBoidsAcc(&trackSquare);
         boids.drawBoids(ctx);
-        /*
-        updateBoidsAcc(&boids);
-
-        for (int j = 0; j < squareNumber; j++)
-        {
-            drawSquare(boids[j], ctx);
-            boids[j].updatePosition();
-        }
-        */
     };
 
     ctx.start();
