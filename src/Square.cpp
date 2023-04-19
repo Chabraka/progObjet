@@ -69,7 +69,7 @@ void Square::restrictSpeed(float minSpeed, float maxSpeed)
 
 void Square::updatePosition(float minSpeed, float maxSpeed)
 {
-    double dt = 1.0 / 60.;
+    float dt = 1.0 / 60.;
 
     // Calcul of the position
     this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
