@@ -19,10 +19,10 @@ public:
         : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration) /*, _maxSpeed(maxSpeed), _minSpeed(minSpeed) */ {};
 
     // Getters
-    glm::vec2    getCenter() { return _center; };
-    glm::float32 getRadius() { return _radius; };
-    glm::vec2    getSpeed() { return _speed; };
-    glm::vec2    getAcceleration() { return _acceleration; };
+    glm::vec2    getCenter() const { return _center; };
+    glm::float32 getRadius() const { return _radius; };
+    glm::vec2    getSpeed() const { return _speed; };
+    glm::vec2    getAcceleration() const { return _acceleration; };
 
     // Setters
     void setCenter(glm::vec2 center) { _center = center; };

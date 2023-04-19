@@ -19,17 +19,17 @@ public:
     float               _factorAttractTracker;
 
 public:
-    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion,float factorAttractTracker);
+    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker);
 
     // Getters
-    int   getSquareNumber() { return _squareNumber; };
-    int   getMaxSqareNumber() { return _maxSquareNumber; };
-    float getMinSpeed() { return _minSpeed; };
-    float getMaxSpeed() { return _maxSpeed; };
-    float getMinDistance() { return _minDistance; };
-    float getFactorAttraction() { return _factorAttraction; };
-    float getFactorRepulsion() { return _factorRepulsion; };
-    float getMaxRepulsion() { return _maxRepulsion; };
+    int   getSquareNumber() const { return _squareNumber; };
+    int   getMaxSqareNumber() const { return _maxSquareNumber; };
+    float getMinSpeed() const { return _minSpeed; };
+    float getMaxSpeed() const { return _maxSpeed; };
+    float getMinDistance() const { return _minDistance; };
+    float getFactorAttraction() const { return _factorAttraction; };
+    float getFactorRepulsion() const { return _factorRepulsion; };
+    float getMaxRepulsion() const { return _maxRepulsion; };
 
     // Setters
     void setSquareNumber(int squareNumber) { _squareNumber = squareNumber; };
@@ -37,9 +37,9 @@ public:
     void setMinSpeed(float minSpeed) { _minSpeed = minSpeed; };
     void setMaxSpeed(float maxSpeed) { _maxSpeed = maxSpeed; };
     void setMinDistance(float minDistance) { _minDistance = minDistance; };
-    void getFactorAttraction(float factorAttraction) { _factorAttraction = factorAttraction; };
-    void getFactorRepulsion(float factorRepulsion) { _factorRepulsion = factorRepulsion; };
-    void getMaxRepulsion(float maxRepulsion) { _maxRepulsion = maxRepulsion; };
+    void setFactorAttraction(float factorAttraction) { _factorAttraction = factorAttraction; };
+    void setFactorRepulsion(float factorRepulsion) { _factorRepulsion = factorRepulsion; };
+    void setMaxRepulsion(float maxRepulsion) { _maxRepulsion = maxRepulsion; };
 
     // Drawing
     void drawBoids(p6::Context& ctx);
@@ -47,4 +47,3 @@ public:
     // Updates
     void updateBoidsAcc(Square* trackSquare);
 };
-
