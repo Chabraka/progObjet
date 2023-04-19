@@ -20,7 +20,7 @@ Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpe
 /* ----- Draw ----- */
 void Boids::drawBoids(p6::Context& ctx)
 {
-    for (unsigned int j = 0; j < _squareNumber; j++)
+    for (int j = 0; j < _squareNumber; j++)
     {
         drawSquare(_boids[j], ctx);
         _boids[j].updatePosition(_minSpeed, _maxSpeed);
@@ -30,7 +30,7 @@ void Boids::drawBoids(p6::Context& ctx)
 /* ----- Updates ----- */
 void Boids::updateBoidsAcc(Square* trackSquare)
 {
-    for (unsigned int i = 0; i < _squareNumber; i++)
+    for (int i = 0; i < _squareNumber; i++)
     {
         _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion, trackSquare, _factorAttractTracker);
     }
