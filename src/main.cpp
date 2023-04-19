@@ -1,6 +1,7 @@
+
 #include <cstdlib>
 #include <vector>
-#include "Square.hpp"
+#include "Boids.hpp"
 #include "glm/fwd.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -26,57 +27,51 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    int                 squareNumber    = 50;
-    int                 maxSquareNumber = 100;
-    std::vector<Square> boids;
-
-    // Creation of boids
-    for (int i = 0; i < maxSquareNumber; i++)
-    {
-        Square square(
-            glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
-            0.05f,
-            glm::vec2(p6::random::number(-0.02f, 0.02f), p6::random::number(-0.02f, 0.02f)),
-            glm::vec2(0., 0.),
-            0.3,
-            0.1
-
-        );
-        boids.push_back(square);
-    }
+    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f, 0.15f);
 
     /**************************
      *     RENDERING CODE     *
      **************************/
 
     ctx.imgui = [&]() {
-        // Parameters' window
+        /* Parameters' window */
         ImGui::Begin("Test");
-        // Number of squares
-        ImGui::SliderInt("Square number", &squareNumber, 10, 100);
+        /* Number of squares */
+        // ImGui::SliderInt("Square number", &squareNumber, 10, 100);
+        ImGui::SliderInt("Square number", &boids._squareNumber, 10, boids._maxSquareNumber);
 
-        /*jouer avec les valeurs repulsion + maxRepulsion et attraction, factorSpeedMean, minimal distance*/
-        ImGui::SliderFloat("Square speed x", &boids[1]._speed.x, -0.5f, 0.5f);
-        ImGui::SliderFloat("Square speed y", &boids[1]._speed.y, -0.5f, 0.5f);
+        ImGui::SliderFloat("max speed", &boids._maxSpeed, 0.1, 1.);
 
-        // Max and min speed
-        ImGui::SliderFloat("Square max speed", &boids[1]._maxSpeed, 0.5f, 1.f);
-        ImGui::SliderFloat("Square min speed", &boids[1]._minSpeed, 0.f, 0.5f);
+        ImGui::SliderFloat("min distance/cohesion", &boids._minDistance, 0.1, 1.);
+
+        ImGui::SliderFloat("Attraction", &boids._factorAttraction, 0.001, 0.01);
+
+        ImGui::SliderFloat("Repulsion", &boids._factorRepulsion, -0.2, -0.001);
+
+        ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
+
+         ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
+         
         ImGui::End();
     };
+
+    Square trackSquare(
+        glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+        0.01f,
+        glm::vec2(0., 0.),
+        glm::vec2(0., 0.)
+    );
 
     // Infinite update loop
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
+        drawSquare(trackSquare, ctx);
 
-        updateBoidsAcc(&boids);
+        updatePositionTracker(&trackSquare);
 
-        for (int j = 0; j < squareNumber; j++)
-        {
-            drawSquare(boids[j], ctx);
-            boids[j].updatePosition();
-        }
+        boids.updateBoidsAcc(&trackSquare);
+        boids.drawBoids(ctx);
     };
 
     ctx.start();
