@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdlib>
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
