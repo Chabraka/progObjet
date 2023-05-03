@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <vector>
 #include "Boids.hpp"
+#include "Parameters.hpp"
 #include "glm/fwd.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids boids(50, 100, 0.01f, 0.5f, 0.7f, 0.001f, -0.02f, -3.f, 0.15f);
+    Boids boids(Parameters::get());
 
     /**************************
      *     RENDERING CODE     *
@@ -35,22 +36,14 @@ int main(int argc, char* argv[])
     ctx.imgui = [&]() {
         /* Parameters' window */
         ImGui::Begin("Test");
-        /* Number of squares */
-        // ImGui::SliderInt("Square number", &squareNumber, 10, 100);
-        ImGui::SliderInt("Square number", &boids._squareNumber, 10, boids._maxSquareNumber);
+        ImGui::SliderInt("Square number", &Parameters::get().SQUARE_NB, 10, Parameters::get().MAX_SQUARE_NB);
+        ImGui::SliderFloat("Max speed", &Parameters::get().MAX_SPEED, 0.1, 1.);
+        ImGui::SliderFloat("Min distance of cohesion", &Parameters::get().MIN_DIST, 0.1, 1.);
+        ImGui::SliderFloat("Attraction", &Parameters::get().FACTOR_ATTRACTION, 0.001, 0.01);
+        ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
+        ImGui::SliderFloat("Max Repulsion", &Parameters::get().MAX_REPULSION, -1.f, -4.f);
+        ImGui::SliderFloat("Attraction tracker", &Parameters::get().FACTOR_ATTRACT_TRACKER, 0.01f, 0.3f);
 
-        ImGui::SliderFloat("max speed", &boids._maxSpeed, 0.1, 1.);
-
-        ImGui::SliderFloat("min distance/cohesion", &boids._minDistance, 0.1, 1.);
-
-        ImGui::SliderFloat("Attraction", &boids._factorAttraction, 0.001, 0.01);
-
-        ImGui::SliderFloat("Repulsion", &boids._factorRepulsion, -0.2, -0.001);
-
-        ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
-
-         ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
-         
         ImGui::End();
     };
 
@@ -69,8 +62,8 @@ int main(int argc, char* argv[])
 
         updatePositionTracker(&trackSquare);
 
-        boids.updateBoidsAcc(&trackSquare);
-        boids.drawBoids(ctx);
+        boids.updateBoidsAcc(&trackSquare, Parameters::get());
+        boids.drawBoids(ctx, Parameters::get());
     };
 
     ctx.start();

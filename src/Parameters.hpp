@@ -9,7 +9,7 @@ struct Parameters {
 public:
     int   SQUARE_NB              = 50;
     int   MAX_SQUARE_NB          = 100;
-    float MIN_SPEED              = 0.1f;
+    float MIN_SPEED              = 0.01f;
     float MAX_SPEED              = 0.5f;
     float MIN_DIST               = 0.7f;
     float FACTOR_ATTRACTION      = 0.001f;

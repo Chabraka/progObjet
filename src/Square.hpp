@@ -11,10 +11,6 @@ public:
     glm::float32 _radius;
     glm::vec2    _speed;
     glm::vec2    _acceleration;
-    /*
-    float        _maxSpeed;
-    float        _minSpeed;
-    */
 
 public:
     Square(glm::vec2 center, glm::float32 radius, glm::vec2 speed, glm::vec2 acceleration /*, float maxSpeed, float minSpeed */)
