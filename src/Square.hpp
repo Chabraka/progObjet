@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdlib>
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -36,7 +38,7 @@ public:
 
     // Updates
     void updatePosition(float minSpeed, float maxSpeed);
-    void updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker);
+    void updateAcc(std::vector<Square> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker);
 
     glm::vec2 attractionTracker(Square* trackSquare, float factorAttractTracker);
 };

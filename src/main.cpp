@@ -1,4 +1,3 @@
-
 #include <cstdlib>
 #include <vector>
 #include "Boids.hpp"
@@ -50,8 +49,8 @@ int main(int argc, char* argv[])
 
         ImGui::SliderFloat("max Repulsion", &boids._maxRepulsion, -1.f, -4.f);
 
-         ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
-         
+        ImGui::SliderFloat("Attraction tracker", &boids._factorAttractTracker, 0.01f, 0.3f);
+
         ImGui::End();
     };
 

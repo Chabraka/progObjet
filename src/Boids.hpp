@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdlib>
 #include <vector>
 #include "Square.hpp"
@@ -19,7 +21,7 @@ public:
     float               _factorAttractTracker;
 
 public:
-    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion,float factorAttractTracker);
+    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker);
 
     // Getters
     int   getSquareNumber() { return _squareNumber; };
