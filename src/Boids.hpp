@@ -9,18 +9,19 @@
 #include "p6/p6.h"
 
 class Boids {
-    // private:
+    /* Attributes */
 public:
     std::vector<Square> _boids;
 
+    /* Methods */
 public:
-    // Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker);
+    // Constructors
     Boids() = default;
     Boids(Parameters& params);
 
-    // Drawing
+    // Draw
     void drawBoids(p6::Context& ctx, Parameters& params);
 
-    // Updates
+    // Update
     void updateBoidsAcc(Square* trackSquare, Parameters& params);
 };

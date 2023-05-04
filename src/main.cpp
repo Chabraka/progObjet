@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
     }
 
-    // Actual app
+    // App
     auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
     Boids   boids(Parameters::get());
     Tracker trackSquare(
-        glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+        glm::vec2(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f)),
         0.01f,
         glm::vec2(0., 0.),
         glm::vec2(0., 0.)
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         ctx.background(p6::NamedColor::RaspberryGlace);
 
         // Tracker
-        trackSquare.drawSquare(ctx);
+        trackSquare.drawTracker(ctx);
         trackSquare.updatePositionTracker();
 
         // Boids
