@@ -2,11 +2,11 @@
 #include <sys/types.h>
 
 /* ----- Draw ----- */
-void drawSquare(Square sqr, p6::Context& ctx)
+void Square::drawSquare(p6::Context& ctx)
 {
     ctx.square(
-        p6::Center{sqr.getCenter().x, sqr.getCenter().y},
-        p6::Radius{sqr._radius}
+        p6::Center{this->_center.x, this->_center.y},
+        p6::Radius{this->_radius}
     );
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
@@ -142,19 +142,6 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i, float minDista
     acc += attractionTracker(trackSquare, factorAttractTracker);
 
     this->_acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
-}
-
-/* --- Tracker --- */
-
-void updatePositionTracker(Square* trackSquare)
-{
-    double direction_x = p6::random::number(-0.07f, 0.07f);
-    double direction_y = p6::random::number(-0.07f, 0.07f);
-
-    glm::vec2 speed(direction_x + trackSquare->getSpeed().x, direction_y + trackSquare->getSpeed().y);
-    trackSquare->setSpeed(speed);
-
-    trackSquare->updatePosition(0.3, 0.7);
 }
 
 glm::vec2 Square::attractionTracker(Square* trackSquare, float factorAttractTracker)

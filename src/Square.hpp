@@ -14,13 +14,14 @@ private:
     glm::vec2 _acceleration;
 
 public:
+    // Constructors
+    Square()
+        : _center(glm::vec2(1.0f)), _radius(1.0f), _speed(glm::vec2(1.0f)), _acceleration(glm::vec2(1.0f)){};
     Square(glm::vec2 center, glm::float32 radius, glm::vec2 speed, glm::vec2 acceleration)
-        : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration) /*, _maxSpeed(maxSpeed), _minSpeed(minSpeed) */ {};
+        : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration){};
 
-    // Getters
-    glm::vec2 getCenter() const { return _center; };
-    glm::vec2 getSpeed() const { return _speed; };
-    void      setSpeed(glm::vec2 speed) { _speed = speed; }; /* passer en private quand on aura une class tracker */
+    // Drawing
+    void drawSquare(p6::Context& ctx);
 
 private:
     // Restrictions
@@ -39,9 +40,3 @@ public:
 
     glm::vec2 attractionTracker(Square* trackSquare, float factorAttractTracker);
 };
-
-// Drawing
-void drawSquare(Square sqr, p6::Context& ctx);
-
-// Tracker
-void updatePositionTracker(Square* trackSquare);

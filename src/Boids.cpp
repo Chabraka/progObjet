@@ -22,7 +22,7 @@ void Boids::drawBoids(p6::Context& ctx, Parameters& params)
 {
     for (int j = 0; j < params.SQUARE_NB; j++)
     {
-        drawSquare(_boids[j], ctx);
+        _boids[j].drawSquare(ctx);
         _boids[j].updatePosition(params.MIN_SPEED, params.MAX_SPEED);
     }
 }

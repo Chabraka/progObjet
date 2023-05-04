@@ -2,6 +2,7 @@
 #include <vector>
 #include "Boids.hpp"
 #include "Parameters.hpp"
+#include "Tracker.hpp"
 #include "glm/fwd.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -27,8 +28,8 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids  boids(Parameters::get());
-    Square trackSquare(
+    Boids   boids(Parameters::get());
+    Tracker trackSquare(
         glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
         0.01f,
         glm::vec2(0., 0.),
@@ -59,8 +60,8 @@ int main(int argc, char* argv[])
         ctx.background(p6::NamedColor::RaspberryGlace);
 
         // Tracker
-        drawSquare(trackSquare, ctx);
-        updatePositionTracker(&trackSquare);
+        trackSquare.drawSquare(ctx);
+        trackSquare.updatePositionTracker();
 
         // Boids
         boids.updateBoidsAcc(&trackSquare, Parameters::get());
