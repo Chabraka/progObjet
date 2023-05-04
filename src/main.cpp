@@ -27,7 +27,13 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    Boids boids(Parameters::get());
+    Boids  boids(Parameters::get());
+    Square trackSquare(
+        glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
+        0.01f,
+        glm::vec2(0., 0.),
+        glm::vec2(0., 0.)
+    );
 
     /**************************
      *     RENDERING CODE     *
@@ -36,6 +42,7 @@ int main(int argc, char* argv[])
     ctx.imgui = [&]() {
         /* Parameters' window */
         ImGui::Begin("Test");
+
         ImGui::SliderInt("Square number", &Parameters::get().SQUARE_NB, 10, Parameters::get().MAX_SQUARE_NB);
         ImGui::SliderFloat("Max speed", &Parameters::get().MAX_SPEED, 0.1, 1.);
         ImGui::SliderFloat("Min distance of cohesion", &Parameters::get().MIN_DIST, 0.1, 1.);
@@ -47,21 +54,15 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-    Square trackSquare(
-        glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
-        0.01f,
-        glm::vec2(0., 0.),
-        glm::vec2(0., 0.)
-    );
-
     // Infinite update loop
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::RaspberryGlace);
 
+        // Tracker
         drawSquare(trackSquare, ctx);
-
         updatePositionTracker(&trackSquare);
 
+        // Boids
         boids.updateBoidsAcc(&trackSquare, Parameters::get());
         boids.drawBoids(ctx, Parameters::get());
     };
