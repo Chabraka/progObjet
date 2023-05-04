@@ -1,16 +1,16 @@
 #include "Boids.hpp"
+#include "Parameters.hpp"
 
 /* ----- Constructor ----- */
-Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker)
-    : _squareNumber(squareNumber), _maxSquareNumber(maxSquareNumber), _minSpeed(minSpeed), _maxSpeed(maxSpeed), _minDistance(minDistance), _factorAttraction(factorAttraction), _factorRepulsion(factorRepulsion), _maxRepulsion(maxRepulsion), _factorAttractTracker(factorAttractTracker)
+Boids::Boids(Parameters& params)
 {
     // Creation of boids
-    for (int i = 0; i < maxSquareNumber; i++)
+    for (int i = 0; i < params.MAX_SQUARE_NB; i++)
     {
         Square square(
             glm::vec2(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f)),
             0.05f,
-            glm::vec2(p6::random::number(-maxSpeed, maxSpeed), p6::random::number(-maxSpeed, maxSpeed)),
+            glm::vec2(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED), p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),
             glm::vec2(0., 0.)
         );
         _boids.push_back(square);
@@ -18,20 +18,20 @@ Boids::Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpe
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(p6::Context& ctx)
+void Boids::drawBoids(p6::Context& ctx, Parameters& params)
 {
-    for (unsigned int j = 0; j < _squareNumber; j++)
+    for (int j = 0; j < params.SQUARE_NB; j++)
     {
-        drawSquare(_boids[j], ctx);
-        _boids[j].updatePosition(_minSpeed, _maxSpeed);
+        _boids[j].drawSquare(ctx);
+        _boids[j].updatePosition(params.MIN_SPEED, params.MAX_SPEED);
     }
 }
 
 /* ----- Updates ----- */
-void Boids::updateBoidsAcc(Square* trackSquare)
+void Boids::updateBoidsAcc(Square* trackSquare, Parameters& params)
 {
-    for (unsigned int i = 0; i < _squareNumber; i++)
+    for (int i = 0; i < params.SQUARE_NB; i++)
     {
-        _boids.at(i).updateAcc(_boids, i, _minDistance, _factorAttraction, _factorRepulsion, _maxRepulsion, trackSquare, _factorAttractTracker);
+        _boids.at(i).updateAcc(_boids, i, params.MIN_DIST, params.FACTOR_ATTRACTION, params.FACTOR_REPULSION, params.FACTOR_REPULSION, trackSquare, params.FACTOR_ATTRACT_TRACKER);
     }
 }

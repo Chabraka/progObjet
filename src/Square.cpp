@@ -2,15 +2,14 @@
 #include <sys/types.h>
 
 /* ----- Draw ----- */
-void drawSquare(Square sqr, p6::Context& ctx)
+void Square::drawSquare(p6::Context& ctx)
 {
     ctx.square(
-        p6::Center{sqr.getCenter().x, sqr.getCenter().y},
-        p6::Radius{sqr.getRadius()}
+        p6::Center{this->_center.x, this->_center.y},
+        p6::Radius{this->_radius}
     );
     ctx.fill = {1.f, 0.7f, 0.2f};
 }
-
 
 /* ----- Restrictions ----- */
 
@@ -65,6 +64,29 @@ void Square::restrictSpeed(float minSpeed, float maxSpeed)
     }
 }
 
+/* ----- Behaviors ----- */
+
+glm::vec2 Square::attraction(glm::vec2 direction, float distance, float factorAttraction)
+{
+    return direction * factorAttraction / distance;
+}
+
+glm::vec2 Square::repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion)
+{
+    return direction * std::max((1 / (distance * distance)) * (0.01f * factorRepulsion), maxRepulsion);
+}
+
+glm::vec2 Square::adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
+{
+    // Adjustment of the speed relative to the neighbors
+    if (numspeedboids != 0)
+    {
+        glm::vec2 BoidsSpeedMean = sumSpeed / (float)numspeedboids;
+        acc                      = acc + BoidsSpeedMean * (float)1.; // parameter to adjust (1) can be a factorSpeedMean
+    }
+    return acc;
+}
+
 /* ----- Updates ----- */
 
 void Square::updatePosition(float minSpeed, float maxSpeed)
@@ -84,7 +106,7 @@ void Square::updatePosition(float minSpeed, float maxSpeed)
     this->restrictArea();
 }
 
-void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare,float factorAttractTracker)
+void Square::updateAcc(std::vector<Square> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker)
 {
     glm::vec2 acc(0., 0.);
     glm::vec2 sumSpeed(0., 0.);  // sum speed of neighbors
@@ -122,44 +144,10 @@ void Square::updateAcc(std::vector<Square> boids, unsigned int i,float minDistan
     this->_acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
 }
 
-/* ----- Behaviors ----- */
-
-glm::vec2 attraction(glm::vec2 direction, float distance, float factorAttraction)
-{
-    return direction * factorAttraction / distance;
-}
-
-glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion)
-{
-    return direction * std::max((1 / (distance * distance)) * (0.01f* factorRepulsion), maxRepulsion);
-}
-
-glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids)
-{
-    // Adjustment of the speed relative to the neighbors
-    if (numspeedboids != 0)
-    {
-        glm::vec2 BoidsSpeedMean = sumSpeed / (float)numspeedboids;
-        acc                      = acc + BoidsSpeedMean * (float)1.; // parameter to adjust (1) can be a factorSpeedMean
-    }
-    return acc;
-}
-
-glm::vec2 updatePositionTracker(Square* trackSquare){
-
-        double direction_x = p6::random::number(-0.07f, 0.07f);
-        double direction_y = p6::random::number(-0.07f, 0.07f);
-       
-        glm::vec2 speed(direction_x+trackSquare->_speed.x, direction_y+trackSquare->_speed.y);
-        trackSquare->_speed=speed;
-
-        trackSquare->updatePosition(0.3, 0.7);
-}
-
 glm::vec2 Square::attractionTracker(Square* trackSquare, float factorAttractTracker)
 {
-    float   distance  = glm::distance(this->_center, trackSquare->_center);
-    glm::vec2 attract(0.,0.);
+    float     distance = glm::distance(this->_center, trackSquare->_center);
+    glm::vec2 attract(0., 0.);
     // Avoid divison by 0
     if (distance <= 0.001)
     {
@@ -167,5 +155,4 @@ glm::vec2 Square::attractionTracker(Square* trackSquare, float factorAttractTrac
     }
     glm::vec2 direction = (trackSquare->_center - this->_center) / distance;
     return attraction(direction, distance, factorAttractTracker);
-
 }

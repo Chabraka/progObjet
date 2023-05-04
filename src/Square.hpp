@@ -5,52 +5,38 @@
 #include "p6/p6.h"
 
 class Square {
-    // private:
+    /* Attributes */
 public:
-    glm::vec2    _center;
-    glm::float32 _radius;
-    glm::vec2    _speed;
-    glm::vec2    _acceleration;
-    /*
-    float        _maxSpeed;
-    float        _minSpeed;
-    */
+    const glm::float32 _radius;
 
+private:
+    glm::vec2 _center;
+    glm::vec2 _speed;
+    glm::vec2 _acceleration;
+
+    /* Methods */
 public:
-    Square(glm::vec2 center, glm::float32 radius, glm::vec2 speed, glm::vec2 acceleration /*, float maxSpeed, float minSpeed */)
-        : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration) /*, _maxSpeed(maxSpeed), _minSpeed(minSpeed) */ {};
+    // Constructors
+    Square()
+        : _center(glm::vec2(1.0f)), _radius(1.0f), _speed(glm::vec2(1.0f)), _acceleration(glm::vec2(1.0f)){};
+    Square(glm::vec2 center, glm::float32 radius, glm::vec2 speed, glm::vec2 acceleration)
+        : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration){};
 
-    // Getters
-    glm::vec2    getCenter() { return _center; };
-    glm::float32 getRadius() { return _radius; };
-    glm::vec2    getSpeed() { return _speed; };
-    glm::vec2    getAcceleration() { return _acceleration; };
+    // Draw
+    void drawSquare(p6::Context& ctx);
 
-    // Setters
-    void setCenter(glm::vec2 center) { _center = center; };
-    void setRadius(glm::float32 radius) { _radius = radius; };
-    void setSpeed(glm::vec2 speed) { _speed = speed; };
-    void setAcceleration(glm::vec2 acceleration) { _acceleration = acceleration; };
+    // Update
+    void      updatePosition(float minSpeed, float maxSpeed);
+    void      updateAcc(std::vector<Square> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker);
+    glm::vec2 attractionTracker(Square* trackSquare, float factorAttractTracker);
 
+private:
     // Restrictions
     void restrictArea();
     void restrictSpeed(float minSpeed, float maxSpeed);
 
-    // Updates
-    void updatePosition(float minSpeed, float maxSpeed);
-    void updateAcc(std::vector<Square> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Square* trackSquare, float factorAttractTracker);
-
-    glm::vec2 attractionTracker(Square* trackSquare, float factorAttractTracker);
+    // Behaviours
+    glm::vec2 attraction(glm::vec2 direction, float distance, float factorAttraction);
+    glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion);
+    glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids);
 };
-
-// Drawing
-void drawSquare(Square sqr, p6::Context& ctx);
-
-// a mettre dans le square pour les differents factors
-// Behaviors
-
-glm::vec2 attraction(glm::vec2 direction, float distance, float factorAttraction);
-glm::vec2 repulsion(glm::vec2 direction, float distance, float factorRepulsion, float maxRepulsion);
-glm::vec2 adjustSpeed(glm::vec2 acc, glm::vec2 sumSpeed, int numspeedboids);
-
-glm::vec2 updatePositionTracker(Square* trackSquare);

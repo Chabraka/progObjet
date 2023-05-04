@@ -2,50 +2,26 @@
 
 #include <cstdlib>
 #include <vector>
+#include "Parameters.hpp"
 #include "Square.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
 class Boids {
-    // private:
+    /* Attributes */
 public:
     std::vector<Square> _boids;
-    int                 _squareNumber;
-    int                 _maxSquareNumber;
-    float               _minSpeed;
-    float               _maxSpeed;
-    float               _minDistance;
-    float               _factorAttraction;
-    float               _factorRepulsion;
-    float               _maxRepulsion;
-    float               _factorAttractTracker;
 
+    /* Methods */
 public:
-    Boids(int squareNumber, int maxSquareNumber, float minSpeed, float maxSpeed, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, float factorAttractTracker);
+    // Constructors
+    Boids() = default;
+    Boids(Parameters& params);
 
-    // Getters
-    int   getSquareNumber() { return _squareNumber; };
-    int   getMaxSqareNumber() { return _maxSquareNumber; };
-    float getMinSpeed() { return _minSpeed; };
-    float getMaxSpeed() { return _maxSpeed; };
-    float getMinDistance() { return _minDistance; };
-    float getFactorAttraction() { return _factorAttraction; };
-    float getFactorRepulsion() { return _factorRepulsion; };
-    float getMaxRepulsion() { return _maxRepulsion; };
+    // Draw
+    void drawBoids(p6::Context& ctx, Parameters& params);
 
-    // Setters
-    void setSquareNumber(int squareNumber) { _squareNumber = squareNumber; };
-    void setMaxSqareNumber(int maxSquareNumber) { _maxSquareNumber = maxSquareNumber; };
-    void setMinSpeed(float minSpeed) { _minSpeed = minSpeed; };
-    void setMaxSpeed(float maxSpeed) { _maxSpeed = maxSpeed; };
-    void setMinDistance(float minDistance) { _minDistance = minDistance; };
-    void getFactorAttraction(float factorAttraction) { _factorAttraction = factorAttraction; };
-    void getFactorRepulsion(float factorRepulsion) { _factorRepulsion = factorRepulsion; };
-    void getMaxRepulsion(float maxRepulsion) { _maxRepulsion = maxRepulsion; };
-
-    // Drawing
-    void drawBoids(p6::Context& ctx);
-
-    // Updates
-    void updateBoidsAcc(Square* trackSquare);
+    // Update
+    void updateBoidsAcc(Square* trackSquare, Parameters& params);
 };
