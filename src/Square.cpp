@@ -18,31 +18,31 @@ void Square::restrictArea()
     /* If the square hits the walls, change direction */
 
     // Left wall
-    if (this->getCenter().x - this->_radius < -2)
+    if (this->_center.x - this->_radius < -2)
     {
-        this->setCenter(glm::vec2(-2 + this->_radius, this->getCenter().y));
-        this->setSpeed(glm::vec2(-this->getSpeed().x, this->getSpeed().y));
+        this->_center.x = -2 + this->_radius;
+        this->_speed.x  = -this->_speed.x;
     }
 
     // Right wall
-    else if (this->getCenter().x + this->_radius > 2)
+    else if (this->_center.x + this->_radius > 2)
     {
-        this->setCenter(glm::vec2(2 - this->_radius, this->getCenter().y));
-        this->setSpeed(glm::vec2(-this->getSpeed().x, this->getSpeed().y));
+        this->_center.x = 2 - this->_radius;
+        this->_speed.x  = -this->_speed.x;
     }
 
     // Bottom wall
-    if (this->getCenter().y - this->_radius < -1)
+    if (this->_center.y - this->_radius < -1)
     {
-        this->setCenter(glm::vec2(this->getCenter().x, -1 + this->_radius));
-        this->setSpeed(glm::vec2(this->getSpeed().x, -this->getSpeed().y));
+        this->_center.y = -1 + this->_radius;
+        this->_speed.y  = -this->_speed.y;
     }
 
     // Top wall
-    else if (this->getCenter().y + this->_radius > 1)
+    else if (this->_center.y + this->_radius > 1)
     {
-        this->setCenter(glm::vec2(this->getCenter().x, 1 - this->_radius));
-        this->setSpeed(glm::vec2(this->getSpeed().x, -this->getSpeed().y));
+        this->_center.y = 1 - this->_radius;
+        this->_speed.y  = -this->_speed.y;
     }
 }
 
@@ -94,10 +94,12 @@ void Square::updatePosition(float minSpeed, float maxSpeed)
     float dt = 1.0 / 60.;
 
     // Calcul of the position
-    this->setCenter(this->getCenter() + glm::vec2(this->getSpeed() * dt + this->getAcceleration() * dt * dt * 0.5f));
+    this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
+    this->_center.y += this->_speed.y * dt + this->_acceleration.y * dt * dt / 2;
 
     // Calcul of the speed
-    this->setSpeed(this->getSpeed() + this->getAcceleration() * dt);
+    this->_speed.x += this->_acceleration.x * dt;
+    this->_speed.y += this->_acceleration.y * dt;
 
     // Restrict the position
     this->restrictSpeed(minSpeed, maxSpeed);
@@ -157,13 +159,13 @@ void updatePositionTracker(Square* trackSquare)
 
 glm::vec2 Square::attractionTracker(Square* trackSquare, float factorAttractTracker)
 {
-    float     distance = glm::distance(this->getCenter(), trackSquare->getCenter());
+    float     distance = glm::distance(this->_center, trackSquare->_center);
     glm::vec2 attract(0., 0.);
     // Avoid divison by 0
     if (distance <= 0.001)
     {
         return attract;
     }
-    glm::vec2 direction = (trackSquare->getCenter() - this->getCenter()) / distance;
+    glm::vec2 direction = (trackSquare->_center - this->_center) / distance;
     return attraction(direction, distance, factorAttractTracker);
 }

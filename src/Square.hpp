@@ -20,15 +20,9 @@ public:
     // Getters
     glm::vec2 getCenter() const { return _center; };
     glm::vec2 getSpeed() const { return _speed; };
-    glm::vec2 getAcceleration() const { return _acceleration; };
-
-    void setSpeed(glm::vec2 speed) { _speed = speed; }; /* passer en private quand on aura une class tracker */
+    void      setSpeed(glm::vec2 speed) { _speed = speed; }; /* passer en private quand on aura une class tracker */
 
 private:
-    // Setters
-    void setCenter(glm::vec2 center) { _center = center; };
-    void setAcceleration(glm::vec2 acceleration) { _acceleration = acceleration; };
-
     // Restrictions
     void restrictArea();
     void restrictSpeed(float minSpeed, float maxSpeed);
