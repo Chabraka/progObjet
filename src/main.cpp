@@ -36,6 +36,51 @@ int main(int argc, char* argv[])
         glm::vec2(0., 0.)
     );
 
+    /* --- VBO --- */
+    /*
+    // Creation vbo
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    // Binding vbo sur cible GL_ARRAY_BUFFER
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    //  Creation tab coordonnee
+    GLfloat vertices[] = {-0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.5f};
+
+    // Envoi donnee
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+
+    // Debinder
+    glBindBuffer(GL_ARRAY_BUFFER, 0); */
+
+    /* --- VAO --- */
+
+    /*
+
+    // Creation vao
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+
+    // Binding vao
+    glBindVertexArray(vao);
+
+    // Activer attribut position
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+
+    // Rebinder vbo
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    // Specifier format position
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
+
+    // Debind vbo
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    // Debind vao
+    glBindVertexArray(0); */
+
     /**************************
      *     RENDERING CODE     *
      **************************/
@@ -57,7 +102,21 @@ int main(int argc, char* argv[])
 
     // Infinite update loop
     ctx.update = [&]() {
+        /*
+        // Clear window
+        glClear(GL_COLOR_BUFFER_BIT); */
+
         ctx.background(p6::NamedColor::RaspberryGlace);
+
+        /*
+        // Bind vao
+        glBindVertexArray(vao);
+
+        // Draw call
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        // Debind vao
+        glBindVertexArray(0); */
 
         // Tracker
         trackSquare.drawTracker(ctx);
@@ -69,4 +128,10 @@ int main(int argc, char* argv[])
     };
 
     ctx.start();
+    /*
+        // Free vbo
+        glDeleteBuffers(1, &vbo);
+
+        // Free vao
+        glDeleteVertexArrays(1, &vao); */
 }
