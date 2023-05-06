@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 #include <vector>
+#include "Boid.hpp"
 #include "Parameters.hpp"
-#include "Square.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -11,7 +11,7 @@
 class Boids {
     /* Attributes */
 public:
-    std::vector<Square> _boids;
+    std::vector<Boid> _boids;
 
     /* Methods */
 public:
@@ -23,5 +23,5 @@ public:
     void drawBoids(p6::Context& ctx, Parameters& params);
 
     // Update
-    void updateBoidsAcc(Square* trackSquare, Parameters& params);
+    void updateBoidsAcc(Tracker* tracker, Parameters& params);
 };
