@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <vector>
 #include "Boids.hpp"
+#include "GLFW/glfw3.h"
 #include "OpenGL.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -71,6 +72,12 @@ int main(int argc, char* argv[])
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
         boids.drawBoids(&shader, vao, Parameters::get());
+
+        // Quit
+        if (ctx.key_is_pressed(GLFW_KEY_A))
+        {
+            ctx.stop();
+        };
     };
 
     ctx.start();
