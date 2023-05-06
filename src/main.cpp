@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 
     // Shaders
     const p6::Shader shader = p6::load_shader("shaders/2D.vs.glsl", "shaders/2D.fs.glsl");
-    // glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -33,10 +33,10 @@ int main(int argc, char* argv[])
 
     Boids   boids(Parameters::get());
     Tracker tracker(
-        glm::vec2(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f)),
+        glm::vec3(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
         0.08f,
-        glm::vec2(0.3, 0.3),
-        glm::vec2(0.2, 0.2)
+        glm::vec3(0.3),
+        glm::vec3(0.2)
     );
 
     /**************************
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
     // Infinite update loop
     ctx.update = [&]() {
         // Clear window
-        glClear(GL_COLOR_BUFFER_BIT /* | GL_DEPTH_BUFFER_BIT */);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
 
         // Tracker
