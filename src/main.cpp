@@ -23,13 +23,13 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
     // Shaders
-    // const p6::Shader shader = p6::load_shader("shaders/2D.vs.glsl", "shaders/2D.fs.glsl");
+    const p6::Shader shader = p6::load_shader("shaders/2D.vs.glsl", "shaders/2D.fs.glsl");
     // glEnable(GL_DEPTH_TEST);
 
     /***************************
      *   INITIALIZATION CODE   *
      ***************************/
-    // GLuint vao = initOpenGL();
+    GLuint vao = initOpenGL();
 
     Boids   boids(Parameters::get());
     Tracker tracker(
@@ -61,20 +61,16 @@ int main(int argc, char* argv[])
     // Infinite update loop
     ctx.update = [&]() {
         // Clear window
-        // glClear(GL_COLOR_BUFFER_BIT /* | GL_DEPTH_BUFFER_BIT */);
-        // shader.use();
-
-        ctx.background(p6::NamedColor::RaspberryGlace);
+        glClear(GL_COLOR_BUFFER_BIT /* | GL_DEPTH_BUFFER_BIT */);
+        shader.use();
 
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(ctx);
+        tracker.drawTracker(&shader, vao);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(ctx, Parameters::get());
-
-        // drawOpenGL(vao);
+        boids.drawBoids(&shader, vao, Parameters::get());
     };
 
     ctx.start();

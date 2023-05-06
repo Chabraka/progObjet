@@ -18,11 +18,11 @@ Boids::Boids(Parameters& params)
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(p6::Context& ctx, Parameters& params)
+void Boids::drawBoids(const p6::Shader* shader, GLuint vao, Parameters& params)
 {
     for (int j = 0; j < params.BOID_NB; j++)
     {
-        _boids[j].drawBoid(ctx);
+        _boids[j].drawBoid(shader, vao);
         _boids[j].updatePosition(params.MIN_SPEED, params.MAX_SPEED);
     }
 }
