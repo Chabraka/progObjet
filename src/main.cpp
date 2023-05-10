@@ -24,13 +24,14 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
     // Shaders
-    const p6::Shader shader = p6::load_shader("shaders/2D.vs.glsl", "shaders/2D.fs.glsl");
+    const p6::Shader shader = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
     glEnable(GL_DEPTH_TEST);
 
     /***************************
      *   INITIALIZATION CODE   *
      ***************************/
-    GLuint vao = initOpenGL();
+    MatrixView matrixView;
+    GLuint     vao = initOpenGL();
 
     Boids   boids(Parameters::get());
     Tracker tracker(
@@ -65,13 +66,18 @@ int main(int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
 
+        // Matrix
+        shader.set("uMVMatrix", matrixView._MVMatrix);
+        shader.set("uMVPMatrix", matrixView._MVPMatrix);
+        shader.set("uNormalMatrix", matrixView._NormalMatrix);
+
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(&shader, vao);
+        tracker.drawTracker(&shader, matrixView._ProjMatrix, vao);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, vao, Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, vao, Parameters::get());
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_A))

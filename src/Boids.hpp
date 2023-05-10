@@ -20,7 +20,7 @@ public:
     Boids(Parameters& params);
 
     // Draw
-    void drawBoids(const p6::Shader* shader, GLuint vao, Parameters& params);
+    void drawBoids(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao, Parameters& params);
 
     // Update
     void updateBoidsAcc(Tracker* tracker, Parameters& params);
