@@ -8,6 +8,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
 
+#include "Camera.hpp"
+
+
 int main(int argc, char* argv[])
 {
     { // Run the tests
@@ -41,6 +44,8 @@ int main(int argc, char* argv[])
         glm::vec3(0.2)
     );
 
+    TrackballCamera camera;
+
     /**************************
      *     RENDERING CODE     *
      **************************/
@@ -66,6 +71,12 @@ int main(int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
 
+        //Camera power Matrix
+
+        matrixView._MVMatrix = camera.getViewMatrix()*matrixView._MVMatrix;
+        matrixView._MVPMatrix =  matrixView._ProjMatrix *matrixView._MVMatrix;
+
+
         // Matrix
         shader.set("uMVMatrix", matrixView._MVMatrix);
         shader.set("uMVPMatrix", matrixView._MVPMatrix);
@@ -84,6 +95,28 @@ int main(int argc, char* argv[])
         {
             ctx.stop();
         };
+
+        //Camera
+
+
+        ctx.key_pressed = [&](const p6::Key& key) {
+            if (key.physical == GLFW_KEY_W)
+            {
+                camera.moveFront(0.1);
+            }
+            if (key.physical == GLFW_KEY_S)
+            {
+                camera.moveFront(-0.1);
+            }
+        };
+
+
+        ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
+            camera.rotateLeft(button.delta.x * 50);
+            camera.rotateUp(-button.delta.y * 50);
+        };
+
+
     };
 
     ctx.start();

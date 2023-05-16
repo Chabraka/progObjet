@@ -50,11 +50,11 @@ GLuint initOpenGL()
     glBindVertexArray(0);
 
     return vao;
-};
+}
 
 void drawOpenGL(GLuint vao)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
-};
+}
