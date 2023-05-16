@@ -1,5 +1,6 @@
 #include "Boid.hpp"
 #include <sys/types.h>
+#include "OpenGL.hpp"
 
 /* ----- Draw ----- */
 void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao)
@@ -13,7 +14,7 @@ void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao)
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uColor", glm::vec3(0.5, 0.8, 0.2));
 
-    drawOpenGL(vao);
+    drawOpenGLBoid(vao);
 }
 
 /* ----- Restrictions ----- */

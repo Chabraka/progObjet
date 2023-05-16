@@ -2,6 +2,7 @@
 #include <vector>
 #include "Boids.hpp"
 #include "GLFW/glfw3.h"
+#include "Island.hpp"
 #include "OpenGL.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -34,7 +35,11 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
     MatrixView matrixView;
-    GLuint     vao = initOpenGL();
+    GLuint     vaoB = initOpenGLBoids();
+
+    const uint nbTriangles = 100;
+    Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
+    GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
 
     Boids   boids(Parameters::get());
     Tracker tracker(
@@ -82,13 +87,16 @@ int main(int argc, char* argv[])
         shader.set("uMVPMatrix", matrixView._MVPMatrix);
         shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
+        // Island
+        island.drawIsland(&shader, matrixView._ProjMatrix, vaoI, nbTriangles);
+
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, vao);
+        tracker.drawTracker(&shader, matrixView._ProjMatrix, vaoB);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, matrixView._ProjMatrix, vao, Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, vaoB, Parameters::get());
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_A))

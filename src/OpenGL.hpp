@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <vector>
 #include "glm/gtc/matrix_transform.hpp"
 #include "p6/p6.h"
 
@@ -28,6 +29,8 @@ struct MatrixView {
     void setMatrix();
 };
 
-GLuint initOpenGL();
+GLuint initOpenGLBoids();
+GLuint initOpenGLIsland(const uint radius, const uint nbTriangles);
 
-void drawOpenGL(GLuint vao);
+void drawOpenGLBoid(GLuint vao);
+void drawOpenGLIsland(GLuint vao, const uint nbTriangles);
