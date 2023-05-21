@@ -2,7 +2,7 @@
 #include <vector>
 #include "Boids.hpp"
 #include "GLFW/glfw3.h"
-#include "Island.hpp"
+// #include "Island.hpp"
 #include "OpenGL.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -38,8 +38,8 @@ int main(int argc, char* argv[])
     GLuint     vaoB = initOpenGLBoids();
 
     const uint nbTriangles = 100;
-    Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
-    GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
+    // Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
+    // GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
 
     Boids   boids(Parameters::get());
     Tracker tracker(
@@ -78,25 +78,25 @@ int main(int argc, char* argv[])
 
         //Camera power Matrix
 
-        matrixView._MVMatrix = camera.getViewMatrix()*matrixView._MVMatrix;
-        matrixView._MVPMatrix =  matrixView._ProjMatrix *matrixView._MVMatrix;
+        matrixView._MMatrix = glm::mat4(1);
+        // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
 
 
-        // Matrix
-        shader.set("uMVMatrix", matrixView._MVMatrix);
-        shader.set("uMVPMatrix", matrixView._MVPMatrix);
-        shader.set("uNormalMatrix", matrixView._NormalMatrix);
+        // // Matrix
+        // shader.set("uMVMatrix", matrixView._MMatrix);
+        // shader.set("uMVPMatrix", matrixView._MVPMatrix);
+        // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
         // Island
-        island.drawIsland(&shader, matrixView._ProjMatrix, vaoI, nbTriangles);
+        // island.drawIsland(&shader, matrixView._ProjMatrix, vaoI, nbTriangles);
 
         // Tracker
         tracker.updatePositionTracker();
         tracker.drawTracker(&shader, matrixView._ProjMatrix, vaoB);
 
         // Boids
-        boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, matrixView._ProjMatrix, vaoB, Parameters::get());
+        // boids.updateBoidsAcc(&tracker, Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_A))
@@ -106,15 +106,14 @@ int main(int argc, char* argv[])
 
         //Camera
 
-
         ctx.key_pressed = [&](const p6::Key& key) {
             if (key.physical == GLFW_KEY_W)
             {
-                camera.moveFront(0.1);
+                camera.moveFront(5);
             }
             if (key.physical == GLFW_KEY_S)
             {
-                camera.moveFront(-0.1);
+                camera.moveFront(-1);
             }
         };
 

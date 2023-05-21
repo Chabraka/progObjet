@@ -18,6 +18,7 @@ public:
     void moveFront(float delta);
     void rotateLeft(float degrees);
     void rotateUp(float degrees);
+    void dump();
     glm::mat4 getViewMatrix() const;
 
 };

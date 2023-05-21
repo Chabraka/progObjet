@@ -97,18 +97,18 @@ GLuint initOpenGLIsland(const uint radius, const uint nbTriangles)
     glBindVertexArray(0);
 
     return vao;
-};
+}
 
 void drawOpenGLBoid(GLuint vao)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
-};
+}
 
 void drawOpenGLIsland(GLuint vao, const uint nbTriangles)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, nbTriangles * 3);
     glBindVertexArray(0);
-};
+}

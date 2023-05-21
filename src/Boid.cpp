@@ -3,14 +3,14 @@
 #include "OpenGL.hpp"
 
 /* ----- Draw ----- */
-void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao)
+void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, -2));
     T           = glm::translate(T, glm::vec3(this->_center.x / 2, this->_center.y, this->_center.z));
 
     // shader->set("uModelMatrix", T);
     shader->set("uMVMatrix", T);
-    shader->set("uMVPMatrix", ProjMatrix * T);
+    shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uColor", glm::vec3(0.5, 0.8, 0.2));
 

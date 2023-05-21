@@ -1,3 +1,4 @@
+#include <iostream>
 #define GLM_FORCE_RADIANS
 #include "Camera.hpp"
 #include "glm/gtx/transform.hpp"
@@ -24,4 +25,11 @@ glm::mat4 TrackballCamera::getViewMatrix() const {
     viewMatrix = glm::rotate(viewMatrix, m_fAngleX, glm::vec3(1.f, 0.f, 0.f));
     viewMatrix = glm::rotate(viewMatrix, m_fAngleY, glm::vec3(0.f, 1.f, 0.f));
     return viewMatrix;
+}
+
+void TrackballCamera::dump(){
+    std::cout << this->m_fDistance << "\n";
+    std::cout << this->m_fAngleX << "\n";
+    std::cout << this->m_fAngleY << "\n";
+    
 }
