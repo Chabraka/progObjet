@@ -117,25 +117,8 @@ int main(int argc, char* argv[])
 
         // Camera
 
-        ctx.key_pressed = [&](const p6::Key& key) {
-            if (key.physical == GLFW_KEY_W)
-            {
-                camera.moveFront(0.1);
-            }
-            if (key.physical == GLFW_KEY_S)
-            {
-                camera.moveFront(-0.1);
-            }
-            if (key.physical == GLFW_KEY_A)
-            {
-                camera.moveLeft(0.1);
-            }
-            if (key.physical == GLFW_KEY_D)
-            {
-                camera.moveLeft(-0.1);
-            }
-        };
-
+        cameraControls(ctx, camera);
+        //arrive pas a mettre dans Controls :'-(
         ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
             camera.rotateLeft(button.delta.x * 50);
             camera.rotateUp(-button.delta.y * 50);
