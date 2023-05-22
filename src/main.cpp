@@ -16,8 +16,6 @@ int main(int argc, char* argv[])
 {
     opentest("../models/test");
 
-    // return 0;
-
     { // Run the tests
         if (doctest::Context{}.run() != 0)
             return EXIT_FAILURE;
@@ -88,7 +86,6 @@ int main(int argc, char* argv[])
         shader.use();
 
         // Camera power Matrix
-
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
 
@@ -116,9 +113,8 @@ int main(int argc, char* argv[])
         };
 
         // Camera
-
         cameraControls(ctx, camera);
-        //arrive pas a mettre dans Controls :'-(
+        // arrive pas a mettre dans Controls :'-(
         ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
             camera.rotateLeft(button.delta.x * 50);
             camera.rotateUp(-button.delta.y * 50);
