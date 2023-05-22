@@ -14,7 +14,7 @@ void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 Vi
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uColor", glm::vec3(0.5, 0.8, 0.2));
 
-    drawOpenGLBoid(vao);
+    drawOpenGL(vao);
 }
 
 /* ----- Restrictions ----- */

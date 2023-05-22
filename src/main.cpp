@@ -44,9 +44,10 @@ int main(int argc, char* argv[])
     FreeflyCamera camera;
 
     // Islands
-    Island  mainIsland(glm::vec3(0.0, 0.0, 0.0), 3.f);
+    Island  mainIsland(glm::vec3(0.0, 0.0, 0.0));
+    GLuint  vaoI = initOpenGLMainIsland();
     Islands islands(25);
-    GLuint  vaoI = initOpenGLIsland();
+    GLuint  vaoIs = initOpenGLIslands();
 
     // Boids
     Boids  boids(Parameters::get());
@@ -59,6 +60,7 @@ int main(int argc, char* argv[])
         glm::vec3(0.3),
         glm::vec3(0.2)
     );
+    GLuint vaoT = initOpenGLTracker();
 
     /**************************
      *     RENDERING CODE     *
@@ -97,11 +99,11 @@ int main(int argc, char* argv[])
 
         // Islands
         mainIsland.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
-        islands.drawIslands(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
+        islands.drawIslands(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoIs);
 
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB);
+        tracker.drawTracker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoT);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());

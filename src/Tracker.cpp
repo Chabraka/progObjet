@@ -14,7 +14,7 @@ void Tracker::drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::m
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uColor", glm::vec3(0.8, 0.3, 0.7));
 
-    drawOpenGLBoid(vao);
+    drawOpenGL(vao);
 }
 
 /* --- Restrictions --- */

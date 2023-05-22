@@ -5,7 +5,9 @@ glm::mat4 translate(float tx, float ty, float tz)
     return glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), glm::vec4(tx, ty, tz, 1));
 }
 
-GLuint initOpenGLBoids()
+/* --- Init --- */
+
+GLuint initOpenGLTracker()
 {
     /* --- VBO --- */
     GLuint vbo;
@@ -14,21 +16,16 @@ GLuint initOpenGLBoids()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     //  Tab with coordinates
-    Vertex2DColor tracker[] = {
-        Vertex2DColor(glm::vec3(-0.05, -0.05, -0.05), glm::vec3(1, 0, 0)),
-        Vertex2DColor(glm::vec3(-0.05, 0.05, -0.05), glm::vec3(0, 1, 0)),
-        Vertex2DColor(glm::vec3(0.05, -0.05, -0.05), glm::vec3(0, 0, 1)),
-        Vertex2DColor(glm::vec3(0.05, 0.05, -0.05), glm::vec3(1, 0, 0)),
-        Vertex2DColor(glm::vec3(-0.05, 0.05, -0.05), glm::vec3(0, 1, 0)),
-        Vertex2DColor(glm::vec3(0.05, -0.05, -0.05), glm::vec3(0, 0, 1)),
+    Vertex3DColor tracker[] = {
+        Vertex3DColor(glm::vec3(-0.05, -0.05, -0.05), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.05, 0.05, -0.05), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.05, -0.05, -0.05), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0.05, 0.05, -0.05), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.05, 0.05, -0.05), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.05, -0.05, -0.05), glm::vec3(0, 0, 1)),
     };
 
-    /* Vertex2DColor paperplane[] = {
-        Vertex2DColor(glm::vec3(   ,   ,   ), glm::vec3(1, 0, 0)),
-
-    }; */
-
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex2DColor), tracker, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex3DColor), tracker, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     /* --- VAO --- */
@@ -43,8 +40,8 @@ GLuint initOpenGLBoids()
 
     /* --- Binding --- */
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _position)));
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _color)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -52,77 +49,142 @@ GLuint initOpenGLBoids()
     return vao;
 }
 
-GLuint initOpenGLIsland()
+GLuint initOpenGLBoids()
 {
-    return initOpenGLBoids();
-}
-
-/*
-GLuint initOpenGLIsland(const uint radius, const uint nbTriangles)
-{
-     --- VBO ---
+    /* --- VBO --- */
     GLuint vbo;
     glGenBuffers(1, &vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    std::vector<Vertex2DColor> island;
-    for (uint i = 0; i < nbTriangles; i++)
-    {
-        island.push_back(Vertex2DColor(glm::vec3(0, 0, 0), glm::vec3(1, 0, 0)));
-        island.push_back(Vertex2DColor(
-            glm::vec3(radius * glm::cos(i * 2 * glm::pi<float>() / nbTriangles), radius * glm::sin(i * 2 * glm::pi<float>() / nbTriangles), 0.0),
-            glm::vec3(1, 0, 0)
-        ));
-        island.push_back(Vertex2DColor(
-            glm::vec3(radius * glm::cos((i + 1) * 2 * glm::pi<float>() / nbTriangles), radius * glm::sin((i + 1) * 2 * glm::pi<float>() / nbTriangles), 0.0),
-            glm::vec3(1, 0, 0)
-        ));
-    }
+    //  Tab with coordinates
+    Vertex3DColor boids[] = {
+        Vertex3DColor(glm::vec3(-0.04, -0.04, -0.04), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.04, 0.04, -0.04), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.04, -0.04, -0.04), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0.04, 0.04, -0.04), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.04, 0.04, -0.04), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.04, -0.04, -0.04), glm::vec3(0, 0, 1)),
+    };
 
-    glBufferData(GL_ARRAY_BUFFER, 3 * nbTriangles * sizeof(Vertex2DColor), island.data(), GL_STATIC_DRAW);
+    /* Vertex2DColor paperplane[] = {
+        Vertex2DColor(glm::vec3(   ,   ,   ), glm::vec3(1, 0, 0)),
+
+    }; */
+
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex3DColor), boids, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    */
 
-/* --- VAO ---
-GLuint vao;
-glGenVertexArrays(1, &vao);
-glBindVertexArray(vao);
-// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    /* --- VAO --- */
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
-const GLuint VERTEX_ATTR_POSITION = 0;
-const GLuint VERTEX_ATTR_COLOR    = 1;
-glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
-*/
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    const GLuint VERTEX_ATTR_COLOR    = 1;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
 
-/* --- Binding ---
-glBindBuffer(GL_ARRAY_BUFFER, vbo);
-glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _position)));
-glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _color)));
+    /* --- Binding --- */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
 
-glBindBuffer(GL_ARRAY_BUFFER, 0);
-glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
-return vao;
-}*/
+    return vao;
+}
 
-void drawOpenGLBoid(GLuint vao)
+GLuint initOpenGLMainIsland()
+{
+    /* --- VBO --- */
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    //  Tab with coordinates
+    Vertex3DColor mainIsland[] = {
+        Vertex3DColor(glm::vec3(-0.5, 0., -0.5), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.5, 0., 0.5), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.5, 0., -0.5), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0.5, 0., 0.5), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.5, 0., 0.5), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.5, 0., -0.5), glm::vec3(0, 0, 1)),
+    };
+
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex3DColor), mainIsland, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    /* --- VAO --- */
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    const GLuint VERTEX_ATTR_COLOR    = 1;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+
+    /* --- Binding --- */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    return vao;
+}
+
+GLuint initOpenGLIslands()
+{
+    /* --- VBO --- */
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    //  Tab with coordinates
+    Vertex3DColor mainIsland[] = {
+        Vertex3DColor(glm::vec3(-0.05, 0., -0.05), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.05, 0., 0.05), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.05, 0., -0.05), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0.05, 0., 0.05), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.05, 0., 0.05), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0.05, 0., -0.05), glm::vec3(0, 0, 1)),
+    };
+
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex3DColor), mainIsland, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    /* --- VAO --- */
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    const GLuint VERTEX_ATTR_COLOR    = 1;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+
+    /* --- Binding --- */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    return vao;
+}
+
+/* --- Draw --- */
+
+void drawOpenGL(GLuint vao)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }
-
-void drawOpenGLIsland(GLuint vao)
-{
-    drawOpenGLBoid(vao);
-}
-
-/*
-void drawOpenGLIsland(GLuint vao, const uint nbTriangles)
-{
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, nbTriangles * 3);
-    glBindVertexArray(0);
-} */

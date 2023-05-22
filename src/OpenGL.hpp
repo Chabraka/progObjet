@@ -8,12 +8,12 @@
 
 glm::mat4 translate(float tx, float ty, float tz);
 
-struct Vertex2DColor {
+struct Vertex3DColor {
     glm::vec3 _position;
     glm::vec3 _color;
 
-    Vertex2DColor() = default;
-    Vertex2DColor(glm::vec3 p, glm::vec3 c)
+    Vertex3DColor() = default;
+    Vertex3DColor(glm::vec3 p, glm::vec3 c)
         : _position(p), _color(c){};
 };
 
@@ -29,10 +29,9 @@ struct MatrixView {
     void setMatrix();
 };
 
+GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
-GLuint initOpenGLIsland();
-// GLuint initOpenGLIsland(const uint radius, const uint nbTriangles);
+GLuint initOpenGLMainIsland();
+GLuint initOpenGLIslands();
 
-void drawOpenGLBoid(GLuint vao);
-void drawOpenGLIsland(GLuint vao);
-// void drawOpenGLIsland(GLuint vao, const uint nbTriangles);
+void drawOpenGL(GLuint vao);
