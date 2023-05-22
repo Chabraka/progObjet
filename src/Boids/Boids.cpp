@@ -1,5 +1,4 @@
 #include "Boids.hpp"
-#include "Parameters.hpp"
 
 /* ----- Constructor ----- */
 Boids::Boids(Parameters& params)

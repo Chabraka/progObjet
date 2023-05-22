@@ -1,9 +1,9 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include "Boids.hpp"
+#include "Boids/Boids.hpp"
 #include "GLFW/glfw3.h"
-#include "Island.hpp"
+#include "Islands/Islands.hpp"
 #include "OpenGL.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -38,24 +38,27 @@ int main(int argc, char* argv[])
     /***************************
      *   INITIALIZATION CODE   *
      ***************************/
-    MatrixView matrixView;
-    GLuint     vaoB = initOpenGLBoids();
 
-    // const uint nbTriangles = 100;
-    // Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
-    // GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
-    Island island(glm::vec3(0.0, 0.0, 0.0), 0.8);
-    GLuint vaoI = initOpenGLIsland();
+    // Cam
+    MatrixView    matrixView;
+    FreeflyCamera camera;
 
-    Boids   boids(Parameters::get());
+    // Islands
+    Island  mainIsland(glm::vec3(0.0, 0.0, 0.0), 3.f);
+    Islands islands(25);
+    GLuint  vaoI = initOpenGLIsland();
+
+    // Boids
+    Boids  boids(Parameters::get());
+    GLuint vaoB = initOpenGLBoids();
+
+    // Tracker
     Tracker tracker(
         glm::vec3(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
         0.08f,
         glm::vec3(0.3),
         glm::vec3(0.2)
     );
-
-    FreeflyCamera camera;
 
     /**************************
      *     RENDERING CODE     *
@@ -92,9 +95,9 @@ int main(int argc, char* argv[])
         // shader.set("uMVPMatrix", matrixView._MVPMatrix);
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
-        // Island
-        // island.drawIsland(&shader, matrixView._ProjMatrix, vaoI, nbTriangles);
-        island.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
+        // Islands
+        mainIsland.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
+        islands.drawIslands(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
 
         // Tracker
         tracker.updatePositionTracker();
