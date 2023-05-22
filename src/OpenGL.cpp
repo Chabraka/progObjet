@@ -57,30 +57,19 @@ GLuint initOpenGLBoids()
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    //  Tab with coordinates
-    /*
     Vertex3DColor boids[] = {
-        Vertex3DColor(glm::vec3(-0.04, -0.04, -0.04), glm::vec3(1, 0, 0)),
-        Vertex3DColor(glm::vec3(-0.04, 0.04, -0.04), glm::vec3(0, 1, 0)),
-        Vertex3DColor(glm::vec3(0.04, -0.04, -0.04), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0.04, 0.04, -0.04), glm::vec3(1, 0, 0)),
-        Vertex3DColor(glm::vec3(-0.04, 0.04, -0.04), glm::vec3(0, 1, 0)),
-        Vertex3DColor(glm::vec3(0.04, -0.04, -0.04), glm::vec3(0, 0, 1)),
-    }; */
-
-    Vertex3DColor boids[] = {
-        Vertex3DColor(glm::vec3(-0.05, 0., 0.), glm::vec3(1, 0, 0)),
-        Vertex3DColor(glm::vec3(0., 0., 0.08), glm::vec3(0, 1, 0)),
-        Vertex3DColor(glm::vec3(-0.02, 0., 0.), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0., 0., 0.08), glm::vec3(0, 1, 0)),
-        Vertex3DColor(glm::vec3(-0.02, 0., 0.), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.05, 0., 0.), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-0.02, 0.01, 0.), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-0.02, 0.01, 0.), glm::vec3(0, 0, 1)),
         Vertex3DColor(glm::vec3(0., -0.02, 0.), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0., 0., 0.08), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(1, 0, 0)),
         Vertex3DColor(glm::vec3(0., -0.02, 0.), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0.02, 0., 0.), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0., 0., 0.08), glm::vec3(0, 1, 0)),
-        Vertex3DColor(glm::vec3(0.02, 0., 0.), glm::vec3(0, 0, 1)),
-        Vertex3DColor(glm::vec3(0.05, 0., 0.), glm::vec3(1, 0, 0))};
+        Vertex3DColor(glm::vec3(0.02, 0.01, 0.), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(0.02, 0.01, 0.), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(0.05, 0., 0.), glm::vec3(0, 1, 0))};
 
     glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(Vertex3DColor), boids, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -190,11 +179,39 @@ GLuint initOpenGLIslands()
     return vao;
 }
 
+/* --- Textures ---
+
+GLuint initTex(p6::Image* boidsTexture)
+{
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, boidsTexture.width, boidsTexture.height, 0, GL_RGBA, GL_FLOAT, boidsTexture->getPixels());
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    return texture;
+}*/
+
 /* --- Draw --- */
 
 void drawOpenGL(GLuint vao)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+}
+
+void drawOpenGLBoids(GLuint vao /*, GLuint texture, const p6::Shader* shader */)
+{
+    glBindVertexArray(vao);
+    // glBindTexture(GL_TEXTURE_2D, texture);
+    // shader->set("uTexture", 0);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
+    // glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
 }

@@ -29,6 +29,9 @@ int main(int argc, char* argv[])
     auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
 
+    // Texture
+    // std::unique_ptr<p6::Image> sheetTex = p6::load_image("assets/textures/boids/sheet.png");
+
     // Shaders
     const p6::Shader shader = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
     glEnable(GL_DEPTH_TEST);
@@ -50,6 +53,7 @@ int main(int argc, char* argv[])
     // Boids
     Boids  boids(Parameters::get());
     GLuint vaoB = initOpenGLBoids();
+    // GLuint texB = initTex(&sheetTex);
 
     // Tracker
     Tracker tracker(
@@ -68,13 +72,13 @@ int main(int argc, char* argv[])
         /* Parameters' window */
         ImGui::Begin("Parameters");
 
-        ImGui::SliderInt("Square number", &Parameters::get().BOID_NB, 10, Parameters::get().MAX_BOID_NB);
+        ImGui::SliderInt("Boids number", &Parameters::get().BOID_NB, 10, Parameters::get().MAX_BOID_NB);
         ImGui::SliderFloat("Max speed", &Parameters::get().MAX_SPEED, 0.1, 1.);
         ImGui::SliderFloat("Min distance of cohesion", &Parameters::get().MIN_DIST, 0.1, 1.);
         ImGui::SliderFloat("Attraction", &Parameters::get().FACTOR_ATTRACTION, 0.001, 0.01);
         ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
         ImGui::SliderFloat("Max Repulsion", &Parameters::get().MAX_REPULSION, -1.f, -4.f);
-        ImGui::SliderFloat("Attraction tracker", &Parameters::get().FACTOR_ATTRACT_TRACKER, 0.01f, 0.3f);
+        ImGui::SliderFloat("Attraction (tracker)", &Parameters::get().FACTOR_ATTRACT_TRACKER, 0.01f, 0.3f);
 
         ImGui::End();
     };
@@ -104,7 +108,7 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, /* texB, */ Parameters::get());
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))

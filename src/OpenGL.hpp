@@ -17,6 +17,15 @@ struct Vertex3DColor {
         : _position(p), _color(c){};
 };
 
+struct Vertex3DUV {
+    glm::vec3 _position;
+    glm::vec3 _coordTex;
+
+    Vertex3DUV() = default;
+    Vertex3DUV(glm::vec3 p, glm::vec3 c)
+        : _position(p), _coordTex(c){};
+};
+
 struct MatrixView {
     glm::mat4 _ProjMatrix;
     glm::mat4 _MMatrix;
@@ -33,5 +42,7 @@ GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
 GLuint initOpenGLIslands();
+// GLuint initTex(p6::Image* boidsTexture);
 
 void drawOpenGL(GLuint vao);
+void drawOpenGLBoids(GLuint vao /*, GLuint texture, const p6::Shader* shader */);

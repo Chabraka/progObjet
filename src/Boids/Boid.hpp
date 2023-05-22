@@ -24,7 +24,7 @@ public:
         : _center(center), _radius(radius), _speed(speed), _acceleration(acceleration){};
 
     // Draw
-    void drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
+    void drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao /*, GLuint texture */);
 
     // Update
     void      updatePosition(float minSpeed, float maxSpeed);
