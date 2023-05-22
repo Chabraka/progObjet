@@ -52,9 +52,15 @@ GLuint initOpenGLBoids()
     return vao;
 }
 
+GLuint initOpenGLIsland()
+{
+    return initOpenGLBoids();
+}
+
+/*
 GLuint initOpenGLIsland(const uint radius, const uint nbTriangles)
 {
-    /* --- VBO --- */
+     --- VBO ---
     GLuint vbo;
     glGenBuffers(1, &vbo);
 
@@ -76,28 +82,30 @@ GLuint initOpenGLIsland(const uint radius, const uint nbTriangles)
 
     glBufferData(GL_ARRAY_BUFFER, 3 * nbTriangles * sizeof(Vertex2DColor), island.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    */
 
-    /* --- VAO --- */
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+/* --- VAO ---
+GLuint vao;
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
+// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    const GLuint VERTEX_ATTR_POSITION = 0;
-    const GLuint VERTEX_ATTR_COLOR    = 1;
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+const GLuint VERTEX_ATTR_POSITION = 0;
+const GLuint VERTEX_ATTR_COLOR    = 1;
+glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+*/
 
-    /* --- Binding --- */
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _position)));
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _color)));
+/* --- Binding ---
+glBindBuffer(GL_ARRAY_BUFFER, vbo);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _position)));
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*)(offsetof(Vertex2DColor, _color)));
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+glBindVertexArray(0);
 
-    return vao;
-}
+return vao;
+}*/
 
 void drawOpenGLBoid(GLuint vao)
 {
@@ -106,9 +114,15 @@ void drawOpenGLBoid(GLuint vao)
     glBindVertexArray(0);
 }
 
+void drawOpenGLIsland(GLuint vao)
+{
+    drawOpenGLBoid(vao);
+}
+
+/*
 void drawOpenGLIsland(GLuint vao, const uint nbTriangles)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, nbTriangles * 3);
     glBindVertexArray(0);
-}
+} */

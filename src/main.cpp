@@ -1,28 +1,22 @@
-#include <string>
 #include <cstdlib>
+#include <string>
 #include <vector>
 #include "Boids.hpp"
 #include "GLFW/glfw3.h"
-// #include "Island.hpp"
+#include "Island.hpp"
 #include "OpenGL.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "doctest/doctest.h"
-#include "Loader.hpp"
 #include "Camera.hpp"
-
+#include "Loader.hpp"
+#include "doctest/doctest.h"
 
 int main(int argc, char* argv[])
 {
+    opentest("../models/test");
 
-
-	opentest("../models/test");
-
-	//return 0;
-
-
-
+    // return 0;
 
     { // Run the tests
         if (doctest::Context{}.run() != 0)
@@ -50,6 +44,8 @@ int main(int argc, char* argv[])
     // const uint nbTriangles = 100;
     // Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
     // GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
+    Island island(glm::vec3(0.0, 0.0, 0.0), 0.8);
+    GLuint vaoI = initOpenGLIsland();
 
     Boids   boids(Parameters::get());
     Tracker tracker(
@@ -86,11 +82,10 @@ int main(int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
 
-        //Camera power Matrix
+        // Camera power Matrix
 
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
-
 
         // // Matrix
         // shader.set("uMVMatrix", matrixView._MMatrix);
@@ -99,10 +94,11 @@ int main(int argc, char* argv[])
 
         // Island
         // island.drawIsland(&shader, matrixView._ProjMatrix, vaoI, nbTriangles);
+        island.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
 
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, vaoB);
+        tracker.drawTracker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
@@ -114,7 +110,7 @@ int main(int argc, char* argv[])
             ctx.stop();
         };
 
-        //Camera
+        // Camera
 
         ctx.key_pressed = [&](const p6::Key& key) {
             if (key.physical == GLFW_KEY_W)
@@ -125,23 +121,20 @@ int main(int argc, char* argv[])
             {
                 camera.moveFront(-0.1);
             }
-			if (key.physical == GLFW_KEY_A)
+            if (key.physical == GLFW_KEY_A)
             {
                 camera.moveLeft(0.1);
             }
-			if (key.physical == GLFW_KEY_D)
+            if (key.physical == GLFW_KEY_D)
             {
                 camera.moveLeft(-0.1);
             }
         };
 
-
         ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
             camera.rotateLeft(button.delta.x * 50);
             camera.rotateUp(-button.delta.y * 50);
         };
-
-
     };
 
     ctx.start();

@@ -30,7 +30,9 @@ struct MatrixView {
 };
 
 GLuint initOpenGLBoids();
-GLuint initOpenGLIsland(const uint radius, const uint nbTriangles);
+GLuint initOpenGLIsland();
+// GLuint initOpenGLIsland(const uint radius, const uint nbTriangles);
 
 void drawOpenGLBoid(GLuint vao);
-void drawOpenGLIsland(GLuint vao, const uint nbTriangles);
+void drawOpenGLIsland(GLuint vao);
+// void drawOpenGLIsland(GLuint vao, const uint nbTriangles);
