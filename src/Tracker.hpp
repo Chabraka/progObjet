@@ -27,7 +27,7 @@ public:
     glm::vec3 getTrackerCenter() { return _center; };
 
     // Draw
-    void drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao);
+    void drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
 
     // Restrictions
     void restrictArea();

@@ -3,14 +3,14 @@
 #include <cstdlib>
 
 /* ----- Draw ----- */
-void Tracker::drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao)
+void Tracker::drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, -2));
     T           = glm::translate(T, glm::vec3(this->_center.x / 2, this->_center.y, this->_center.z));
 
     // shader->set("uModelMatrix", T);
     shader->set("uMVMatrix", T);
-    shader->set("uMVPMatrix", ProjMatrix * T);
+    shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uColor", glm::vec3(0.8, 0.3, 0.7));
 
@@ -21,47 +21,47 @@ void Tracker::drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint
 
 void Tracker::restrictArea()
 {
-    /* If the Boid hits the walls, change direction */
+    /* If the Tracker hits the walls, change direction */
 
     // Left wall
-    if (this->_center.x - this->_radius < -2)
+    if (this->_center.x - this->_radius < -4)
     {
-        this->_center.x = -2 + this->_radius;
+        this->_center.x = -4 + this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Right wall
-    else if (this->_center.x + this->_radius > 2)
+    else if (this->_center.x + this->_radius > 4)
     {
-        this->_center.x = 2 - this->_radius;
+        this->_center.x = 4 - this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Bottom wall
-    if (this->_center.y - this->_radius < -1)
+    if (this->_center.y - this->_radius < -2)
     {
-        this->_center.y = -1 + this->_radius;
+        this->_center.y = -2 + this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Top wall
-    else if (this->_center.y + this->_radius > 1)
+    else if (this->_center.y + this->_radius > 2)
     {
-        this->_center.y = 1 - this->_radius;
+        this->_center.y = 2 - this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Back wall
-    if (this->_center.z - this->_radius < -1)
+    if (this->_center.z - this->_radius < -2)
     {
-        this->_center.z = -1 + this->_radius;
+        this->_center.z = -2 + this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 
     // Front wall
-    else if (this->_center.z + this->_radius > 1)
+    else if (this->_center.z + this->_radius > 2)
     {
-        this->_center.z = 1 - this->_radius;
+        this->_center.z = 2 - this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 }

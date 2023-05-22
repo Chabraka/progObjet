@@ -1,6 +1,6 @@
 #include "Boid.hpp"
 #include <sys/types.h>
-#include "OpenGL.hpp"
+#include "../OpenGL.hpp"
 
 /* ----- Draw ----- */
 void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao)
@@ -24,44 +24,44 @@ void Boid::restrictArea()
     /* If the Boid hits the walls, change direction */
 
     // Left wall
-    if (this->_center.x - this->_radius < -2)
+    if (this->_center.x - this->_radius < -4)
     {
-        this->_center.x = -2 + this->_radius;
+        this->_center.x = -4 + this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Right wall
-    else if (this->_center.x + this->_radius > 2)
+    else if (this->_center.x + this->_radius > 4)
     {
-        this->_center.x = 2 - this->_radius;
+        this->_center.x = 4 - this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Bottom wall
-    if (this->_center.y - this->_radius < -1)
+    if (this->_center.y - this->_radius < -2)
     {
-        this->_center.y = -1 + this->_radius;
+        this->_center.y = -2 + this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Top wall
-    else if (this->_center.y + this->_radius > 1)
+    else if (this->_center.y + this->_radius > 2)
     {
-        this->_center.y = 1 - this->_radius;
+        this->_center.y = 2 - this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Back wall
-    if (this->_center.z - this->_radius < -1)
+    if (this->_center.z - this->_radius < -2)
     {
-        this->_center.z = -1 + this->_radius;
+        this->_center.z = -2 + this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 
     // Front wall
-    else if (this->_center.z + this->_radius > 1)
+    else if (this->_center.z + this->_radius > 2)
     {
-        this->_center.z = 1 - this->_radius;
+        this->_center.z = 2 - this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 }

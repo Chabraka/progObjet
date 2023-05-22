@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdlib>
-#include "OpenGL.hpp"
+#include "../OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
@@ -22,5 +22,5 @@ public:
         : _center(center), _radius(radius){};
 
     // Draw
-    void drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, GLuint vao, const uint nbTriangles);
+    void drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
 };
