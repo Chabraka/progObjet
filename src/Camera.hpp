@@ -1,25 +1,39 @@
 #pragma once
-
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include "glm/gtx/transform.hpp"
+#include "glm/fwd.hpp"
 
 
-class TrackballCamera {
+class FreeflyCamera {
 
 private:
 
-    float m_fDistance;
-    float m_fAngleX;
-    float m_fAngleY;
+    glm::vec3 m_Position;
+    float m_fPhi;
+    float m_fTheta;
+    glm::vec3 m_FrontVector;
+    glm::vec3 m_LeftVector;
+    glm::vec3 m_UpVector;
 
 public:
+    FreeflyCamera() : m_Position(0,0,5), m_fPhi(glm::pi<float>()), m_fTheta(0) {
+        computeDirectionVectors();
+    }
 
-    TrackballCamera(float m_fDistance=5.f, float m_fAngleX=0.f, float m_fAngleY=0.f);
-    
-    void moveFront(float delta);
+    void computeDirectionVectors();
+
+    void moveLeft(float t);
+    void moveFront(float t);
+
     void rotateLeft(float degrees);
     void rotateUp(float degrees);
-    void dump();
-    glm::mat4 getViewMatrix() const;
 
+
+    void setPos(glm::vec3 position);
+    void setPhi(float degrees);
+    void setTheta(float degrees);
+
+    glm::mat4 getViewMatrix() const;
 };
 

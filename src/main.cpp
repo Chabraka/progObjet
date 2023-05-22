@@ -1,3 +1,4 @@
+#include <string>
 #include <cstdlib>
 #include <vector>
 #include "Boids.hpp"
@@ -8,12 +9,21 @@
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
-
+#include "Loader.hpp"
 #include "Camera.hpp"
 
 
 int main(int argc, char* argv[])
 {
+
+
+	opentest("../models/test");
+
+	//return 0;
+
+
+
+
     { // Run the tests
         if (doctest::Context{}.run() != 0)
             return EXIT_FAILURE;
@@ -37,7 +47,7 @@ int main(int argc, char* argv[])
     MatrixView matrixView;
     GLuint     vaoB = initOpenGLBoids();
 
-    const uint nbTriangles = 100;
+    // const uint nbTriangles = 100;
     // Island     island(glm::vec3(0.0, 0.0, 0.0), 0.8);
     // GLuint     vaoI = initOpenGLIsland(island._radius, nbTriangles);
 
@@ -49,7 +59,7 @@ int main(int argc, char* argv[])
         glm::vec3(0.2)
     );
 
-    TrackballCamera camera;
+    FreeflyCamera camera;
 
     /**************************
      *     RENDERING CODE     *
@@ -95,11 +105,11 @@ int main(int argc, char* argv[])
         tracker.drawTracker(&shader, matrixView._ProjMatrix, vaoB);
 
         // Boids
-        // boids.updateBoidsAcc(&tracker, Parameters::get());
+        boids.updateBoidsAcc(&tracker, Parameters::get());
         boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
 
         // Quit
-        if (ctx.key_is_pressed(GLFW_KEY_A))
+        if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
         {
             ctx.stop();
         };
@@ -109,11 +119,19 @@ int main(int argc, char* argv[])
         ctx.key_pressed = [&](const p6::Key& key) {
             if (key.physical == GLFW_KEY_W)
             {
-                camera.moveFront(5);
+                camera.moveFront(0.1);
             }
             if (key.physical == GLFW_KEY_S)
             {
-                camera.moveFront(-1);
+                camera.moveFront(-0.1);
+            }
+			if (key.physical == GLFW_KEY_A)
+            {
+                camera.moveLeft(0.1);
+            }
+			if (key.physical == GLFW_KEY_D)
+            {
+                camera.moveLeft(-0.1);
             }
         };
 
