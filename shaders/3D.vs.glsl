@@ -2,7 +2,7 @@
 
 layout(location = 0) in vec3 aVertexPosition;
 layout(location = 1) in vec3 aVertexColor;
-//layout(location = 1) in vec3 aVertexTex;
+layout(location = 2) in vec3 aVertexTex;
 
 out vec3 vFragPosition;
 out vec3 vFragColor;

@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
     // Texture
-    // std::unique_ptr<p6::Image> sheetTex = p6::load_image("assets/textures/boids/sheet.png");
+    // img::Image sheetTex = p6::load_image_buffer("assets/textures/boids/sheet.jpg");
 
     // Shaders
     const p6::Shader shader = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
