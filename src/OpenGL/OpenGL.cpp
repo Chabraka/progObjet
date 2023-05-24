@@ -12,7 +12,6 @@ GLuint initOpenGLSkybox()
     /* --- VBO --- */
     GLuint vbo;
     glGenBuffers(1, &vbo);
-
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     //  Tab with coordinates
@@ -63,6 +62,57 @@ GLuint initOpenGLSkybox()
     };
 
     glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(Vertex3DColor), skybox, GL_STATIC_DRAW);
+
+    /*
+    //  Tab with coordinates
+    Vertex3DUV skybox[] = {
+        // Back
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
+        // Left
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        // Front
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 0)),
+        // Right
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0, 0)),
+        // Top
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
+        // Back
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 1)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 1)),
+
+    };
+
+    glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(Vertex3DUV), skybox, GL_STATIC_DRAW); */
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     /* --- VAO --- */
@@ -72,13 +122,16 @@ GLuint initOpenGLSkybox()
 
     const GLuint VERTEX_ATTR_POSITION = 0;
     const GLuint VERTEX_ATTR_COLOR    = 1;
+    // const GLuint VERTEX_ATTR_TEXTURE = 2;
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
     glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+    // glEnableVertexAttribArray(VERTEX_ATTR_TEXTURE);
 
     /* --- Binding --- */
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _coordTex)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -281,13 +334,13 @@ GLuint initOpenGLIslands()
 
 /* --- Textures ---
 
-GLuint initTex(img::Image* boidsTexture)
+GLuint initTex(img::Image* imgTexture)
 {
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, boidsTexture->width(), boidsTexture->height(), 0, GL_RGBA, GL_FLOAT, boidsTexture->data());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgTexture->width(), imgTexture->height(), 0, GL_RGBA, GL_FLOAT, imgTexture->data());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -295,7 +348,7 @@ GLuint initTex(img::Image* boidsTexture)
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return texture;
-}*/
+} */
 
 /* --- Draw --- */
 
@@ -306,18 +359,18 @@ void drawOpenGL(GLuint vao)
     glBindVertexArray(0);
 }
 
-void drawOpenGLSkybox(GLuint vao)
-{
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
-}
-
-void drawOpenGLBoids(GLuint vao /* GLuint texture */)
+void drawOpenGLSkybox(GLuint vao /*, GLuint texture */)
 {
     glBindVertexArray(vao);
     // glBindTexture(GL_TEXTURE_2D, texture);
-    glDrawArrays(GL_TRIANGLES, 0, 12);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
     // glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
+}
+
+void drawOpenGLBoids(GLuint vao)
+{
+    glBindVertexArray(vao);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
     glBindVertexArray(0);
 }
