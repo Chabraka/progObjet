@@ -1,4 +1,7 @@
 #include "OpenGL.hpp"
+#include "Loader/Loader.hpp"
+#include <vector>
+
 
 glm::mat4 translate(float tx, float ty, float tz)
 {
@@ -272,6 +275,93 @@ GLuint initOpenGLIslands()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    return vao;
+}
+
+
+
+GLuint initOpenGLModel()
+{
+    // std::vector<glimac::ShapeVertex> shapevertexes = LoadOBJ("../assets/models/cube.obj");
+    
+
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> texv;
+    std::vector<glm::vec3> normalv;
+
+    readVertices("../assets/models/cube.obj", vertices, texv,normalv);
+
+    std::vector<Vertex3DColor> vv;
+
+    for (int i=0; i < vertices.size(); i++){
+        vv.push_back(Vertex3DColor(vertices[i], glm::vec3(0.5)));
+    };
+
+
+    /* --- VBO --- */
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    // Vertex3DColor boids[] = {
+    //     Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(-0.05, 0., 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(-0.02, 0.01, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(-0.02, 0.01, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0., -0.02, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0., -0.02, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0.02, 0.01, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0., 0.01, 0.08), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0.02, 0.01, 0.), glm::vec3(0.5)),
+    //     Vertex3DColor(glm::vec3(0.05, 0., 0.), glm::vec3(0.5))};
+
+
+    //glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(glimac::ShapeVertex), &shapevertexes, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(Vertex3DColor), &vv, GL_STATIC_DRAW);
+
+    /*
+    Vertex3DUV boids[] = {
+        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
+        Vertex3DUV(glm::vec3(-0.05, 0., 0.), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-0.02, 0.01, 0.), glm::vec2(0.3, 0)),
+        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
+        Vertex3DUV(glm::vec3(-0.02, 0.01, 0.), glm::vec2(0.3, 0)),
+        Vertex3DUV(glm::vec3(0., -0.02, 0.), glm::vec2(0.5, 0)),
+        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
+        Vertex3DUV(glm::vec3(0., -0.02, 0.), glm::vec2(0.5, 0)),
+        Vertex3DUV(glm::vec3(0.02, 0.01, 0.), glm::vec2(0.7, 0)),
+        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
+        Vertex3DUV(glm::vec3(0.02, 0.01, 0.), glm::vec2(0.7, 0)),
+        Vertex3DUV(glm::vec3(0.05, 0., 0.), glm::vec2(0, 1))};
+
+    glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(Vertex3DUV), boids, GL_STATIC_DRAW); */
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    /* --- VAO --- */
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    const GLuint VERTEX_ATTR_COLOR    = 1;
+    // const GLuint VERTEX_ATTR_TEXTURE = 2;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+    // glEnableVertexAttribArray(VERTEX_ATTR_TEXTURE);
+
+    /* --- Binding --- */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _coordTex)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

@@ -11,6 +11,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 
 #include <Loader/Loader.hpp>
+#include <common.hpp>
+#include <Lmodel.hpp>
 
 #include "Camera.hpp"
 #include "doctest/doctest.h"
@@ -64,6 +66,11 @@ int main(int argc, char* argv[])
     Boids  boids(Parameters::get());
     GLuint vaoB = initOpenGLBoids();
 
+    // Loaded model
+    Model model;
+    GLuint vaomodel = initOpenGLModel();
+
+
     // Tracker
     Tracker tracker(
         0.08f,
@@ -75,66 +82,7 @@ int main(int argc, char* argv[])
 
     //Test model
 
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> texv;
-    std::vector<glm::vec3> normalv;
-
-    readVertices("../assets/models/cube.obj", vertices, texv,normalv );
-
-    // GLuint vbo;
-    // glGenBuffers(1, &vbo);
-
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    // glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(ShapeVertex), sphere.getDataPointer(), GL_STATIC_DRAW);
-
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // GLuint vao;
-    // glGenVertexArrays(1, &vao);
-
-    // glBindVertexArray(vao);
-
-    // glEnableVertexAttribArray(0);
-    // glEnableVertexAttribArray(1);
-    // glEnableVertexAttribArray(2);
-
-
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    // GLint myLoc;
-    // GLint myNormal;
-    // GLint myCoords;
-
-    // GLint uMVPMatrixLoc = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     
-    // GLint uMVMatrixLoc = glGetUniformLocation(program.getGLId(), "uMVMatrix");
-    // GLint uNormalMatrixLoc =glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-
-    // myLoc = glGetUniformLocation(program.getGLId(), "vPosition_vs");
-    // myNormal = glGetUniformLocation(program.getGLId(), "vNormal_s");
-    // myCoords= glGetUniformLocation(program.getGLId(), "vPTexCoords_vs");
-
-
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)(offsetof(ShapeVertex, position)));
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)(offsetof(ShapeVertex, normal)));
-    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid *)(offsetof(ShapeVertex, texCoords)));
-
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // glBindVertexArray(0);
-
-   
-
-    // glEnable(GL_DEPTH_TEST);
-    
-
-    // glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), (float)(800/600), 0.1f,100.f);
-
-    // glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0.,0.,-5.));
-
-    // glm::mat4 NormalMatrix=glm::transpose(glm::inverse(MVMatrix));
-
 
 
     /**************************
@@ -182,6 +130,10 @@ int main(int argc, char* argv[])
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
         boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
+
+        // loaded model
+        model.drawModel(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaomodel);
+
 
         // Skybox
         shaderTex.use();
