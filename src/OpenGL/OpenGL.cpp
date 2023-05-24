@@ -17,47 +17,47 @@ GLuint initOpenGLSkybox()
     //  Tab with coordinates
     Vertex3DUV skybox[] = {
         // Back
-        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0.251, 0.335)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0.251, 0.664)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(0.499, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0.251, 0.664)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0.499, 0.335)),
         // Left
-        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0.251, 0.335)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0.251, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0.001, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0.001, 0.664)),
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0.001, 0.335)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0.251, 0.335)),
         // Front
-        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0.999, 0.335)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0.999, 0.664)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0.745, 0.335)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(0.745, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0.999, 0.664)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0.745, 0.335)),
         // Right
-        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0, 1)),
-        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0, 0)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(0.499, 0.664)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(0.745, 0.664)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(0.745, 0.664)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0.745, 0.335)),
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0.499, 0.335)),
         // Top
-        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0, 1)),
-        // Back
-        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(1, 0)),
-        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(1, 1)),
-        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0, 1)),
+        Vertex3DUV(glm::vec3(4, 4, -4), glm::vec2(0.499, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0.251, 0.664)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(0.499, 0.999)),
+        Vertex3DUV(glm::vec3(4, 4, 4), glm::vec2(0.499, 0.999)),
+        Vertex3DUV(glm::vec3(-4, 4, -4), glm::vec2(0.251, 0.664)),
+        Vertex3DUV(glm::vec3(-4, 4, 4), glm::vec2(0.251, 0.999)),
+        // Floor
+        Vertex3DUV(glm::vec3(4, -4, -4), glm::vec2(0.499, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0.25, 0)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(4, -4, 4), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(-4, -4, -4), glm::vec2(0.25, 0)),
+        Vertex3DUV(glm::vec3(-4, -4, 4), glm::vec2(0.25, 0.335)),
 
     };
 
@@ -151,24 +151,6 @@ GLuint initOpenGLBoids()
         Vertex3DColor(glm::vec3(0.05, 0., 0.), glm::vec3(0.5))};
 
     glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(Vertex3DColor), boids, GL_STATIC_DRAW);
-
-    /*
-    Vertex3DUV boids[] = {
-        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
-        Vertex3DUV(glm::vec3(-0.05, 0., 0.), glm::vec2(0, 0)),
-        Vertex3DUV(glm::vec3(-0.02, 0.01, 0.), glm::vec2(0.3, 0)),
-        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
-        Vertex3DUV(glm::vec3(-0.02, 0.01, 0.), glm::vec2(0.3, 0)),
-        Vertex3DUV(glm::vec3(0., -0.02, 0.), glm::vec2(0.5, 0)),
-        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
-        Vertex3DUV(glm::vec3(0., -0.02, 0.), glm::vec2(0.5, 0)),
-        Vertex3DUV(glm::vec3(0.02, 0.01, 0.), glm::vec2(0.7, 0)),
-        Vertex3DUV(glm::vec3(0., 0.01, 0.08), glm::vec2(0.5, 0.5)),
-        Vertex3DUV(glm::vec3(0.02, 0.01, 0.), glm::vec2(0.7, 0)),
-        Vertex3DUV(glm::vec3(0.05, 0., 0.), glm::vec2(0, 1))};
-
-    glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(Vertex3DUV), boids, GL_STATIC_DRAW); */
-
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     /* --- VAO --- */
@@ -178,16 +160,13 @@ GLuint initOpenGLBoids()
 
     const GLuint VERTEX_ATTR_POSITION = 0;
     const GLuint VERTEX_ATTR_COLOR    = 1;
-    // const GLuint VERTEX_ATTR_TEXTURE = 2;
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
     glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
-    // glEnableVertexAttribArray(VERTEX_ATTR_TEXTURE);
 
     /* --- Binding --- */
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
-    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _coordTex)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
