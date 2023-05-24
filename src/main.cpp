@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     // Texture
-    img::Image skyTex = p6::load_image_buffer("assets/textures/sky.jpg");
+    img::Image skyTex = p6::load_image_buffer("assets/textures/skybox.png");
 
     /***************************
      *   INITIALIZATION CODE   *

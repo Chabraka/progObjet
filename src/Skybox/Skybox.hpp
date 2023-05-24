@@ -15,9 +15,12 @@ private:
 public:
     // Constructors
     Skybox()
-        : _radius(2.f), _center(glm::vec3(0.f)){};
-    Skybox(glm::float32 radius, glm::vec3 center)
-        : _radius(radius), _center(center){};
+        : _radius(4.f), _center(glm::vec3(0.f)){}; // Only constructor available
+    Skybox(glm::float32 radius, glm::vec3 center) = delete;
+    Skybox(Skybox& skybox)                        = delete;
+
+    // Getters
+    glm::float32 getRadius() const { return _radius; };
 
     // Draw
     void drawSkybox(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, GLuint texture);
