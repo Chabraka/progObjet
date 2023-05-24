@@ -17,11 +17,11 @@ Boids::Boids(Parameters& params)
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, /* GLuint texture, */ Parameters& params)
+void Boids::drawBoids(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, Parameters& params)
 {
     for (int j = 0; j < params.BOID_NB; j++)
     {
-        _boids[j].drawBoid(shader, ProjMatrix, ViewMatrix, vao /*, texture */);
+        _boids[j].drawBoid(shader, ProjMatrix, ViewMatrix, vao);
         _boids[j].updatePosition(params.MIN_SPEED, params.MAX_SPEED);
     }
 }

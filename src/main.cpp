@@ -27,12 +27,14 @@ int main(int argc, char* argv[])
     auto ctx = p6::Context{{.title = "Projet"}};
     ctx.maximize_window();
 
-    // Texture
-    // img::Image sheetTex = p6::load_image_buffer("assets/textures/boids/sheet.jpg");
-
     // Shaders
-    const p6::Shader shader = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
+    const p6::Shader shader    = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
+    const p6::Shader shaderTex = p6::load_shader("shaders/tex3D.vs.glsl", "shaders/tex3D.fs.glsl");
+    shaderTex.set("uTexture", 0);
     glEnable(GL_DEPTH_TEST);
+
+    // Texture
+    img::Image skyTex = p6::load_image_buffer("assets/textures/sky.jpg");
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -45,6 +47,7 @@ int main(int argc, char* argv[])
     // Skybox
     Skybox skybox;
     GLuint vaoS = initOpenGLSkybox();
+    GLuint texS = initTex(skyTex);
 
     // Islands
     Island  mainIsland(glm::vec3(0.0, 0.0, 0.0));
@@ -55,7 +58,6 @@ int main(int argc, char* argv[])
     // Boids
     Boids  boids(Parameters::get());
     GLuint vaoB = initOpenGLBoids();
-    // GLuint texB = initTex(&sheetTex);
 
     // Tracker
     Tracker tracker(
@@ -89,7 +91,6 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         // Clear window
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        shader.use();
 
         // Camera power Matrix
         matrixView._MMatrix = glm::mat4(1);
@@ -100,10 +101,8 @@ int main(int argc, char* argv[])
         // shader.set("uMVPMatrix", matrixView._MVPMatrix);
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
-        // Skybox
-        skybox.drawSkybox(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS);
-
         // Islands
+        shader.use();
         mainIsland.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
         islands.drawIslands(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoIs);
 
@@ -113,7 +112,11 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, /* texB, */ Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
+
+        // Skybox
+        shaderTex.use();
+        skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS, texS);
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))

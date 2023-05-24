@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include "glm/gtc/matrix_transform.hpp"
+#include "img/src/Image.h"
 #include "p6/p6.h"
 
 glm::mat4 translate(float tx, float ty, float tz);
@@ -43,8 +44,8 @@ GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
 GLuint initOpenGLIslands();
-// GLuint initTex(img::Image* boidsTexture);
+GLuint initTex(const img::Image& image);
 
 void drawOpenGL(GLuint vao);
-void drawOpenGLSkybox(GLuint vao);
-void drawOpenGLBoids(GLuint vao /*, GLuint texture */);
+void drawOpenGLSkybox(GLuint vao, GLuint texture);
+void drawOpenGLBoids(GLuint vao);
