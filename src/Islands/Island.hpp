@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdlib>
-#include "../OpenGL.hpp"
+#include "../OpenGL/OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 

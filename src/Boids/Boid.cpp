@@ -1,6 +1,6 @@
 #include "Boid.hpp"
 #include <sys/types.h>
-#include "../OpenGL.hpp"
+#include "../OpenGL/OpenGL.hpp"
 
 /* ----- Draw ----- */
 void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao /*, GLuint texture */)

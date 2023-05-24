@@ -4,8 +4,8 @@
 #include "Boids/Boids.hpp"
 #include "GLFW/glfw3.h"
 #include "Islands/Islands.hpp"
-#include "OpenGL.hpp"
-#include "Skybox.hpp"
+#include "OpenGL/OpenGL.hpp"
+#include "Skybox/Skybox.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
