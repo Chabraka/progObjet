@@ -27,7 +27,7 @@ public:
     void drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
 
     // Update
-    void      updatePosition(float minSpeed, float maxSpeed);
+    // void      updatePosition(float minSpeed, float maxSpeed);
 
    
 };

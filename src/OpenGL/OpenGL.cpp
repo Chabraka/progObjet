@@ -2,7 +2,6 @@
 #include "Loader/Loader.hpp"
 #include <vector>
 
-
 glm::mat4 translate(float tx, float ty, float tz)
 {
     return glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), glm::vec4(tx, ty, tz, 1));

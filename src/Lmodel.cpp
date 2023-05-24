@@ -27,22 +27,22 @@ void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 
 
 /* ----- Updates ----- */
 
-void Model::updatePosition(float minSpeed, float maxSpeed)
-{
-    float dt = 1.0 / 60.;
+// void Model::updatePosition(float minSpeed, float maxSpeed)
+// {
+//     float dt = 1.0 / 60.;
 
-    // Calcul of the position
-    this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
-    this->_center.y += this->_speed.y * dt + this->_acceleration.y * dt * dt / 2;
-    this->_center.z += this->_speed.z * dt + this->_acceleration.z * dt * dt / 2;
+//     // Calcul of the position
+//     this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
+//     this->_center.y += this->_speed.y * dt + this->_acceleration.y * dt * dt / 2;
+//     this->_center.z += this->_speed.z * dt + this->_acceleration.z * dt * dt / 2;
 
-    // Calcul of the speed
-    this->_speed.x += this->_acceleration.x * dt;
-    this->_speed.y += this->_acceleration.y * dt;
-    this->_speed.z += this->_acceleration.z * dt;
+//     // Calcul of the speed
+//     this->_speed.x += this->_acceleration.x * dt;
+//     this->_speed.y += this->_acceleration.y * dt;
+//     this->_speed.z += this->_acceleration.z * dt;
 
-    // Restrict the position
-}
+//     // Restrict the position
+// }
 
 
 

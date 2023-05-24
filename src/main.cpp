@@ -66,11 +66,6 @@ int main(int argc, char* argv[])
     Boids  boids(Parameters::get());
     GLuint vaoB = initOpenGLBoids();
 
-    // Loaded model
-    Model model;
-    GLuint vaomodel = initOpenGLModel();
-
-
     // Tracker
     Tracker tracker(
         0.08f,
@@ -82,8 +77,9 @@ int main(int argc, char* argv[])
 
     //Test model
 
-    
-
+    // Loaded model
+    Model model;
+    GLuint vaomodel = initOpenGLModel();
 
     /**************************
      *     RENDERING CODE     *
@@ -131,13 +127,12 @@ int main(int argc, char* argv[])
         boids.updateBoidsAcc(&tracker, Parameters::get());
         boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
 
-        // loaded model
-        model.drawModel(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaomodel);
-
-
         // Skybox
         shaderTex.use();
         skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS, texS);
+
+        // loaded model
+        model.drawModel(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaomodel);
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
