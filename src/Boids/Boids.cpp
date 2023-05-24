@@ -7,8 +7,8 @@ Boids::Boids(Parameters& params)
     for (int i = 0; i < params.MAX_BOID_NB; i++)
     {
         Boid boid(
-            glm::vec3(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
             0.05f,
+            glm::vec3(p6::random::number(-2.f, 2.f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
             glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED), p6::random::number(-params.MAX_SPEED, params.MAX_SPEED), p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),
             glm::vec3(0.)
         );

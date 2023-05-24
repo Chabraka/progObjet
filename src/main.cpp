@@ -9,12 +9,11 @@
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "Camera.hpp"
-#include "Loader.hpp"
+
 #include "doctest/doctest.h"
 
 int main(int argc, char* argv[])
 {
-    opentest("../models/test");
 
     { // Run the tests
         if (doctest::Context{}.run() != 0)
@@ -57,8 +56,8 @@ int main(int argc, char* argv[])
 
     // Tracker
     Tracker tracker(
-        glm::vec3(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
         0.08f,
+        glm::vec3(p6::random::number(-0.05f, -0.05f), p6::random::number(-1.f, 1.f), p6::random::number(-1.f, 1.f)),
         glm::vec3(0.3),
         glm::vec3(0.2)
     );
