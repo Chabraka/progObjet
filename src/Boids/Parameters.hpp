@@ -7,8 +7,8 @@
 
 struct Parameters {
 public:
-    int   BOID_NB                = 50;
-    int   MAX_BOID_NB            = 100;
+    int   BOID_NB                = 100;
+    int   MAX_BOID_NB            = 200;
     float MIN_SPEED              = 0.01f;
     float MAX_SPEED              = 0.5f;
     float MIN_DIST               = 0.7f;

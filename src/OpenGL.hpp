@@ -38,6 +38,7 @@ struct MatrixView {
     void setMatrix();
 };
 
+GLuint initOpenGLSkybox();
 GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
@@ -45,4 +46,5 @@ GLuint initOpenGLIslands();
 // GLuint initTex(img::Image* boidsTexture);
 
 void drawOpenGL(GLuint vao);
+void drawOpenGLSkybox(GLuint vao);
 void drawOpenGLBoids(GLuint vao /*, GLuint texture */);

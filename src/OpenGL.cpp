@@ -7,6 +7,85 @@ glm::mat4 translate(float tx, float ty, float tz)
 
 /* --- Init --- */
 
+GLuint initOpenGLSkybox()
+{
+    /* --- VBO --- */
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    //  Tab with coordinates
+    Vertex3DColor skybox[] = {
+        // Back
+        Vertex3DColor(glm::vec3(-4, -4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, -4), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(4, 4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, -4), glm::vec3(0, 0, 1)),
+        // Left
+        Vertex3DColor(glm::vec3(-4, -4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, -4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, -4, -4), glm::vec3(1, 0, 0)),
+        // Front
+        Vertex3DColor(glm::vec3(-4, -4, 4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, 4), glm::vec3(0, 0, 1)),
+        Vertex3DColor(glm::vec3(4, 4, 4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, 4), glm::vec3(0, 0, 1)),
+        // Right
+        Vertex3DColor(glm::vec3(4, -4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, -4), glm::vec3(1, 0, 0)),
+        // Top
+        Vertex3DColor(glm::vec3(4, 4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, 4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, 4, 4), glm::vec3(1, 0, 0)),
+        // Back
+        Vertex3DColor(glm::vec3(4, -4, -4), glm::vec3(1, 0, 0)),
+        Vertex3DColor(glm::vec3(-4, -4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(4, -4, 4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, -4, -4), glm::vec3(0, 1, 0)),
+        Vertex3DColor(glm::vec3(-4, -4, 4), glm::vec3(1, 0, 0)),
+
+    };
+
+    glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(Vertex3DColor), skybox, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    /* --- VAO --- */
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    const GLuint VERTEX_ATTR_POSITION = 0;
+    const GLuint VERTEX_ATTR_COLOR    = 1;
+    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
+    glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+
+    /* --- Binding --- */
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _position)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    return vao;
+}
+
 GLuint initOpenGLTracker()
 {
     /* --- VBO --- */
@@ -224,6 +303,13 @@ void drawOpenGL(GLuint vao)
 {
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+}
+
+void drawOpenGLSkybox(GLuint vao)
+{
+    glBindVertexArray(vao);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
 }
 

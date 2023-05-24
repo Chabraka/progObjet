@@ -5,16 +5,15 @@
 #include "GLFW/glfw3.h"
 #include "Islands/Islands.hpp"
 #include "OpenGL.hpp"
+#include "Skybox.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "Camera.hpp"
-
 #include "doctest/doctest.h"
 
 int main(int argc, char* argv[])
 {
-
     { // Run the tests
         if (doctest::Context{}.run() != 0)
             return EXIT_FAILURE;
@@ -43,10 +42,14 @@ int main(int argc, char* argv[])
     MatrixView    matrixView;
     FreeflyCamera camera;
 
+    // Skybox
+    Skybox skybox;
+    GLuint vaoS = initOpenGLSkybox();
+
     // Islands
     Island  mainIsland(glm::vec3(0.0, 0.0, 0.0));
     GLuint  vaoI = initOpenGLMainIsland();
-    Islands islands(25);
+    Islands islands(50);
     GLuint  vaoIs = initOpenGLIslands();
 
     // Boids
@@ -96,6 +99,9 @@ int main(int argc, char* argv[])
         // shader.set("uMVMatrix", matrixView._MMatrix);
         // shader.set("uMVPMatrix", matrixView._MVPMatrix);
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
+
+        // Skybox
+        skybox.drawSkybox(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS);
 
         // Islands
         mainIsland.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
