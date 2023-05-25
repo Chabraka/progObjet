@@ -44,6 +44,7 @@ GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
 GLuint initOpenGLIslands();
+GLuint initOpenGLModel();
 GLuint initTex(const img::Image& image);
 
 void drawOpenGL(GLuint vao);
