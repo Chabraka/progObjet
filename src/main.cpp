@@ -6,14 +6,14 @@
 #include "Islands/Islands.hpp"
 #include "OpenGL/OpenGL.hpp"
 #include "Skybox/Skybox.hpp"
+#include "Walker/Walker.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 
+#include <Lmodel.hpp>
 #include <Loader/Loader.hpp>
 #include <common.hpp>
-#include <Lmodel.hpp>
-
 #include "Camera.hpp"
 #include "doctest/doctest.h"
 
@@ -27,8 +27,6 @@ int main(int argc, char* argv[])
         if (no_gpu_available)
             return EXIT_SUCCESS;
     }
-    
-
 
     // App
     auto ctx = p6::Context{{.title = "Projet"}};
@@ -56,6 +54,10 @@ int main(int argc, char* argv[])
     GLuint vaoS = initOpenGLSkybox();
     GLuint texS = initTex(skyTex);
 
+    // Walker
+    Walker walker;
+    GLuint vaoW = initOpenGLTracker();
+
     // Islands
     Island  mainIsland(glm::vec3(0.0, 0.0, 0.0));
     GLuint  vaoI = initOpenGLMainIsland();
@@ -75,10 +77,8 @@ int main(int argc, char* argv[])
     );
     GLuint vaoT = initOpenGLTracker();
 
-    //Test model
-
     // Loaded model
-    Model model;
+    Model  model;
     GLuint vaomodel = initOpenGLModel();
 
     /**************************
@@ -127,6 +127,10 @@ int main(int argc, char* argv[])
         boids.updateBoidsAcc(&tracker, Parameters::get());
         boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
 
+        // Walker
+        walker.updatePosition(ctx);
+        walker.drawWalker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoW);
+
         // Skybox
         shaderTex.use();
         skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS, texS);
@@ -134,18 +138,18 @@ int main(int argc, char* argv[])
         // loaded model
         model.drawModel(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaomodel);
 
-        // Quit
-        if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
-        {
-            ctx.stop();
-        };
-
         // Camera
         cameraControls(ctx, camera);
         // arrive pas a mettre dans Controls :'-(
         ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
             camera.rotateLeft(button.delta.x * 50);
             camera.rotateUp(-button.delta.y * 50);
+        };
+
+        // Quit
+        if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
+        {
+            ctx.stop();
         };
     };
 

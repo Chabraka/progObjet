@@ -18,7 +18,7 @@ private:
 
 public:
     FreeflyCamera()
-        : m_Position(0, 0, 3), m_fPhi(glm::pi<float>()), m_fTheta(0)
+        : m_Position(0, 0, 1), m_fPhi(glm::pi<float>()), m_fTheta(0)
     {
         computeDirectionVectors();
     }
@@ -36,6 +36,7 @@ public:
     void setPhi(float degrees);
     void setTheta(float degrees);
 
+    glm::vec3 getPosition() const { return m_Position; };
     glm::mat4 getViewMatrix() const;
 };
 
