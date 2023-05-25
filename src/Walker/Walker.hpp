@@ -24,7 +24,7 @@ public:
     Walker(Walker& walker)                        = delete;
 
     // Getter
-    glm::vec3 getCenter() { return _center; };
+    glm::vec3 getCenter() const { return _center; };
 
     // Draw
     void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);

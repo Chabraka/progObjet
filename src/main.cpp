@@ -2,19 +2,17 @@
 #include <string>
 #include <vector>
 #include "Boids/Boids.hpp"
-#include "GLFW/glfw3.h"
 #include "Islands/Islands.hpp"
 #include "OpenGL/OpenGL.hpp"
 #include "Skybox/Skybox.hpp"
 #include "Walker/Walker.hpp"
 #include "imgui.h"
-#include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 
 #include <Lmodel.hpp>
 #include <Loader/Loader.hpp>
 #include <common.hpp>
-#include "Camera.hpp"
+#include "TrackballCamera.hpp"
 #include "doctest/doctest.h"
 
 int main(int argc, char* argv[])
@@ -46,8 +44,8 @@ int main(int argc, char* argv[])
      ***************************/
 
     // Cam
-    MatrixView    matrixView;
-    FreeflyCamera camera;
+    MatrixView      matrixView;
+    TrackballCamera camera;
 
     // Skybox
     Skybox skybox;
@@ -140,10 +138,8 @@ int main(int argc, char* argv[])
 
         // Camera
         cameraControls(ctx, camera);
-        // arrive pas a mettre dans Controls :'-(
-        ctx.mouse_dragged = [&](const p6::MouseDrag& button) {
-            camera.rotateLeft(button.delta.x * 50);
-            camera.rotateUp(-button.delta.y * 50);
+        ctx.mouse_scrolled = [&](const p6::MouseScroll& scroll) {
+            (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
         };
 
         // Quit
@@ -152,6 +148,5 @@ int main(int argc, char* argv[])
             ctx.stop();
         };
     };
-
     ctx.start();
 }
