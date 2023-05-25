@@ -106,6 +106,7 @@ int main(int argc, char* argv[])
         // Camera power Matrix
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
+        glm::mat4 matView = camera.getViewMatrix(walker);
 
         // // Matrix
         // shader.set("uMVMatrix", matrixView._MMatrix);
@@ -114,27 +115,27 @@ int main(int argc, char* argv[])
 
         // Islands
         shader.use();
-        mainIsland.drawIsland(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoI);
-        islands.drawIslands(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoIs);
+        mainIsland.drawIsland(&shader, matrixView._ProjMatrix, matView, vaoI);
+        islands.drawIslands(&shader, matrixView._ProjMatrix, matView, vaoIs);
 
         // Tracker
         tracker.updatePositionTracker();
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoT);
+        tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        boids.drawBoids(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoB, Parameters::get());
+        boids.drawBoids(&shader, matrixView._ProjMatrix, matView, vaoB, Parameters::get());
 
         // Walker
         walker.updatePosition(ctx);
-        walker.drawWalker(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaoW);
+        walker.drawWalker(&shader, matrixView._ProjMatrix, matView, vaoW);
 
         // Skybox
         shaderTex.use();
-        skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, camera.getViewMatrix(), vaoS, texS);
+        skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, matView, vaoS, texS);
 
         // loaded model
-        model.drawModel(&shader, matrixView._ProjMatrix, camera.getViewMatrix(), vaomodel);
+        model.drawModel(&shader, matrixView._ProjMatrix, matView, vaomodel);
 
         // Camera
         cameraControls(ctx, camera);
