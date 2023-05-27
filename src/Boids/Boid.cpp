@@ -3,10 +3,10 @@
 #include "../OpenGL/OpenGL.hpp"
 
 /* ----- Draw ----- */
-void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao)
+void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, const GLuint& vao)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(this->_center.x / 2, this->_center.y, this->_center.z));
+    T           = glm::translate(T, glm::vec3(_center.x / 2, _center.y, _center.z));
 
     shader->set("uMVMatrix", T);
     shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
@@ -18,79 +18,74 @@ void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 Vi
 
 /* ----- Restrictions ----- */
 
-void Boid::restrictArea()
+void Boid::restrictArea(const float& border)
 {
     /* If the Boid hits the walls, change direction */
 
     // Left wall
-    if (this->_center.x - this->_radius < -8)
+    if (_center.x - _radius < -border)
     {
-        this->_center.x = -8 + this->_radius;
-        this->_speed.x  = -this->_speed.x;
+        _center.x = -border + _radius;
+        _speed.x  = -_speed.x;
     }
-
     // Right wall
-    else if (this->_center.x + this->_radius > 8)
+    else if (_center.x + _radius > border)
     {
-        this->_center.x = 8 - this->_radius;
-        this->_speed.x  = -this->_speed.x;
+        _center.x = border - _radius;
+        _speed.x  = -_speed.x;
     }
-
     // Bottom wall
-    if (this->_center.y - this->_radius < -4)
+    if (_center.y - _radius < -border)
     {
-        this->_center.y = -4 + this->_radius;
-        this->_speed.y  = -this->_speed.y;
+        _center.y = -border + _radius;
+        _speed.y  = -_speed.y;
     }
-
     // Top wall
-    else if (this->_center.y + this->_radius > 4)
+    else if (_center.y + _radius > border)
     {
-        this->_center.y = 4 - this->_radius;
-        this->_speed.y  = -this->_speed.y;
+        _center.y = border - _radius;
+        _speed.y  = -_speed.y;
     }
-
     // Back wall
-    if (this->_center.z - this->_radius < -4)
+    if (_center.z - _radius < -border)
     {
-        this->_center.z = -4 + this->_radius;
-        this->_speed.z  = -this->_speed.z;
+        _center.z = -border + _radius;
+        _speed.z  = -_speed.z;
     }
-
     // Front wall
-    else if (this->_center.z + this->_radius > 4)
+    else if (_center.z + _radius > border)
     {
-        this->_center.z = 4 - this->_radius;
-        this->_speed.z  = -this->_speed.z;
+        _center.z = border - _radius;
+        _speed.z  = -_speed.z;
     }
 }
 
-void Boid::restrictSpeed(float minSpeed, float maxSpeed)
+void Boid::restrictSpeed(const float& minSpeed, const float& maxSpeed)
 {
-    float currentSpeed = glm::length(this->_speed);
+    float currentSpeed = glm::length(_speed);
 
     // Speed > 0
     if (currentSpeed > 0.001)
     {
         if (currentSpeed > maxSpeed)
         {
-            this->_speed = glm::normalize(this->_speed) * maxSpeed;
+            _speed = glm::normalize(_speed) * maxSpeed;
         }
         if (currentSpeed < minSpeed)
         {
-            this->_speed = glm::normalize(this->_speed) * minSpeed;
+            _speed = glm::normalize(_speed) * minSpeed;
         }
     }
 }
 
 /* ----- Behaviors ----- */
 
-glm::vec3 Boid::attraction(glm::vec3 direction, float distance, float factorAttraction)
+glm::vec3 Boid::attraction(const glm::vec3& direction, const float& distance, const float& factorAttraction)
 {
     return direction * factorAttraction / distance;
 }
 
-glm::vec3 Boid::repulsion(glm::vec3 direction, float distance, float factorRepulsion, float maxRepulsion)
+glm::vec3 Boid::repulsion(const glm::vec3& direction, const float& distance, const float& factorRepulsion, const float& maxRepulsion)
 {
     return direction * std::max((1 / (distance * distance)) * (0.01f * factorRepulsion), maxRepulsion);
 }
@@ -100,34 +95,34 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numspeedboids
     // Adjustment of the speed relative to the neighbors
     if (numspeedboids != 0)
     {
-        glm::vec3 BoidsSpeedMean = sumSpeed / (float)numspeedboids;
-        acc                      = acc + BoidsSpeedMean * (float)1.; // parameter to adjust (1) can be a factorSpeedMean
+        glm::vec3 boidsSpeedMean = sumSpeed / (float)numspeedboids;
+        acc                      = acc + boidsSpeedMean * (float)1.; // parameter to adjust (1) can be a factorSpeedMean
     }
     return acc;
 }
 
 /* ----- Updates ----- */
 
-void Boid::updatePosition(float minSpeed, float maxSpeed)
+void Boid::updatePosition(Parameters& params)
 {
     float dt = 1.0 / 60.;
 
     // Calcul of the position
-    this->_center.x += this->_speed.x * dt + this->_acceleration.x * dt * dt / 2;
-    this->_center.y += this->_speed.y * dt + this->_acceleration.y * dt * dt / 2;
-    this->_center.z += this->_speed.z * dt + this->_acceleration.z * dt * dt / 2;
+    _center.x += _speed.x * dt + _acceleration.x * dt * dt / 2;
+    _center.y += _speed.y * dt + _acceleration.y * dt * dt / 2;
+    _center.z += _speed.z * dt + _acceleration.z * dt * dt / 2;
 
     // Calcul of the speed
-    this->_speed.x += this->_acceleration.x * dt;
-    this->_speed.y += this->_acceleration.y * dt;
-    this->_speed.z += this->_acceleration.z * dt;
+    _speed.x += _acceleration.x * dt;
+    _speed.y += _acceleration.y * dt;
+    _speed.z += _acceleration.z * dt;
 
     // Restrict the position
-    this->restrictSpeed(minSpeed, maxSpeed);
-    this->restrictArea();
+    restrictSpeed(params.MIN_SPEED, params.MAX_SPEED);
+    restrictArea(params.BOX_SIZE);
 }
 
-void Boid::updateAcc(std::vector<Boid> boids, unsigned int i, float minDistance, float factorAttraction, float factorRepulsion, float maxRepulsion, Tracker* tracker, float factorAttractTracker)
+void Boid::updateAcc(std::vector<Boid> boids, unsigned int i, const float& minDistance, const float& factorAttraction, const float& factorRepulsion, const float& maxRepulsion, Tracker* tracker, const float& factorAttractTracker)
 {
     glm::vec3 acc(0.);
     glm::vec3 sumSpeed(0.);      // sum speed of neighbors
@@ -143,13 +138,13 @@ void Boid::updateAcc(std::vector<Boid> boids, unsigned int i, float minDistance,
 
         /* Neighbors */
         Boid* neighbour = &boids[j];
-        float distance  = glm::distance(this->_center, neighbour->_center);
+        float distance  = glm::distance(_center, neighbour->_center);
         // Avoid divison by 0
         if (distance <= 0.001)
         {
             continue;
         }
-        glm::vec3 direction = (neighbour->_center - this->_center) / distance;
+        glm::vec3 direction = (neighbour->_center - _center) / distance;
         acc += attraction(direction, distance, factorAttraction) + repulsion(direction, distance, factorRepulsion, maxRepulsion);
 
         if (distance < minDistance)
@@ -162,18 +157,18 @@ void Boid::updateAcc(std::vector<Boid> boids, unsigned int i, float minDistance,
 
     acc += attractionTracker(tracker, factorAttractTracker);
 
-    this->_acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
+    _acceleration = adjustSpeed(acc, sumSpeed, numspeedboids);
 }
 
-glm::vec3 Boid::attractionTracker(Tracker* tracker, float factorAttractTracker)
+glm::vec3 Boid::attractionTracker(Tracker* tracker, const float& factorAttractTracker)
 {
-    float     distance = glm::distance(this->_center, tracker->getTrackerCenter());
+    float     distance = glm::distance(_center, tracker->getTrackerCenter());
     glm::vec3 attract(0.);
     // Avoid divison by 0
     if (distance <= 0.001)
     {
         return attract;
     }
-    glm::vec3 direction = (tracker->getTrackerCenter() - this->_center) / distance;
+    glm::vec3 direction = (tracker->getTrackerCenter() - _center) / distance;
     return attraction(direction, distance, factorAttractTracker);
 }

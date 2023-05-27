@@ -2,8 +2,8 @@
 
 #include <cstdlib>
 #include <vector>
+#include "../Parameters.hpp"
 #include "Boid.hpp"
-#include "Parameters.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"

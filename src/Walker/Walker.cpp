@@ -18,47 +18,47 @@ void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat
 
 /* --- Restrictions --- */
 
-void Walker::restrictArea()
+void Walker::restrictArea(const float border)
 {
     // Left wall
-    if (this->_center.x - this->_radius < -4)
+    if (this->_center.x - this->_radius < -border)
     {
-        this->_center.x = -4 + this->_radius;
+        this->_center.x = -border + this->_radius;
         this->_speed.x  = 0.1;
     }
 
     // Right wall
-    else if (this->_center.x + this->_radius > 4)
+    else if (this->_center.x + this->_radius > border)
     {
-        this->_center.x = 4 - this->_radius;
+        this->_center.x = border - this->_radius;
         this->_speed.x  = 0.1;
     }
 
     // Bottom wall
-    if (this->_center.y - this->_radius < -2)
+    if (this->_center.y - this->_radius < -border)
     {
-        this->_center.y = -2 + this->_radius;
+        this->_center.y = -border + this->_radius;
         this->_speed.y  = 0.1;
     }
 
     // Top wall
-    else if (this->_center.y + this->_radius > 2)
+    else if (this->_center.y + this->_radius > border)
     {
-        this->_center.y = 2 - this->_radius;
+        this->_center.y = border - this->_radius;
         this->_speed.y  = 0.1;
     }
 
     // Back wall
-    if (this->_center.z - this->_radius < -2)
+    if (this->_center.z - this->_radius < -border)
     {
-        this->_center.z = -2 + this->_radius;
+        this->_center.z = -border + this->_radius;
         this->_speed.z  = 0.1;
     }
 
     // Front wall
-    else if (this->_center.z + this->_radius > 2)
+    else if (this->_center.z + this->_radius > border)
     {
-        this->_center.z = 2 - this->_radius;
+        this->_center.z = border - this->_radius;
         this->_speed.z  = 0.1;
     }
 }
@@ -82,7 +82,7 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
 }
 
 /* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx)
+void Walker::updatePosition(const p6::Context& ctx, const float border)
 {
     float dt = ctx.delta_time() * 0.5;
 
@@ -122,5 +122,5 @@ void Walker::updatePosition(const p6::Context& ctx)
     }
 
     this->restrictSpeed(0.1, 0.7);
-    this->restrictArea();
+    this->restrictArea(border);
 }

@@ -8,7 +8,7 @@
 class Walker {
     /* Attributes */
 public:
-    const glm::float32 _radius;
+    const float _radius;
 
 private:
     glm::vec3 _center;
@@ -19,9 +19,9 @@ private:
 public:
     // Constructors
     Walker()
-        : _radius(0.6f), _center(glm::vec3(0.f)), _speed(glm::vec3(0.3f)), _acceleration(glm::vec3(0.05f)){}; // Only constructor available
-    Walker(glm::float32 radius, glm::vec3 center) = delete;
-    Walker(Walker& walker)                        = delete;
+        : _radius(0.05f), _center(glm::vec3(0.f)), _speed(glm::vec3(0.3f)), _acceleration(glm::vec3(0.05f)){}; // Only constructor available
+    Walker(float radius, glm::vec3 center) = delete;
+    Walker(Walker& walker)                 = delete;
 
     // Getter
     glm::vec3 getCenter() const { return _center; };
@@ -30,9 +30,9 @@ public:
     void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
 
     // Restrictions
-    void restrictArea();
+    void restrictArea(const float border);
     void restrictSpeed(float minSpeed, float maxSpeed);
 
     // Update
-    void updatePosition(const p6::Context& ctx);
+    void updatePosition(const p6::Context& ctx, const float border);
 };

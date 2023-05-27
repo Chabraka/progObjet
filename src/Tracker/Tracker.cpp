@@ -18,49 +18,49 @@ void Tracker::drawTracker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::m
 
 /* --- Restrictions --- */
 
-void Tracker::restrictArea()
+void Tracker::restrictArea(const float border)
 {
     /* If the Tracker hits the walls, change direction */
 
     // Left wall
-    if (this->_center.x - this->_radius < -4)
+    if (this->_center.x - this->_radius < -border)
     {
-        this->_center.x = -4 + this->_radius;
+        this->_center.x = -border + this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Right wall
-    else if (this->_center.x + this->_radius > 4)
+    else if (this->_center.x + this->_radius > border)
     {
-        this->_center.x = 4 - this->_radius;
+        this->_center.x = border - this->_radius;
         this->_speed.x  = -this->_speed.x;
     }
 
     // Bottom wall
-    if (this->_center.y - this->_radius < -2)
+    if (this->_center.y - this->_radius < -border)
     {
-        this->_center.y = -2 + this->_radius;
+        this->_center.y = -border + this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Top wall
-    else if (this->_center.y + this->_radius > 2)
+    else if (this->_center.y + this->_radius > border)
     {
-        this->_center.y = 2 - this->_radius;
+        this->_center.y = border - this->_radius;
         this->_speed.y  = -this->_speed.y;
     }
 
     // Back wall
-    if (this->_center.z - this->_radius < -2)
+    if (this->_center.z - this->_radius < -border)
     {
-        this->_center.z = -2 + this->_radius;
+        this->_center.z = -border + this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 
     // Front wall
-    else if (this->_center.z + this->_radius > 2)
+    else if (this->_center.z + this->_radius > border)
     {
-        this->_center.z = 2 - this->_radius;
+        this->_center.z = border - this->_radius;
         this->_speed.z  = -this->_speed.z;
     }
 }
@@ -84,7 +84,7 @@ void Tracker::restrictSpeed(float minSpeed, float maxSpeed)
 }
 
 /* --- Update --- */
-void Tracker::updatePosition(float minSpeed, float maxSpeed)
+void Tracker::updatePosition(Parameters& params)
 {
     float dt = 1.0 / 60.;
 
@@ -99,11 +99,11 @@ void Tracker::updatePosition(float minSpeed, float maxSpeed)
     this->_speed.z += this->_acceleration.z * dt;
 
     // Restrict the position
-    this->restrictSpeed(minSpeed, maxSpeed);
-    this->restrictArea();
+    this->restrictSpeed(params.MIN_SPEED, params.MAX_SPEED);
+    this->restrictArea(params.BOX_SIZE);
 }
 
-void Tracker::updatePositionTracker()
+void Tracker::updatePositionTracker(Parameters& params)
 {
     double direction_x = p6::random::number(-0.07f, 0.07f);
     double direction_y = p6::random::number(-0.07f, 0.07f);
@@ -112,5 +112,5 @@ void Tracker::updatePositionTracker()
     glm::vec3 speed(direction_x + this->_speed.x, direction_y + this->_speed.y, direction_z + this->_speed.z);
     this->_speed = speed;
 
-    this->updatePosition(0.1, 0.7);
+    this->updatePosition(params);
 }

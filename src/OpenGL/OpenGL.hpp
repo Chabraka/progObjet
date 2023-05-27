@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <vector>
+#include "../Skybox/Skybox.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "img/src/Image.h"
 #include "p6/p6.h"
@@ -39,7 +40,8 @@ struct MatrixView {
     void setMatrix();
 };
 
-GLuint initOpenGLSkybox();
+GLuint initOpenGLSkybox(const float& skyboxRadius);
+GLuint initOpenGLWalker();
 GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
