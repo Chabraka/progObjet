@@ -23,7 +23,7 @@ void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 
 
 /* ----- Updates ----- */
 
-void Model::updatePosition(float minSpeed, float maxSpeed)
+void Model::updatePosition()
 {
     float dt = 1.0 / 60.;
 

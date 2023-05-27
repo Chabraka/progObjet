@@ -18,7 +18,7 @@ public:
     void rotateUp(float degrees);
     void updatePosition(const glm::vec3& walkerPosition, const float border);
 
-    glm::mat4 getViewMatrix(const Walker& walker) const;
+    glm::mat4 getViewMatrix() const;
 };
 
 void cameraControls(const p6::Context& ctx, TrackballCamera& camera);

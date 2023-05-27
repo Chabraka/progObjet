@@ -7,15 +7,14 @@
 
 class Model {
     /* Attributes */
-
-public:
-    int _vertex_size;
-
 private:
     const glm::float32 _radius;
     glm::vec3          _center;
     glm::vec3          _speed;
     glm::vec3          _acceleration;
+
+public:
+    int _vertex_size;
 
     // Gluint vao;
 
@@ -31,5 +30,5 @@ public:
     void drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, GLuint texture);
 
     // Update
-    void updatePosition(float minSpeed, float maxSpeed);
+    void updatePosition();
 };
