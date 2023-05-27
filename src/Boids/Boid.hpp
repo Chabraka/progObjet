@@ -23,6 +23,9 @@ public:
     Boid(float radius, glm::vec3 center, glm::vec3 speed, glm::vec3 acceleration)
         : _radius(radius), _center(center), _speed(speed), _acceleration(acceleration){};
 
+    // Getter
+    glm::vec3 getCenter() const { return _center; };
+
     // Draw
     void drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, const GLuint& vao);
 

@@ -1,6 +1,7 @@
 #include "Walker.hpp"
 #include <sys/types.h>
 #include <cstdlib>
+#include <vector>
 
 /* ----- Draw ----- */
 void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao)
@@ -81,8 +82,30 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
     }
 }
 
+void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands)
+{
+    for (unsigned int j = 0; j < boids.size(); j++)
+    {
+        /* With boids */
+        float distance = glm::distance(_center, boids[j].getCenter());
+        if (distance <= (_radius + boids[j]._radius) * 1.25f)
+        {
+            _center = _center - boids[j].getCenter() * glm::vec3(0.05f);
+        }
+    }
+    for (unsigned int j = 0; j < islands.size(); j++)
+    {
+        /* With obstacles */
+        float distance = glm::distance(_center, islands[j].getCenter());
+        if (distance <= (_radius + islands[j].getRadius()) * 1.25f)
+        {
+            _center -= islands[j].getCenter() * glm::vec3(0.05f);
+        }
+    }
+}
+
 /* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx, const float border)
+void Walker::updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands)
 {
     float dt = ctx.delta_time() * 0.5;
 
@@ -122,5 +145,6 @@ void Walker::updatePosition(const p6::Context& ctx, const float border)
     }
 
     this->restrictSpeed(0.1, 0.7);
+    this->calculateCollisions(boids, islands);
     this->restrictArea(border);
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdlib>
+#include "../Boids/Boids.hpp"
+#include "../Obstacles/Islands.hpp"
 #include "../OpenGL/OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -32,7 +34,8 @@ public:
     // Restrictions
     void restrictArea(const float border);
     void restrictSpeed(float minSpeed, float maxSpeed);
+    void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands);
 
     // Update
-    void updatePosition(const p6::Context& ctx, const float border);
+    void updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands);
 };

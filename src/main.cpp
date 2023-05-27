@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
         boids.drawBoids(&shader, matrixView._ProjMatrix, matView, vaoB, Parameters::get());
 
         // Walker
-        walker.updatePosition(ctx, Parameters::get().BOX_SIZE);
+        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, boids._boids, islands._islands);
         walker.drawWalker(&shader, matrixView._ProjMatrix, matView, vaoW);
 
         // Skybox
