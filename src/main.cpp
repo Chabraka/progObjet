@@ -2,9 +2,9 @@
 #include <string>
 #include <vector>
 #include "Boids/Boids.hpp"
-#include "Islands/Islands.hpp"
+#include "Camera/TrackballCamera.hpp"
+#include "Obstacles/Islands.hpp"
 #include "OpenGL/OpenGL.hpp"
-#include "Skybox/Skybox.hpp"
 #include "Walker/Walker.hpp"
 #include "imgui.h"
 #define DOCTEST_CONFIG_IMPLEMENT
@@ -12,7 +12,6 @@
 #include <Lmodel.hpp>
 #include <Loader/Loader.hpp>
 #include <common.hpp>
-#include "TrackballCamera.hpp"
 #include "doctest/doctest.h"
 
 int main(int argc, char* argv[])
@@ -43,23 +42,23 @@ int main(int argc, char* argv[])
      *   INITIALIZATION CODE   *
      ***************************/
 
-    // Cam
-    MatrixView      matrixView;
-    TrackballCamera camera;
-
     // Skybox
-    Skybox skybox;
-    GLuint vaoS = initOpenGLSkybox();
+    Skybox skybox(Parameters::get());
+    GLuint vaoS = initOpenGLSkybox(Parameters::get().BOX_SIZE);
     GLuint texS = initTex(skyTex);
 
     // Walker
     Walker walker;
     GLuint vaoW = initOpenGLTracker();
 
+    // Cam
+    MatrixView      matrixView;
+    TrackballCamera camera;
+
     // Islands
-    Island  mainIsland(glm::vec3(0.0, 0.0, 0.0));
+    Island  mainIsland;
     GLuint  vaoI = initOpenGLMainIsland();
-    Islands islands(50);
+    Islands islands(50, Parameters::get().BOX_SIZE);
     GLuint  vaoIs = initOpenGLIslands();
 
     // Boids
@@ -119,7 +118,7 @@ int main(int argc, char* argv[])
         islands.drawIslands(&shader, matrixView._ProjMatrix, matView, vaoIs);
 
         // Tracker
-        tracker.updatePositionTracker();
+        tracker.updatePositionTracker(Parameters::get());
         tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
 
         // Boids
@@ -127,7 +126,7 @@ int main(int argc, char* argv[])
         boids.drawBoids(&shader, matrixView._ProjMatrix, matView, vaoB, Parameters::get());
 
         // Walker
-        walker.updatePosition(ctx);
+        walker.updatePosition(ctx, Parameters::get().BOX_SIZE);
         walker.drawWalker(&shader, matrixView._ProjMatrix, matView, vaoW);
 
         // Skybox
