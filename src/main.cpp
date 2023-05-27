@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
 
     // Texture
     img::Image skyTex = p6::load_image_buffer("assets/textures/skybox.png");
+    img::Image modelImage = p6::load_image_buffer("assets/textures/uvgrid.jpg");
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -75,8 +76,11 @@ int main(int argc, char* argv[])
     GLuint vaoT = initOpenGLTracker();
 
     // Loaded model
-    Model  model;
+     Model model;
+    model._vertex_size=2961;
     GLuint vaomodel = initOpenGLModel();
+    GLuint modelTexture = initTex(modelImage);
+
 
     /**************************
      *     RENDERING CODE     *
@@ -134,7 +138,9 @@ int main(int argc, char* argv[])
         skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, matView, vaoS, texS);
 
         // loaded model
-        model.drawModel(&shader, matrixView._ProjMatrix, matView, vaomodel);
+           // // loaded model
+        shaderTex.use();
+        model.drawModel(&shaderTex, matrixView._ProjMatrix, matView, vaomodel, modelTexture);
 
         // Camera
         cameraControls(ctx, camera);
