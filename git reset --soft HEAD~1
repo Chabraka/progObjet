@@ -1,0 +1,675 @@
+[33mcommit 26c4e20790df9b4c59cc23e4575b25107def9b7a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Merge: 435ea0e 1a5288b
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 27 16:24:01 2023 +0200
+
+    merge main and 3d
+
+[33mcommit 1a5288bab45baa85790b55852c1e22b6e7bca36c[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 27 16:12:40 2023 +0200
+
+    update all objects except camera : trapped in the box
+
+[33mcommit b16d697a0d349783eb412d693d553176ce847e68[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 27 16:11:01 2023 +0200
+
+    update all objects except camera : trapped in the box
+
+[33mcommit d616220f641cc0609b8be92adf68159bf2c88713[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 27 16:03:03 2023 +0200
+
+    update all objects except camera : trapped in the box
+
+[33mcommit c12c56efd6be6bb4357399d8e750b13922b9220d[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 25 18:24:20 2023 +0200
+
+    focus the camera on the walker
+
+[33mcommit e5f8bea2cc8955bc761da9c19a73eb7bd98940ec[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 25 18:05:52 2023 +0200
+
+    change FreeflyCamera for TrackballCamera
+
+[33mcommit 9a917f6469849a94644fede0efd9036cc07e9624[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 25 14:25:51 2023 +0200
+
+    add walker
+
+[33mcommit dbb488c269c9f105e20cd530e31e4408be8517c5[m
+Merge: 9b2fe93 64864db
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 25 12:08:09 2023 +0200
+
+    Merge branch '3d' of https://github.com/Chabraka/progObjet into 3d
+
+[33mcommit 9b2fe93440e72227d34eb295317bc2b979b09970[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 25 12:07:56 2023 +0200
+
+    move cam into box
+
+[33mcommit 64864dbf98b143b0c3d732ecc6ae74334e59db87[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Thu May 25 01:47:40 2023 +0200
+
+    loader mauvaise lecture de donnees + repair merge
+
+[33mcommit a391267224156f44d006e4b638d5ccb4967e966e[m
+Merge: 6a75122 47dac82
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Thu May 25 01:15:29 2023 +0200
+
+    Merge branch '3d' of https://github.com/Chabraka/progObjet into 3d
+
+[33mcommit 6a75122f72b06c0177d2883d52beece4c3ce3089[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Thu May 25 01:15:01 2023 +0200
+
+    test loader marche tjrs pas
+
+[33mcommit cf911f3fdcdbe85eab3a031319d86bd6e58c1cf6[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed May 24 23:03:03 2023 +0200
+
+    test
+
+[33mcommit 47dac82d95252c08d771f62e24acb1538e6aba65[m
+Merge: d75063c cf911f3
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 22:27:40 2023 +0200
+
+    Merge branch '3d' of https://github.com/Chabraka/progObjet into 3d
+
+[33mcommit d75063c65ff981f07ee951e4bfaeb202943d8ec6[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 22:27:25 2023 +0200
+
+    improve skybox
+
+[33mcommit d07cce5f3c13c4ea742bcf6ff064eddecea5a563[m
+Merge: 424dc92 eecc44b
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 19:31:26 2023 +0200
+
+    add skybox's texture
+
+[33mcommit 424dc920e03f7069811abd9ab50300567ce80d14[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 19:17:43 2023 +0200
+
+    add skybox's texture
+
+[33mcommit eecc44bcedb22242ff67689d9bec8e9971bbb506[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 14:19:55 2023 +0200
+
+    try to add skybox's texture
+
+[33mcommit e18c55f9a4d188e416291705452e5cd1b4f06787[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 13:37:44 2023 +0200
+
+    add folders
+
+[33mcommit db671057af27929032ad91cc3541f6fbc40268f0[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 13:33:44 2023 +0200
+
+    add folders
+
+[33mcommit d76f58118483a84d3b802bcb80fa0df81e8114a8[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 24 13:16:24 2023 +0200
+
+    add skybox
+
+[33mcommit aa514588741332650be24de42db5f2753b3e2d0e[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed May 24 02:48:14 2023 +0200
+
+    some bad test + no more Warning
+
+[33mcommit f3fa7b2697f9418899d7caa9c717d98c243a9567[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 21:58:26 2023 +0200
+
+    try to add texture
+
+[33mcommit 29a8a993ab0fe37dbb3dd68d61a43cdda3421276[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 18:51:59 2023 +0200
+
+    update paperplanes + try to implement texture
+
+[33mcommit 99f5a4ca3422d52d241913d1e0f6e7d3dc45c641[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 15:34:07 2023 +0200
+
+    add first version of paperplane
+
+[33mcommit 5fc2a61c0ef7131ef8850f5507161aee07c828ed[m
+Merge: cfa4371 36e71a9
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 14:59:03 2023 +0200
+
+    Merge branch '3d' of https://github.com/Chabraka/progObjet into 3d
+
+[33mcommit 36e71a9222465f2167e04de34a588d14b53af896[m
+Merge: 2ad79ac 31b8ff0
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Mon May 22 16:51:53 2023 +0200
+
+    better camera and some bad test
+
+[33mcommit 2ad79ac15e230aa432c12dafdb70dd2b94c39f53[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Mon May 22 16:48:31 2023 +0200
+
+    better camera and some bad test
+
+[33mcommit cfa4371406ed732816174d7ec90970df6f8be3e7[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 14:58:34 2023 +0200
+
+    update islands
+
+[33mcommit 31b8ff0db77364f34e7745cfa1713f2ca139986f[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 14:06:49 2023 +0200
+
+    add folders and islands
+
+[33mcommit 81de820dabd5aee9c4d8a1701d9fe8e4bc222574[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 22 13:23:38 2023 +0200
+
+    include tracer and island in camera view
+
+[33mcommit 5ec2a768d8c48242e681bbfc57b9d168d335f0c9[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Mon May 22 02:11:13 2023 +0200
+
+    camera ok
+
+[33mcommit 44f45ff0476405768a83735e4da457634a3c5090[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Sun May 21 20:35:58 2023 +0200
+
+    Still working on camera
+
+[33mcommit 489147a6fe02989a5808f1349704ddaf129e1c03[m
+Merge: 071930e 2b8ac9f
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue May 16 23:39:39 2023 +0200
+
+    ebauche camera
+
+[33mcommit 071930e9d555ad422043528558acd87f03f146ca[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue May 16 23:37:59 2023 +0200
+
+    ebauche camera
+
+[33mcommit 2b8ac9f42a4659cf72bbcee67657edb70a6e8c71[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 15 16:17:40 2023 +0200
+
+    try to add circle (future island)
+
+[33mcommit 33c467bbc7db49522b8b72dfc1f76b73d712ade8[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 15 14:12:45 2023 +0200
+
+    move shaders folder to root
+
+[33mcommit 5f59234918ba724124a2e5bf4965d8109bdb6024[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Mon May 15 13:59:36 2023 +0200
+
+    track files not tracked
+
+[33mcommit 809a6490f5dfb33341e387eaf8df99f6d88ed9d8[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 10 17:29:33 2023 +0200
+
+    add depth !
+
+[33mcommit 71f6e0c29833806762d53e85d531fd167d3d8185[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 6 21:27:15 2023 +0200
+
+    press q to quit
+
+[33mcommit 695ac240cd601ed269a6625637e8e880a0841b13[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 6 20:41:28 2023 +0200
+
+    change all vec2 to vec3
+
+[33mcommit 337857ae26ff89490336b5699eb6874c857b3d78[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 6 20:04:11 2023 +0200
+
+    draw boids with OpenGL
+
+[33mcommit 6b26dd8b32462c98bc5cf6e6ffd476e11e53ca46[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Sat May 6 16:55:34 2023 +0200
+
+    update tracker + change Square files name for Boid + add OpenGL .cpp and .hpp
+
+[33mcommit 52e5c0a135e0b7282c9241ff4accbb56da442426[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri May 5 15:20:23 2023 +0200
+
+    try drawing with OpenGL
+
+[33mcommit d3de3fbfc4bdd2233c6a1bae9b6bb0f915ed40e2[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 4 16:33:19 2023 +0200
+
+    update 3d branch
+
+[33mcommit 435ea0e98e7626713daeab7989158cef0653abe7[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 4 16:19:47 2023 +0200
+
+    clean code
+
+[33mcommit 81224ade29bf1a5d84c7cdbd04489b255b7224e0[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 4 15:25:18 2023 +0200
+
+    implement Tracker class and delete the last useless getters/setters
+
+[33mcommit b39d2affa0224bfb12167ce001d5fb437a2f745b[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 4 13:19:24 2023 +0200
+
+    delete useless getters and setters
+
+[33mcommit 17d8efb3805c15c2125686c0ebc13eeb5e8c24d4[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Thu May 4 13:03:05 2023 +0200
+
+    set square attributes and setters to private
+
+[33mcommit e4157020643ec263fe1709b269d845bd8ed5aae9[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 3 19:33:02 2023 +0200
+
+    implement singleton Parameters
+
+[33mcommit 31b7ac53199d17b5d2e233cd67858f1dd0340043[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 3 17:13:50 2023 +0200
+
+    add pragma once in headers
+
+[33mcommit 1675459d9967751aa75abb85d3e8ef29dd88ab8b[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed May 3 17:10:07 2023 +0200
+
+    add pragma once in headers
+
+[33mcommit abe9b3ce2e40eec824a0a5a9227507a586719753[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 19 17:04:42 2023 +0200
+
+    ready for 3d
+
+[33mcommit 17c02ab8693419869889ae610ebcf7a91a04dd10[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 19 15:49:47 2023 +0200
+
+    add parameters struct
+
+[33mcommit 0b21dfe269bfff2be2d1f1f756a1c3e67fd26d19[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 19 15:18:19 2023 +0200
+
+    add const
+
+[33mcommit b91eb586130a29e5abdb801bfcb57349f36588f9[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 19 15:03:54 2023 +0200
+
+    correct warnings
+
+[33mcommit ba428872d3dd2156bb75d497a5b623b6697241d2[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 19 16:44:06 2023 +0200
+
+    factorAttractiontracker imGui2
+
+[33mcommit ebf256a1cffdc0a60812edc760f40b6718b572e9[m
+Merge: 1ae338b f685654
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 19 16:31:37 2023 +0200
+
+    factorAttractiontracker imGui
+
+[33mcommit 1ae338b5eb7eee0b819dbe4d32ba42589cb06d0a[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 19 16:29:05 2023 +0200
+
+    factorAttractiontracker imGui
+
+[33mcommit 1116187fee7a2e30ecfb88fe18f2c788988e55f3[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 19 16:07:12 2023 +0200
+
+    factorRepulsion guy
+
+[33mcommit f685654e3baf416282271ac619307ec4235b1370[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 19 14:26:19 2023 +0200
+
+    clean useless code
+
+[33mcommit 6fef147d69f7e6065a54736e7e65114c8e282fd8[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 12 22:48:10 2023 +0200
+
+    track square behaviour
+
+[33mcommit 5267bbec09e301b77aa4ba84ceccb1a16b2601e2[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 12 21:25:34 2023 +0200
+
+    im gui donnee
+
+[33mcommit 6ca18d859ab861e0d649147569ca8c98834742a4[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 12 19:09:41 2023 +0200
+
+    try add squaretracker
+
+[33mcommit ae37833ea8bd62d673c06488e3ee0ed71dba97e5[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 12 15:59:44 2023 +0200
+
+    add Boids class .cpp and .hpp
+
+[33mcommit aadfa49a1867cba3e0f5ef8d600dad258befed57[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Apr 12 12:41:26 2023 +0200
+
+    implement getters and setters
+
+[33mcommit 165bcd707ef3cf312318eb9ef98bc722570c3126[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Apr 12 00:28:16 2023 +0200
+
+    attraction repulsion acc
+
+[33mcommit 6f279e3f8df95fec96bc7f0eb02f5c617ede93d6[m
+Merge: 0190ef3 d4d2b61
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue Apr 11 23:06:06 2023 +0200
+
+    Merge branch 'acc' into main
+
+[33mcommit d4d2b614e95a674b2d67ded70c78c7e9de90db66[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue Apr 11 23:04:45 2023 +0200
+
+    reglage acc + fixe rebond
+
+[33mcommit 0190ef3ba7527a08b3aaf5f6d8306318abb6470f[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue Apr 11 21:54:29 2023 +0200
+
+    ajout fichier
+
+[33mcommit 9439f401074d22a94695d8af3c7c825b22ce8e0d[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Tue Apr 11 21:44:04 2023 +0200
+
+    work in progress
+
+[33mcommit 92d4ddaa9cfe620750e84af4cd1afecba86e6a26[m
+Merge: 48016a5 df849d7
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Apr 7 15:48:30 2023 +0200
+
+    Merge branch 'main' of https://github.com/Chabraka/progObjet
+
+[33mcommit df849d7365ef1ca404b27c46ae37a25a527033b1[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Apr 7 17:45:46 2023 +0200
+
+    separate function
+
+[33mcommit 48016a5549b29a3f267a3ead4f549f1663719295[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Apr 7 15:48:25 2023 +0200
+
+    add ImGui max and min speed
+
+[33mcommit c0c8cf8039e37fe9c6c81274113412f6a3def423[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Apr 7 15:11:01 2023 +0200
+
+    add underscores for attributes
+
+[33mcommit d3b0ac73908b10b7a430d78e385b649e7ecc5d83[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Apr 7 17:04:05 2023 +0200
+
+    update class + function
+
+[33mcommit 6ae035e35d98bd6a2ed0e4c5996838fdb8d0456b[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Thu Apr 6 15:57:19 2023 +0200
+
+    update movement boids + position
+
+[33mcommit 5d038a56b0a75ef141dd1bfad8e937236a280eea[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 31 17:38:47 2023 +0200
+
+    update speed
+
+[33mcommit 5d8dc6370eb8f68c2941f7f00891131f607aef5b[m
+Merge: 3237a01 e6f8417
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 31 17:35:58 2023 +0200
+
+    update position
+
+[33mcommit 3237a01d067c9b5107ee0079166ee1e11e59a255[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 31 17:34:42 2023 +0200
+
+    update position
+
+[33mcommit b39158286a0a8deb29fd2dd871ba8b64c4f0796f[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 31 17:14:07 2023 +0200
+
+    update window collision
+
+[33mcommit e6f8417f41ae5a85208895b7f22bb3f54980b821[m
+Merge: 7c12331 b391582
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Mar 31 15:31:29 2023 +0200
+
+    add ImGui window
+
+[33mcommit 7c12331aa281f504ba346102c42290e7e02ce160[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Mar 31 15:26:56 2023 +0200
+
+    add ImGui window
+
+[33mcommit 64bed77eeb1706500a622d11464165a35e585cce[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 24 19:06:00 2023 +0100
+
+    update movement
+
+[33mcommit 3985bac338f414448fc6f99759eb7c4b9b590db5[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Mar 24 17:54:44 2023 +0100
+
+    add multiple squares
+
+[33mcommit 9b8b571e9f465fc7d1d8f56ed624af5fb7afa12a[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 24 18:46:25 2023 +0100
+
+    random
+
+[33mcommit de6505c4f2e3115e8e2c1b84d7b6901c29c6d0d7[m
+Merge: 5b86012 61f9e8f
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Mar 24 17:35:03 2023 +0100
+
+    clean and merge
+
+[33mcommit 61f9e8f72395405fb0d37a130d0bf6aa14e502e8[m
+Merge: 4f7dbcb 3749143
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 24 18:31:49 2023 +0100
+
+    random movement
+
+[33mcommit 4f7dbcb385f7098d7f1763dac5e28fd4acd71000[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Fri Mar 24 18:29:57 2023 +0100
+
+    random movement
+
+[33mcommit 5b8601254cfad6d42a8f41d5c60796c338828a01[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Fri Mar 24 17:33:43 2023 +0100
+
+    clean
+
+[33mcommit 376e90ada31a45a925232a07d49a88c3d8245994[m
+Merge: 412a999 2381afc
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 16:50:12 2023 +0100
+
+    Merge branch 'main' of https://github.com/Chabraka/progObjet into main
+
+[33mcommit 412a999fee2613153ce0929fcfd6aef5b2361686[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 16:50:00 2023 +0100
+
+    add collision
+
+[33mcommit c196ce63f72091e4abc9871cc248e8dd41898241[m
+Merge: 58d2848 1e6931d
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 16:17:41 2023 +0100
+
+    update position
+
+[33mcommit 58d28484f36c030db99276378ab3c5d682d6b419[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 16:15:39 2023 +0100
+
+    update position
+
+[33mcommit 3749143bb3590e69e43216eabb914e0899b572ce[m
+Merge: d13837f 376e90a
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 15:53:05 2023 +0100
+
+    merge
+
+[33mcommit d13837f2e4067005f5535a129a4c5f196622b8a4[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 15:52:09 2023 +0100
+
+    merge
+
+[33mcommit 2381afc8547459b6b677f5b36b4771828a9304eb[m
+Merge: f5dec20 c196ce6
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 15:22:21 2023 +0100
+
+    merge
+
+[33mcommit f5dec20fdf4a51be3fec8dac1a10366e1be5bfba[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 15:21:05 2023 +0100
+
+    merge
+
+[33mcommit eba520ec6328a7c4c9403f4b2947b75d57d6e28e[m
+Merge: 3557619 1f05172
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 15:17:52 2023 +0100
+
+    square clean
+
+[33mcommit 3557619ea2c85d4412cfa49c422bd987f699289e[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 15 15:02:39 2023 +0100
+
+    main
+
+[33mcommit 1e6931d347aba7de6bdd9bc1e5c4dce7a8929819[m
+Merge: c462793 eba520e
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 14:21:10 2023 +0100
+
+    add square class
+
+[33mcommit c462793cdd57d813d91a83ac64a6985830975375[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 14:20:00 2023 +0100
+
+    add square class
+
+[33mcommit 1f051729e675072783316339d5225cd1740154ca[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 15 14:00:44 2023 +0100
+
+    add square class
+
+[33mcommit 2b483a16959c0792453eab590f663edddc9d31be[m
+Merge: afcdb0a c5b0519
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 1 17:16:41 2023 +0100
+
+    update p6
+
+[33mcommit c5b0519df37d4a49ea25440bd2edfacf1d012e4e[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Mar 1 17:59:16 2023 +0100
+
+    p6
+
+[33mcommit afcdb0a8376a577d52c5da0e360a8ec728f47a19[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Mar 1 17:13:53 2023 +0100
+
+    update p6
+
+[33mcommit be50bcf049ff63008b143380deab1be7e9f269e2[m
+Author: Charline <charli.le.pape@gmail.com>
+Date:   Wed Feb 15 16:47:30 2023 +0100
+
+    square test
+
+[33mcommit 9db9df8830895ba669b6baca737f6bf693cbef41[m
+Author: Juliette-J <juliette.jeannin@hotmail.fr>
+Date:   Wed Feb 15 15:50:34 2023 +0100
+
+    Test
+
+[33mcommit 0d6fc42624a0709e25055bd746206c53a44fd747[m
+Author: Charline LP <62283687+Chabraka@users.noreply.github.com>
+Date:   Sat Feb 11 17:50:31 2023 +0100
+
+    Initial commit

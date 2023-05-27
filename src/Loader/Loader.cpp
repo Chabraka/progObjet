@@ -35,6 +35,7 @@ void readVertices(const std::string& path, std::vector<glm::vec3>& vertices, std
 }
 
 void readFaces(const std::string& path, std::vector<int>& vertices, std::vector<int>& texv, std::vector<int>& normalv) {
+    // Ça ne suffit pas à créer une face.
     std::ifstream file(path);
 
     vertices.clear();
