@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include "../Skybox/Skybox.hpp"
+#include "ObjLoader.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "img/src/Image.h"
 #include "p6/p6.h"
@@ -40,6 +41,24 @@ struct MatrixView {
     void setMatrix();
 };
 
+class ObjRenderer {
+    /* Attributes */
+
+public:
+    GLuint      vao;
+    int         vertex_size;
+    p6::Shader* shader;
+    GLuint      texture;
+
+    /* Methods */
+public:
+    // Constructors
+    ObjRenderer(const char* obj_path, const char* image_path, const p6::Shader* shader);
+
+    // Draw
+    void draw(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix);
+};
+
 GLuint initOpenGLSkybox(const float& skyboxRadius);
 GLuint initOpenGLWalker();
 GLuint initOpenGLTracker();
@@ -50,5 +69,6 @@ GLuint initOpenGLModel();
 GLuint initTex(const img::Image& image);
 
 void drawOpenGL(GLuint vao);
+void drawOpenGLModel(GLuint vao, GLuint texture, int size);
 void drawOpenGLSkybox(GLuint vao, GLuint texture);
 void drawOpenGLBoids(GLuint vao);

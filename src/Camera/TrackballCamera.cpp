@@ -23,10 +23,10 @@ void TrackballCamera::rotateUp(float degrees)
     m_fAngleX += degrees;
 }
 
-glm::mat4 TrackballCamera::getViewMatrix() const
+glm::mat4 TrackballCamera::getViewMatrix(const Walker& walker) const
 {
     glm::mat4 viewMatrix(1.f);
-    glm::vec3 translation = glm::vec3(-m_position.x / 2, -m_position.y, -m_position.z);
+    glm::vec3 translation = glm::vec3(-walker.getCenter().x, -walker.getCenter().y, -walker.getCenter().z - m_fDistance);
 
     viewMatrix =
         glm::translate(glm::mat4(1.f), translation);

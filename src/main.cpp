@@ -36,7 +36,8 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     // Texture
-    img::Image skyTex = p6::load_image_buffer("assets/textures/skybox.png");
+    img::Image skyTex     = p6::load_image_buffer("assets/textures/skybox.png");
+    img::Image modelImage = p6::load_image_buffer("assets/textures/uvgrid.jpg");
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -75,8 +76,10 @@ int main(int argc, char* argv[])
     GLuint vaoT = initOpenGLTracker();
 
     // Loaded model
-    Model  model;
-    GLuint vaomodel = initOpenGLModel();
+    Model model;
+    model._vertex_size  = 2961;
+    GLuint vaomodel     = initOpenGLModel();
+    GLuint modelTexture = initTex(modelImage);
 
     /**************************
      *     RENDERING CODE     *
@@ -105,7 +108,7 @@ int main(int argc, char* argv[])
         // Camera power Matrix
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
-        glm::mat4 matView = camera.getViewMatrix();
+        glm::mat4 matView = camera.getViewMatrix(walker);
 
         // // Matrix
         // shader.set("uMVMatrix", matrixView._MMatrix);
@@ -134,12 +137,14 @@ int main(int argc, char* argv[])
         skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, matView, vaoS, texS);
 
         // loaded model
-        model.drawModel(&shader, matrixView._ProjMatrix, matView, vaomodel);
+        // // loaded model
+        shaderTex.use();
+        model.drawModel(&shaderTex, matrixView._ProjMatrix, matView, vaomodel, modelTexture);
 
         // Camera
         camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);
         cameraControls(ctx, camera);
-        ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
+        ctx.mouse_scrolled = [&](const p6::MouseScroll& scroll) {
             (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
         };
 
