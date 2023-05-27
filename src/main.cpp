@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
         model.drawModel(&shader, matrixView._ProjMatrix, matView, vaomodel);
 
         // Camera
-        camera.updatePosition(walker.getCenter());
+        camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);
         cameraControls(ctx, camera);
         ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
             (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling

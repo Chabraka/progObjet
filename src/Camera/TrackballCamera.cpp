@@ -35,6 +35,15 @@ glm::mat4 TrackballCamera::getViewMatrix() const
     return viewMatrix;
 }
 
+void TrackballCamera::updatePosition(const glm::vec3& walkerPosition, const float border)
+{
+    glm::vec3 position = walkerPosition + glm::vec3(0., 0., m_fDistance);
+    if (abs(position.x) < border && abs(position.y) < border && abs(position.z) < border)
+    {
+        m_position = position;
+    }
+};
+
 void cameraControls(const p6::Context& ctx, TrackballCamera& camera)
 {
     // Rotate
