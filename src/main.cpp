@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
         // Camera power Matrix
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
-        glm::mat4 matView = camera.getViewMatrix(walker);
+        glm::mat4 matView = camera.getViewMatrix();
 
         // // Matrix
         // shader.set("uMVMatrix", matrixView._MMatrix);
@@ -143,10 +143,12 @@ int main(int argc, char* argv[])
         model.drawModel(&shaderTex, matrixView._ProjMatrix, matView, vaomodel, modelTexture);
 
         // Camera
+        camera.updatePosition(walker.getCenter());
         cameraControls(ctx, camera);
-        ctx.mouse_scrolled = [&](const p6::MouseScroll& scroll) {
+        ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
             (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
         };
+
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
