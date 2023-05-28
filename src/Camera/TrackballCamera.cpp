@@ -42,7 +42,7 @@ void TrackballCamera::updatePosition(const glm::vec3& walkerPosition, const floa
     {
         m_position = position;
     }
-};
+}
 
 void cameraControls(const p6::Context& ctx, TrackballCamera& camera)
 {

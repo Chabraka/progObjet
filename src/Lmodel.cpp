@@ -1,9 +1,11 @@
+
+
 #include "Lmodel.hpp"
 #include <sys/types.h>
 #include "OpenGL/OpenGL.hpp"
 
 /* ----- Draw ----- */
-void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, GLuint texture)
+void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, -2));
     T           = glm::translate(T, glm::vec3(this->_center.x, this->_center.y, this->_center.z));
@@ -13,17 +15,20 @@ void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uTexture", 0);
     // shader->set("uColor", glm::vec3(0.0, 0.5, 0.5));
+    this->_objrenderer.draw();
 
-    drawOpenGLModel(vao, texture, this->_vertex_size);
-}
+}   
 
 /* ----- Restrictions ----- */
 
+
 /* ----- Behaviors ----- */
+
+
 
 /* ----- Updates ----- */
 
-void Model::updatePosition()
+void Model::updatePosition(float minSpeed, float maxSpeed)
 {
     float dt = 1.0 / 60.;
 
@@ -39,3 +44,4 @@ void Model::updatePosition()
 
     // Restrict the position
 }
+

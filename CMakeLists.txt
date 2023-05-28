@@ -30,6 +30,9 @@ if(WARNINGS_AS_ERRORS)
     endif()
 endif()
 
+# ---Help gdb---
+set(CMAKE_BUILD_TYPE Debug)
+
 # ---Setup Testing---
 include(FetchContent)
 FetchContent_Declare(

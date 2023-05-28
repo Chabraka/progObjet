@@ -1,14 +1,14 @@
 #pragma once
 
+
 #include <cstddef>
 #include <cstdlib>
 #include <vector>
-#include "../ObjLoader.hpp"
 #include "../Skybox/Skybox.hpp"
-#include "Loader/Loader.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "img/src/Image.h"
 #include "p6/p6.h"
+#include "ObjLoader.hpp"
 
 glm::mat4 translate(float tx, float ty, float tz);
 
@@ -20,6 +20,7 @@ struct Vertex3DColor {
     Vertex3DColor(glm::vec3 p, glm::vec3 c)
         : _position(p), _color(c){};
 };
+
 
 struct Vertex3DUV {
     glm::vec3 _position;
@@ -42,23 +43,58 @@ struct MatrixView {
     void setMatrix();
 };
 
+
+/*
+ObjRenderer est une classe destinée à recevoir toutes les variables et méthodes nécessaires 
+au rendu OpenGL.
+
+
+*/
 class ObjRenderer {
     /* Attributes */
-
+    
 public:
-    GLuint      vao;
-    int         vertex_size;
-    p6::Shader* shader;
-    GLuint      texture;
+    GLuint vao;
+    int vertex_size;
+    const p6::Shader* shader;
+    GLuint texture;
+
+private:
+    void _initGL(const char* obj_path);
 
     /* Methods */
 public:
     // Constructors
+    ObjRenderer();
     ObjRenderer(const char* obj_path, const char* image_path, const p6::Shader* shader);
+    ObjRenderer(const char* obj_path, GLuint texture, const p6::Shader* shader);
+   
 
     // Draw
-    void draw(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix);
+    void draw();   
 };
+
+class MultiResObjRenderer {
+    public:
+     ObjRenderer low_renderer;
+     ObjRenderer medium_renderer;
+     ObjRenderer high_renderer;
+
+     private:
+     float _floor_low_medium;
+     float _floor_medium_high;
+
+    public:
+    MultiResObjRenderer(){};
+    MultiResObjRenderer(
+        const char* low_obj_path, const char* medium_obj_path, const char* high_obj_path, 
+        const char* image_path, const p6::Shader* shader, 
+        float floor_low_medium, float floor_medium_high);
+
+    void draw(float cam_distance);
+};
+
+
 
 GLuint initOpenGLSkybox(const float& skyboxRadius);
 GLuint initOpenGLWalker();
@@ -66,10 +102,8 @@ GLuint initOpenGLTracker();
 GLuint initOpenGLBoids();
 GLuint initOpenGLMainIsland();
 GLuint initOpenGLIslands();
-GLuint initOpenGLModel();
 GLuint initTex(const img::Image& image);
 
 void drawOpenGL(GLuint vao);
-void drawOpenGLModel(GLuint vao, GLuint texture, int size);
 void drawOpenGLSkybox(GLuint vao, GLuint texture);
 void drawOpenGLBoids(GLuint vao);

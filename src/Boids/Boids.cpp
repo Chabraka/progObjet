@@ -1,30 +1,50 @@
 #include "Boids.hpp"
 
 /* ----- Constructor ----- */
-Boids::Boids(Parameters& params)
+Boids::Boids(Parameters& params, float floor_low_medium, float floor_medium_high, const p6::Shader* shader)
 {
+
+    this->renderer = MultiResObjRenderer("assets/models/baleine_low.obj", "assets/models/baleine_medium.obj", "assets/models/baleine_high.obj", 
+        "assets/textures/baleine.jpg", shader, 
+        floor_low_medium, floor_medium_high);
     // Creation of boids
     for (int i = 0; i < params.MAX_BOID_NB; i++)
     {
         Boid boid(
-            0.05f,
-            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f))),
-            glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),
-            glm::vec3(0.)
+            0.05f, // radius
+            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f))), //speed
+            glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)), //acceleration
+            glm::vec3(0.0)
         );
         _boids.push_back(boid);
     }
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao, Parameters& params)
+void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position)
 {
     for (int j = 0; j < params.BOID_NB; j++)
     {
-        _boids[j].drawBoid(shader, ProjMatrix, ViewMatrix, vao);
-        _boids[j].updatePosition(params);
+        float cam_distance = glm::distance(_boids[j]._center, cam_position);
+        std::cout << cam_distance <<"=cam_distance" << std::endl;
+        this->drawBoid(&_boids[j],ProjMatrix, ViewMatrix, cam_distance);
+        _boids[j].updatePosition(params, dt);
     }
 }
+
+void Boids::drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float cam_distance)
+{
+    glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
+    T           = glm::translate(T, glm::vec3(boid->_center.x / 2, boid->_center.y, boid->_center.z));
+
+    this->renderer.low_renderer.shader->set("uMVMatrix", T);
+    this->renderer.low_renderer.shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
+    this->renderer.low_renderer.shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
+    this->renderer.low_renderer.shader->set("uColor", glm::vec3(0.5, 0.8, 0.2));
+
+    this->renderer.draw(cam_distance);
+}
+
 
 /* ----- Updates ----- */
 void Boids::updateBoidsAcc(Tracker* tracker, Parameters& params)

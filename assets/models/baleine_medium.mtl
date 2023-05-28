@@ -1,0 +1,12 @@
+# Blender 3.5.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Plastic_Pearl_Colored_Procedural
+Ns 200.000000
+Ka 0.500000 0.500000 0.500000
+Ks 0.000000 0.000000 0.000000
+Ke 0.020588 0.045294 0.150000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd /home/eric/Documents/CHARLINE/boit4/progObjet/assets/textures/baleine.jpg

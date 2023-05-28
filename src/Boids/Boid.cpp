@@ -2,19 +2,7 @@
 #include <sys/types.h>
 #include "../OpenGL/OpenGL.hpp"
 
-/* ----- Draw ----- */
-void Boid::drawBoid(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, const GLuint& vao)
-{
-    glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(_center.x / 2, _center.y, _center.z));
 
-    shader->set("uMVMatrix", T);
-    shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
-    shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
-    shader->set("uColor", glm::vec3(0.5, 0.8, 0.2));
-
-    drawOpenGLBoids(vao);
-}
 
 /* ----- Restrictions ----- */
 
@@ -103,9 +91,8 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numspeedboids
 
 /* ----- Updates ----- */
 
-void Boid::updatePosition(Parameters& params)
+void Boid::updatePosition(Parameters& params, float dt)
 {
-    float dt = 1.0 / 60.;
 
     // Calcul of the position
     _center.x += _speed.x * dt + _acceleration.x * dt * dt / 2;

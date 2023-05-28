@@ -4,9 +4,17 @@
 #include "p6/p6.h"
 
 class TrackballCamera {
+
+
+
 private:
     glm::vec3 m_position;
+
+public:
     float     m_fDistance;
+
+private:
+    
     float     m_fAngleX;
     float     m_fAngleY;
 
