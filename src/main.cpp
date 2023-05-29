@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     // Islands
     Island  mainIsland;
     GLuint  vaoI = initOpenGLMainIsland();
-    Islands islands(50, Parameters::get().BOX_SIZE);
+    Islands islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
     GLuint  vaoIs = initOpenGLIslands();
 
     // Boids
@@ -74,6 +74,7 @@ int main(int argc, char* argv[])
     GLuint vaoT = initOpenGLTracker();
 
     // Loaded model
+    Model model("assets/models/floating_island.obj", "assets/textures/floating_island.png", &shaderTex);
     //Model model;
     //model._vertex_size  = 2961;
     //GLuint vaomodel     = initOpenGLModel();
@@ -123,9 +124,10 @@ int main(int argc, char* argv[])
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
         // Islands
+        // Islands
         shader.use();
         mainIsland.drawIsland(&shader, matrixView._ProjMatrix, matView, vaoI);
-        islands.drawIslands(&shader, matrixView._ProjMatrix, matView, vaoIs);
+        islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter());
 
         // Tracker
         tracker.updatePositionTracker(Parameters::get());
@@ -146,8 +148,8 @@ int main(int argc, char* argv[])
 
         
         // loaded model
-        //shaderTex.use();
-        //model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
+        shaderTex.use();
+        model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Camera
         camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);

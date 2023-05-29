@@ -26,7 +26,7 @@ void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& pa
     for (int j = 0; j < params.BOID_NB; j++)
     {
         float cam_distance = glm::distance(_boids[j]._center, cam_position);
-        std::cout << cam_distance <<"=cam_distance" << std::endl;
+        // std::cout << cam_distance <<"=cam_distance" << std::endl;
         this->drawBoid(&_boids[j],ProjMatrix, ViewMatrix, cam_distance);
         _boids[j].updatePosition(params, dt);
     }
@@ -34,8 +34,13 @@ void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& pa
 
 void Boids::drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float cam_distance)
 {
+    
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(boid->_center.x / 2, boid->_center.y, boid->_center.z));
+    T           = glm::translate(T, glm::vec3(boid->_center.x, boid->_center.y, boid->_center.z));
+    // Orientation du boid:
+    glm::vec3 axis = glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));
+    float angle = glm::acos(glm::dot(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));    
+    T           = glm::rotate(T, angle, axis);
 
     this->renderer.low_renderer.shader->set("uMVMatrix", T);
     this->renderer.low_renderer.shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);

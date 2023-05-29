@@ -10,10 +10,11 @@ class Boid {
 public:
     const float _radius;
     glm::vec3 _center;
+    glm::vec3 _speed;
 
 private:
     
-    glm::vec3 _speed;
+    
     glm::vec3 _acceleration;
 
     /* Methods */
