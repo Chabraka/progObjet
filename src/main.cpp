@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
         // Camera power Matrix
         matrixView._MMatrix = glm::mat4(1);
         // matrixView._MVPMatrix =  matrixView._ProjMatrix * matrixView._MMatrix;
-        glm::mat4 matView = camera.getViewMatrix();
+        glm::mat4 matView = camera.getViewMatrix(walker);
 
         // // Matrix
         // shader.set("uMVMatrix", matrixView._MMatrix);
