@@ -16,12 +16,19 @@ private:
     glm::vec3 _center;
     glm::vec3 _speed;
     glm::vec3 _acceleration;
+    ObjRenderer _objboat;
+    ObjRenderer _objpirate;
 
     /* Methods */
 public:
     // Constructors
-    Walker()
-        : _radius(0.05f), _center(glm::vec3(0.f)), _speed(glm::vec3(0.3f)), _acceleration(glm::vec3(0.05f)){}; // Only constructor available
+    Walker(const p6::Shader* shader)
+        : _radius(0.05f), _center(glm::vec3(0.f)), 
+          _speed(glm::vec3(0.3f)), 
+          _acceleration(glm::vec3(0.05f)),
+          _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)),
+          _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader))
+          {}; // Only constructor available
     Walker(float radius, glm::vec3 center) = delete;
     Walker(Walker& walker)                 = delete;
 
@@ -29,7 +36,7 @@ public:
     glm::vec3 getCenter() const { return _center; };
 
     // Draw
-    void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
+    void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix);
 
     // Restrictions
     void restrictArea(const float border);

@@ -4,6 +4,7 @@
 #include "Boids/Boids.hpp"
 #include "Camera/TrackballCamera.hpp"
 #include "Obstacles/Islands.hpp"
+#include "Obstacles/MainIsland.hpp"
 #include "OpenGL/OpenGL.hpp"
 #include "Walker/Walker.hpp"
 #include "imgui.h"
@@ -47,18 +48,15 @@ int main(int argc, char* argv[])
     GLuint texS = initTex(skyTex);
 
     // Walker
-    Walker walker;
-    GLuint vaoW = initOpenGLTracker();
+    Walker walker(&shaderTex);
 
     // Cam
     MatrixView      matrixView;
     TrackballCamera camera;
 
     // Islands
-    Island  mainIsland;
-    GLuint  vaoI = initOpenGLMainIsland();
+    MainIsland  mainIsland(&shaderTex);
     Islands islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
-    GLuint  vaoIs = initOpenGLIslands();
 
     // Boids
     Boids  boids(Parameters::get(), 3.0,0.4, &shaderTex);
@@ -74,7 +72,8 @@ int main(int argc, char* argv[])
     GLuint vaoT = initOpenGLTracker();
 
     // Loaded model
-    Model model("assets/models/floating_island.obj", "assets/textures/floating_island.png", &shaderTex);
+    // pour test
+    // Model model("assets/models/main_island.obj", "assets/textures/floating_island.png", &shaderTex);
     //Model model;
     //model._vertex_size  = 2961;
     //GLuint vaomodel     = initOpenGLModel();
@@ -126,7 +125,7 @@ int main(int argc, char* argv[])
         // Islands
         // Islands
         shader.use();
-        mainIsland.drawIsland(&shader, matrixView._ProjMatrix, matView, vaoI);
+        mainIsland.drawIsland(&shaderTex, matrixView._ProjMatrix, matView);
         islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter());
 
         // Tracker
@@ -140,7 +139,7 @@ int main(int argc, char* argv[])
 
         // Walker
         walker.updatePosition(ctx, Parameters::get().BOX_SIZE, boids._boids, islands._islands);
-        walker.drawWalker(&shader, matrixView._ProjMatrix, matView, vaoW);
+        walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Skybox
         shaderTex.use();
@@ -148,8 +147,8 @@ int main(int argc, char* argv[])
 
         
         // loaded model
-        shaderTex.use();
-        model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
+        // shaderTex.use();
+        // model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Camera
         camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);

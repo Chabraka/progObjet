@@ -1,0 +1,44 @@
+# Blender 3.5.1 MTL File: 'ISLAND.blend'
+# www.blender.org
+
+newmtl Boat_Glossy
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Boat_Metal
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Tex.png
+map_Ns /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Roughtness.png
+map_d /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Tex.png
+map_Bump -bm 1.000000 /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Nor.png
+
+newmtl Boat_Tex
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Tex.png
+map_Ns /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Roughtness.png
+map_d /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Tex.png
+map_Bump -bm 1.000000 /home/eric/Documents/CHARLINE/modeles/victorian-row-boat-lamp-low-poly/source/Victorian Row Boat & Lamp - Low Poly/Texture/Boat_Nor.png
+
+newmtl Brillo
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
