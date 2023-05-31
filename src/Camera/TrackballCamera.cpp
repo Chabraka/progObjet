@@ -33,7 +33,7 @@ glm::mat4 TrackballCamera::getViewMatrix(const Walker& walker) const
     viewMatrix = glm::rotate(viewMatrix, m_fAngleY, glm::vec3(0.f, 1.f, 0.f));
     // std::cout << m_fAngleX << "\n";
     // std::cout << viewMatrix[0][0] << "\n";
-    viewMatrix = glm::translate(viewMatrix, translation);
+    viewMatrix = glm::translate(viewMatrix, translation + glm::vec3(0.f, 0.f, m_fDistance));
     return viewMatrix;
 }
 
