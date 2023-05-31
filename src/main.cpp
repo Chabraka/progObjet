@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <glm/glm.hpp>
 #include "Boids/Boids.hpp"
 #include "Camera/TrackballCamera.hpp"
 #include "Obstacles/Islands.hpp"
@@ -59,7 +60,7 @@ int main(int argc, char* argv[])
     Islands islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
 
     // Boids
-    Boids  boids(Parameters::get(), 3.0,0.4, &shaderTex);
+    Boids  boids(Parameters::get(), 3.0,0.4, &shaderTex, glm::vec3(0.020588, 0.045294, 0.150000) , glm::vec3(5.000000, 5.000000, 5.000000), 150.000000);
     //GLuint vaoB = initOpenGLBoids();
 
     // Tracker
@@ -122,6 +123,10 @@ int main(int argc, char* argv[])
         // shader.set("uMVPMatrix", matrixView._MVPMatrix);
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
+        glm::mat4 lightModelMatrix = glm::translate(glm::mat4(1.f), glm::vec3(1,2,3));
+        // lightModelMatrix = glm::scale(lightModelMatrix, glm::vec3(0.2f));
+        glm::vec4 lightdirection = (matView*lightModelMatrix*glm::vec4(1.f,0.f,0.f,1.f));
+
         // Islands
         // Islands
         shader.use();
@@ -135,7 +140,7 @@ int main(int argc, char* argv[])
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
         std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float) camera.m_fDistance << std::endl;
-        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter());
+        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), lightdirection, glm::vec3(1));
 
         // Walker
         walker.updatePosition(ctx, Parameters::get().BOX_SIZE, boids._boids, islands._islands);

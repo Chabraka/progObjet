@@ -16,6 +16,7 @@ struct Vertex3DColor {
     glm::vec3 _position;
     glm::vec3 _color;
 
+
     Vertex3DColor() = default;
     Vertex3DColor(glm::vec3 p, glm::vec3 c)
         : _position(p), _color(c){};
@@ -24,11 +25,12 @@ struct Vertex3DColor {
 
 struct Vertex3DUV {
     glm::vec3 _position;
+    glm::vec3 _normal;
     glm::vec2 _coordTex;
 
     Vertex3DUV() = default;
-    Vertex3DUV(glm::vec3 p, glm::vec2 c)
-        : _position(p), _coordTex(c){};
+    Vertex3DUV(glm::vec3 p, glm::vec2 c, glm::vec3 n)
+        : _position(p), _coordTex(c), _normal(n){};
 };
 
 struct MatrixView {
