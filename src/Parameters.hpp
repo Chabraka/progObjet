@@ -10,7 +10,7 @@ public:
     int         BOID_NB                = 100;
     const int   MAX_BOID_NB            = 300;
     float       MIN_SPEED              = 0.01f;
-    float       MAX_SPEED              = 0.6f;
+    float       MAX_SPEED              = 0.4f;
     float       MIN_DIST               = 0.7f;
     float       FACTOR_ATTRACTION      = 0.001f;
     float       FACTOR_REPULSION       = -0.02f;

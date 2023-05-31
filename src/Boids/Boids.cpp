@@ -8,8 +8,8 @@ Boids::Boids(Parameters& params, float floor_low_medium, float floor_medium_high
     for (int i = 0; i < params.MAX_BOID_NB; i++)
     {
         Boid boid(
-            0.2f,                                                                                                                                                                                                                                 // radius
-            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.2f), (params.BOX_SIZE - 0.2f)), p6::random::number(-(params.BOX_SIZE - 0.2f), (params.BOX_SIZE - 0.2f)), p6::random::number(-(params.BOX_SIZE - 0.2f), (params.BOX_SIZE - 0.2f))), // center
+            0.3f,                                                                                                                                                                                                                                 // radius
+            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f))), // center
             glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),                                                                                                                                                                   // speed
             glm::vec3(0.0)                                                                                                                                                                                                                        // acceleration
         );
@@ -18,14 +18,14 @@ Boids::Boids(Parameters& params, float floor_low_medium, float floor_medium_high
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position)
+void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     for (int j = 0; j < params.BOID_NB; j++)
     {
         float cam_distance = glm::distance(_boids[j]._center, cam_position);
         // std::cout << cam_distance <<"=cam_distance" << std::endl;
         this->drawBoid(&_boids[j], ProjMatrix, ViewMatrix, cam_distance);
-        _boids[j].updatePosition(params, dt);
+        _boids[j].updatePosition(params, dt, boids, islands, mainIsland);
     }
 }
 

@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
         std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float)camera.m_fDistance << std::endl;
-        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter());
+        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), boids._boids, islands._islands, mainIsland);
 
         // Walker
         walker.updatePosition(ctx, Parameters::get(), boids._boids, islands._islands, mainIsland);

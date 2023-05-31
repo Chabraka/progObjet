@@ -152,7 +152,7 @@ void Walker::updatePosition(const p6::Context& ctx, const Parameters& params, co
         _speed.y += _acceleration.y * dt;
     }
 
-    this->restrictSpeed(0.1, 0.7);
+    this->restrictSpeed(0.1, 0.5);
     this->calculateCollisions(params.BOID_NB, boids, islands, mainIsland);
     this->restrictArea(params.BOX_SIZE);
 }
