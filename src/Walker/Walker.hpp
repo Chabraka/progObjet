@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "../Boids/Boids.hpp"
 #include "../Obstacles/Islands.hpp"
+#include "../Obstacles/MainIsland.hpp"
 #include "../OpenGL/OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -13,9 +14,9 @@ public:
     const float _radius;
 
 private:
-    glm::vec3 _center;
-    glm::vec3 _speed;
-    glm::vec3 _acceleration;
+    glm::vec3   _center;
+    glm::vec3   _speed;
+    glm::vec3   _acceleration;
     ObjRenderer _objboat;
     ObjRenderer _objpirate;
 
@@ -23,12 +24,7 @@ private:
 public:
     // Constructors
     Walker(const p6::Shader* shader)
-        : _radius(0.05f), _center(glm::vec3(0.f)), 
-          _speed(glm::vec3(0.3f)), 
-          _acceleration(glm::vec3(0.05f)),
-          _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)),
-          _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader))
-          {}; // Only constructor available
+        : _radius(0.12f), _center(glm::vec3(0.f, 0.f, 1.f)), _speed(glm::vec3(0.3f)), _acceleration(glm::vec3(0.05f)), _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)), _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader)){}; // Only constructor available
     Walker(float radius, glm::vec3 center) = delete;
     Walker(Walker& walker)                 = delete;
 
@@ -41,8 +37,8 @@ public:
     // Restrictions
     void restrictArea(const float border);
     void restrictSpeed(float minSpeed, float maxSpeed);
-    void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands);
+    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 
     // Update
-    void updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands);
+    void updatePosition(const p6::Context& ctx, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 };

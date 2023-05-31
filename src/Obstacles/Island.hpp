@@ -19,13 +19,15 @@ private:
 public:
     // Constructors
     Island()
-        : _radius(0.7f), _center(glm::vec3(0.0f)){
-            _angle = p6::random::number(0.0, 360.);
-        };
+        : _radius(0.08f), _center(glm::vec3(0.0f))
+    {
+        _angle = p6::random::number(0.0, 360.);
+    };
     Island(glm::vec3 center)
-        : _radius(0.1f), _center(center){
-            _angle = p6::random::number(0.0, 360.);
-        };
+        : _radius(0.08f), _center(center)
+    {
+        _angle = p6::random::number(0.0, 360.);
+    };
 
     // Getter
     const glm::vec3 getCenter() const { return _center; };

@@ -17,12 +17,9 @@ private:
 public:
     // Constructors
     MainIsland(const p6::Shader* shader)
-        : _radius(0.7f), _center(glm::vec3(0.0f)),
-        _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)){}
-        ;
+        : _radius(0.4f), _center(glm::vec3(0.0f)), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)){};
     MainIsland(glm::vec3 center, const p6::Shader* shader)
-        : _radius(0.1f), _center(center),
-        _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)){};
+        : _radius(0.4f), _center(center), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)){};
 
     // Getter
     const glm::vec3 getCenter() const { return _center; };

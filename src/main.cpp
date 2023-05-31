@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     // Texture
-    img::Image skyTex     = p6::load_image_buffer("assets/textures/skybox.png");
+    img::Image skyTex = p6::load_image_buffer("assets/textures/skybox.png");
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -55,12 +55,12 @@ int main(int argc, char* argv[])
     TrackballCamera camera;
 
     // Islands
-    MainIsland  mainIsland(&shaderTex);
-    Islands islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
+    MainIsland mainIsland(&shaderTex);
+    Islands    islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
 
     // Boids
-    Boids  boids(Parameters::get(), 3.0,0.4, &shaderTex);
-    //GLuint vaoB = initOpenGLBoids();
+    Boids boids(Parameters::get(), 3.0, 0.4, &shaderTex);
+    // GLuint vaoB = initOpenGLBoids();
 
     // Tracker
     Tracker tracker(
@@ -74,10 +74,10 @@ int main(int argc, char* argv[])
     // Loaded model
     // pour test
     // Model model("assets/models/main_island.obj", "assets/textures/floating_island.png", &shaderTex);
-    //Model model;
-    //model._vertex_size  = 2961;
-    //GLuint vaomodel     = initOpenGLModel();
-    //GLuint modelTexture = initTex(modelImage);
+    // Model model;
+    // model._vertex_size  = 2961;
+    // GLuint vaomodel     = initOpenGLModel();
+    // GLuint modelTexture = initTex(modelImage);
 
     /**************************
      *     RENDERING CODE     *
@@ -98,16 +98,15 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-
     auto start = std::chrono::high_resolution_clock::now();
 
     // Infinite update loop
     ctx.update = [&]() {
         // mesure du temps écoulé pour une boucle
-        auto end = std::chrono::high_resolution_clock::now();
+        auto                          end     = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = end - start;
-        float dt = elapsed.count();
-        start = end;
+        float                         dt      = elapsed.count();
+        start                                 = end;
         // std::cout << "Temps de rendu : " << renderTime << " secondes" << std::endl;
         // Clear window
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -134,18 +133,17 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float) camera.m_fDistance << std::endl;
+        std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float)camera.m_fDistance << std::endl;
         boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter());
 
         // Walker
-        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, boids._boids, islands._islands);
+        walker.updatePosition(ctx, Parameters::get(), boids._boids, islands._islands, mainIsland);
         walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Skybox
         shaderTex.use();
         skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, matView, vaoS, texS);
 
-        
         // loaded model
         // shaderTex.use();
         // model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);

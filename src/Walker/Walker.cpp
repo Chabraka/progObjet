@@ -7,7 +7,7 @@
 void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(this->_center.x / 2, this->_center.y, this->_center.z));
+    T           = glm::translate(T, this->getCenter());
 
     shader->set("uMVMatrix", T);
     shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
@@ -83,30 +83,37 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
     }
 }
 
-void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands)
+void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
-    for (unsigned int j = 0; j < boids.size(); j++)
+    float distance = glm::distance(_center, mainIsland.getCenter());
+    if (distance <= (_radius + mainIsland.getRadius()))
+    {
+        _center -= glm::vec3(0.03f);
+        _speed -= 0.005;
+    }
+    for (unsigned int j = 0; j < boidsNb; j++)
     {
         /* With boids */
         float distance = glm::distance(_center, boids[j].getCenter());
-        if (distance <= (_radius + boids[j]._radius) * 1.25f)
+        if (distance <= (_radius + boids[j]._radius))
         {
-            _center = _center - boids[j].getCenter() * glm::vec3(0.05f);
+            _center -= boids[j].getCenter() * glm::vec3(0.0005f / (distance * distance));
         }
     }
     for (unsigned int j = 0; j < islands.size(); j++)
     {
         /* With obstacles */
         float distance = glm::distance(_center, islands[j].getCenter());
-        if (distance <= (_radius + islands[j].getRadius()) * 1.25f)
+        if (distance <= (_radius + islands[j].getRadius()))
         {
-            _center -= islands[j].getCenter() * glm::vec3(0.05f);
+            _center -= islands[j].getCenter() * glm::vec3(0.0005f / (distance * distance));
+            _speed -= 0.005;
         }
     }
 }
 
 /* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands)
+void Walker::updatePosition(const p6::Context& ctx, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     float dt = ctx.delta_time() * 0.5;
 
@@ -146,6 +153,6 @@ void Walker::updatePosition(const p6::Context& ctx, const float border, const st
     }
 
     this->restrictSpeed(0.1, 0.7);
-    this->calculateCollisions(boids, islands);
-    this->restrictArea(border);
+    this->calculateCollisions(params.BOID_NB, boids, islands, mainIsland);
+    this->restrictArea(params.BOX_SIZE);
 }
