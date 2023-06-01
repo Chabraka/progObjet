@@ -24,7 +24,7 @@ public:
     void moveFront(float delta);
     void rotateLeft(float degrees);
     void rotateUp(float degrees);
-    void updatePosition(const glm::vec3& walkerPosition, const float border);
+    void updatePosition(const glm::vec3& walkerPosition, float orientation, const float border);
 
     glm::mat4 getViewMatrix(const Walker& walker) const;
 };

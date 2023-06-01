@@ -19,7 +19,6 @@ private:
 	float _orientation;
     glm::vec3 _center;
     glm::vec3 _speed;
-    glm::vec3 _acceleration;
     ObjRenderer _objboat;
     ObjRenderer _objpirate;
 
@@ -28,11 +27,10 @@ public:
     // Constructors
     Walker(const p6::Shader* shader)
         : _radius(0.05f), _center(glm::vec3(0.f)),
-          _speed(glm::vec3(0.5f)),
-          _acceleration(glm::vec3(0.0f)),
+          _speed(glm::vec3(0.f)),
           _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)),
           _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader)),
-		  _lamp(glm::vec3(0,0,0.5f), glm::vec3(0.8,0.5,0.))
+		  _lamp(glm::vec3(0,0,0.5f), glm::vec3(0.4,0.25,0.1))
           {}; // Only constructor available
 	Walker(const p6::Shader* shader, LightProperties lightprop):Walker(shader){
 		_lightProperties = lightprop;
@@ -42,6 +40,7 @@ public:
 
     // Getter
     glm::vec3 getCenter() const { return _center; };
+    float getOrientation() const { return _orientation; };
 
     // Draw
     void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity);

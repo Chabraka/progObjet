@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
 
         // Tracker
         tracker.updatePositionTracker(Parameters::get());
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
+        //tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
@@ -163,11 +163,9 @@ int main(int argc, char* argv[])
         // model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Camera
-        camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);
+        camera.updatePosition(walker.getCenter(), walker.getOrientation(), Parameters::get().BOX_SIZE);
         cameraControls(ctx, camera);
-        ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
-            (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
-        };
+
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))
