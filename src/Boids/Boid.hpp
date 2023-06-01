@@ -21,7 +21,7 @@ private:
 public:
     // Constructors
     Boid()
-        : _radius(0.3f), _center(glm::vec3(1.0f)), _speed(glm::vec3(0.4f)), _acceleration(glm::vec3(0.4f)){};
+        : _radius(0.2f), _center(glm::vec3(1.0f)), _speed(glm::vec3(0.4f)), _acceleration(glm::vec3(0.4f)){};
     Boid(float radius, glm::vec3 center, glm::vec3 speed, glm::vec3 acceleration)
         : _radius(radius), _center(center), _speed(speed), _acceleration(acceleration){};
 

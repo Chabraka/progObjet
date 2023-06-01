@@ -13,7 +13,7 @@ public:
     float       MAX_SPEED              = 0.4f;
     float       MIN_DIST               = 0.7f;
     float       FACTOR_ATTRACTION      = 0.001f;
-    float       FACTOR_REPULSION       = -0.02f;
+    float       FACTOR_REPULSION       = -0.110f;
     float       MAX_REPULSION          = -3.f;
     float       FACTOR_ATTRACT_TRACKER = 0.15f;
     const float BOX_SIZE               = 3.f;

@@ -148,7 +148,7 @@ void Walker::updatePosition(const p6::Context& ctx, const Parameters& params, co
     }
     else if (ctx.key_is_pressed(GLFW_KEY_LEFT_SHIFT))
     {
-        _center.y -= (_speed.y * dt + _acceleration.y * dt * dt * 0.5f) * 0.5;
+        _center.y -= _speed.y * dt + _acceleration.y * dt * dt * 0.5;
         _speed.y += _acceleration.y * dt;
     }
 
