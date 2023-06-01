@@ -15,7 +15,7 @@ private:
     float m_fAngleY;
 
 public:
-    TrackballCamera(float m_fDistance = 0.3f, float m_fAngleX = 0.f, float m_fAngleY = 0.f);
+    TrackballCamera(float m_fDistance = 0.5f, float m_fAngleX = 0.f, float m_fAngleY = 0.f);
 
     void moveFront(float delta);
     void rotateLeft(float degrees);
