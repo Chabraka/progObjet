@@ -27,7 +27,7 @@ private:
 public:
     // Constructors
     Walker(const p6::Shader* shader)
-        : _radius(0.05f), _center(glm::vec3(0.f)), _speed(glm::vec3(0.f)), _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)), _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader)), _lamp(glm::vec3(0, 0, 0.5f), glm::vec3(0.4, 0.25, 0.1)){}; // Only constructor available
+        : _radius(0.05f), _center(glm::vec3(0.f, 0.f, 1.f)), _speed(glm::vec3(0.f)), _objboat(ObjRenderer("assets/models/boat1.obj", "assets/textures/Boat_Tex.png", shader)), _objpirate(ObjRenderer("assets/models/Pirate.obj", "assets/textures/PirateUVtexture.png", shader)), _lamp(glm::vec3(0, 0, 0.5f), glm::vec3(0.4, 0.25, 0.1)){}; // Only constructor available
     Walker(const p6::Shader* shader, LightProperties lightprop)
         : Walker(shader)
     {
