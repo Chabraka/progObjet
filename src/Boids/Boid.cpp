@@ -90,32 +90,32 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numspeedboids
 /* ----- Updates ----- */
 void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
-    /*float distance = glm::distance(_center, mainIsland.getCenter());
-    if (distance <= (_radius + mainIsland.getRadius() * 2.))
+    float distance = glm::distance(_center, mainIsland.getCenter());
+    if (distance <= (_radius + mainIsland.getRadius() * 2))
     {
-        _center -= glm::vec3(0.2f);
-        _speed = glm::vec3(0.01f);
-    }*/
+        _center += glm::normalize(_center) * glm::vec3(0.006f);
+        _speed -= glm::vec3(0.08f);
+    }
     for (unsigned int j = 0; j < boidsNb; j++)
     {
         // With the other boids
         float distance = glm::distance(_center, boids[j].getCenter());
         if (distance <= (2 * _radius) && distance != 0)
         {
-            //_center -= boids[j].getCenter() * glm::vec3(0.000005f / (distance * distance));
             _center -= glm::normalize(_center) * glm::vec3(0.001f);
         }
-    } /*
-     for (unsigned int j = 0; j < islands.size(); j++)
-     {
-         // With obstacles
-         float distance = glm::distance(_center, islands[j].getCenter());
-         if (distance <= (_radius + islands[j].getRadius()))
-         {
-             _center -= islands[j].getCenter() * glm::vec3(0.05f / (distance * distance));
-             _speed = glm::vec3(0.01f);
-         }
-     } */
+    }
+    for (unsigned int j = 0; j < islands.size(); j++)
+    {
+        // With obstacles
+        float distance = glm::distance(_center, islands[j].getCenter());
+        if (distance <= (_radius + islands[j].getRadius()))
+        {
+            //_center -= islands[j].getCenter() * glm::vec3(0.05f / (distance * distance));
+            _center += glm::normalize(_center) * glm::vec3(0.006f);
+            _speed = glm::vec3(0.08f);
+        }
+    }
 }
 
 void Boid::updatePosition(Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)

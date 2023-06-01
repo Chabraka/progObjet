@@ -37,7 +37,7 @@ public:
     // Restrictions
     void restrictArea(const float border);
     void restrictSpeed(float minSpeed, float maxSpeed);
-    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void calculateCollisions(const int& boidsNb, std::vector<Boid> boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 
     // Update
     void updatePosition(const p6::Context& ctx, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
