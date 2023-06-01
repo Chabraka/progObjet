@@ -17,6 +17,8 @@ public:
     float       MAX_REPULSION          = -3.f;
     float       FACTOR_ATTRACT_TRACKER = 0.15f;
     const float BOX_SIZE               = 3.f;
+    float       FLOOR_LOW_MEDIUM       = 3.0;
+    float       FLOOR_MEDIUM_HIGH      = 0.4;
 
 private:
     Parameters() = default;

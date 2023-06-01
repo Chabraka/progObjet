@@ -56,10 +56,10 @@ int main(int argc, char* argv[])
 
     // Islands
     MainIsland mainIsland(&shaderTex);
-    Islands    islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex);
+    Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex);
 
     // Boids
-    Boids boids(Parameters::get(), 3.0, 0.4, &shaderTex);
+    Boids boids(Parameters::get(), Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex);
     // GLuint vaoB = initOpenGLBoids();
 
     // Tracker
@@ -94,6 +94,8 @@ int main(int argc, char* argv[])
         ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
         ImGui::SliderFloat("Max Repulsion", &Parameters::get().MAX_REPULSION, -1.f, -4.f);
         ImGui::SliderFloat("Attraction (tracker)", &Parameters::get().FACTOR_ATTRACT_TRACKER, 0.01f, 0.3f);
+        ImGui::SliderFloat("Floor between low and medium LOD", &Parameters::get().FLOOR_LOW_MEDIUM, 1.f, 5.f);
+        ImGui::SliderFloat("Floor between medium and high LOD", &Parameters::get().FLOOR_MEDIUM_HIGH, 0.1f, 0.7f);
 
         ImGui::End();
     };
