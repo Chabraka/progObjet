@@ -11,16 +11,16 @@ uniform vec3 uKd;
 uniform vec3 uKs;
 uniform float uShininess;
 
-uniform vec3 uLightPos_vs;
+uniform vec3 sunPosition;
 uniform vec3 uLightIntensity;
 
 vec3 blinnPhong(){
 
-    float d= distance(vFragPosition.xyz, uLightPos_vs);
+    float d= distance(vFragPosition.xyz, sunPosition);
 	vec3 Li = uLightIntensity/(d*d);
     vec3 N = normalize(vFragNormal.xyz);
     vec3 w0 = normalize(-vFragPosition.xyz);
-    vec3 wi = normalize(uLightPos_vs-vFragPosition.xyz);
+    vec3 wi = normalize(sunPosition-vFragPosition.xyz);
     vec3 halfVector = (w0 + wi)/2.f;
 
     return Li*(uKd*dot(wi, N) + uKs* pow(dot(halfVector, N), uShininess));

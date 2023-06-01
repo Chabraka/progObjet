@@ -1,7 +1,9 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <glm/glm.hpp>
 #include "Boids/Boids.hpp"
+#include "Light.hpp"
 #include "Camera/TrackballCamera.hpp"
 #include "Obstacles/Islands.hpp"
 #include "Obstacles/MainIsland.hpp"
@@ -32,6 +34,7 @@ int main(int argc, char* argv[])
     // Shaders
     const p6::Shader shader    = p6::load_shader("shaders/3D.vs.glsl", "shaders/3D.fs.glsl");
     const p6::Shader shaderTex = p6::load_shader("shaders/tex3D.vs.glsl", "shaders/tex3D.fs.glsl");
+	const p6::Shader shaderSkybox = p6::load_shader("shaders/tex3D.vs.glsl", "shaders/skybox.fs.glsl");
     shaderTex.set("uTexture", 0);
     glEnable(GL_DEPTH_TEST);
 
@@ -48,18 +51,21 @@ int main(int argc, char* argv[])
     GLuint texS = initTex(skyTex);
 
     // Walker
-    Walker walker(&shaderTex);
+    Walker walker(&shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
 
     // Cam
     MatrixView      matrixView;
     TrackballCamera camera;
 
     // Islands
-    MainIsland mainIsland(&shaderTex);
-    Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex);
+
+    MainIsland  mainIsland(&shaderTex);
+
+    Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
 
     // Boids
-    Boids boids(Parameters::get(), Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex);
+    Boids boids(Parameters::get(), Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
+
 
     // Tracker
     Tracker tracker(
@@ -122,38 +128,50 @@ int main(int argc, char* argv[])
         // shader.set("uMVPMatrix", matrixView._MVPMatrix);
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
+        glm::mat4 lightModelMatrix = glm::translate(glm::mat4(1.f), glm::vec3(3,3,3));
+        // lightModelMatrix = glm::scale(lightModelMatrix, glm::vec3(0.2f));
+        glm::vec4 lightposition = (lightModelMatrix*glm::vec4(0.f,0.f,0.f,1.f));
+		glm::vec3 lightIntensity = glm::vec3(50);
+		Light sun(glm::vec3(lightposition), lightIntensity);
+		// std::cout << lightposition.x << "  " << lightposition.y << "  " << lightposition.z << "  " << lightposition.a << "\n";
+
         // Islands
-        shader.use();
-        mainIsland.drawIsland(&shaderTex, matrixView._ProjMatrix, matView);
-        islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter());
+        // Islands
+        // shader.use();
+		shaderTex.use();
+        mainIsland.drawIsland(&shaderTex, matrixView._ProjMatrix, matView, sun, walker.getLight());
+        islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter(), sun, walker.getLight());
 
         // Tracker
         tracker.updatePositionTracker(Parameters::get());
-        tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
+        //tracker.drawTracker(&shader, matrixView._ProjMatrix, matView, vaoT);
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        // std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float)camera.m_fDistance << std::endl;
-        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), boids._boids, islands._islands, mainIsland);
+
+        std::cout << "# " << walker.getCenter().x << " : " << walker.getCenter().y << " : " << walker.getCenter().z << " " <<  std::endl;
+		std::cout << "~ " << walker.getLight().position.y << "\n\n";
+        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(),boids._boids, islands._islands, mainIsland, sun, walker.getLight());
+
 
         // Walker
-        walker.updatePosition(ctx, Parameters::get(), boids._boids, islands._islands, mainIsland);
-        walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView);
+        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, Parameters::get(), boids._boids, islands._islands, mainIsland);
+		// std::cout << glm::degrees(walker._orientation) <<"\n";
+        walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView, lightposition, lightIntensity);
 
         // Skybox
-        shaderTex.use();
-        skybox.drawSkybox(&shaderTex, matrixView._ProjMatrix, matView, vaoS, texS);
+        shaderSkybox.use();
+        skybox.drawSkybox(&shaderSkybox, matrixView._ProjMatrix, matView, vaoS, texS);
+
 
         // loaded model
         // shaderTex.use();
         // model.drawModel(&shaderTex, matrixView._ProjMatrix, matView);
 
         // Camera
-        camera.updatePosition(walker.getCenter(), Parameters::get().BOX_SIZE);
+        camera.updatePosition(walker.getCenter(), walker.getOrientation(), Parameters::get().BOX_SIZE);
         cameraControls(ctx, camera);
-        ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
-            (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
-        };
+
 
         // Quit
         if (ctx.key_is_pressed(GLFW_KEY_ESCAPE))

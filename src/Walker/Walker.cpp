@@ -1,7 +1,6 @@
 #include "Walker.hpp"
 #include <sys/types.h>
 #include <cstdlib>
-#include <iterator>
 #include <vector>
 
 /* ----- Draw ----- */
@@ -84,7 +83,7 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
     }
 }
 
-void Walker::calculateCollisions(const int& boidsNb, std::vector<Boid> boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     float distance = glm::distance(_center, mainIsland.getCenter());
     if (distance <= (_radius + mainIsland.getRadius()))

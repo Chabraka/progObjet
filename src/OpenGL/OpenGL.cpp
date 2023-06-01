@@ -77,12 +77,11 @@ ObjRenderer::ObjRenderer(){
 
     std::vector<Vertex3DUV> vv;
     for (int i=0; i < shapevertexes.size(); i++){
-        vv.push_back(Vertex3DUV(shapevertexes[i].position, shapevertexes[i].texCoords));
+        vv.push_back(Vertex3DUV(shapevertexes[i].position, shapevertexes[i].texCoords, shapevertexes[i].normal));
     };
 
     // storing vv.len() in vertex_size
     this->vertex_size = vv.size();
-
 
     /* --- VBO --- */
     GLuint vbo;
@@ -102,17 +101,20 @@ ObjRenderer::ObjRenderer(){
     const GLuint VERTEX_ATTR_POSITION = 0;
     const GLuint VERTEX_ATTR_COLOR    = 1;
     const GLuint VERTEX_ATTR_TEXTURE = 2;
+    const GLuint VERTEX_ATTR_NORMAL = 3;
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
     // glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
-    glDisableVertexAttribArray(VERTEX_ATTR_COLOR);
+    // glDisableVertexAttribArray(VERTEX_ATTR_COLOR);
     // glDisableVertexAttribArray(VERTEX_ATTR_TEXTURE);
     glEnableVertexAttribArray(VERTEX_ATTR_TEXTURE);
+    glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
 
     /* --- Binding --- */
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _position)));
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _position)));
     // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DColor), (const GLvoid*)(offsetof(Vertex3DColor, _color)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _coordTex)));
+    glVertexAttribPointer(VERTEX_ATTR_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _coordTex)));
+    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DUV), (const GLvoid*)(offsetof(Vertex3DUV, _normal)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -140,8 +142,6 @@ glm::mat4 translate(float tx, float ty, float tz)
 
 
 
-
-
 /* --- Init --- */
 
 GLuint initOpenGLSkybox(const float& skyboxRadius)
@@ -154,48 +154,47 @@ GLuint initOpenGLSkybox(const float& skyboxRadius)
     //  Tab with coordinates
     Vertex3DUV skybox[] = {
         // Back
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335), glm::vec3(0,0,1)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(0,0,1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(0,0,1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664), glm::vec3(0,0,1)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(0,0,1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(0,0,1)),
         // Left
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.335)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335), glm::vec3(1,0,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(1,0,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.664), glm::vec3(1,0,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.664), glm::vec3(1,0,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.001, 0.335), glm::vec3(1,0,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335), glm::vec3(1,0,0)),
         // Front
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.335)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.335), glm::vec3(0,0,-1)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.664), glm::vec3(0,0,-1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335), glm::vec3(0,0,-1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664), glm::vec3(0,0,-1)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.999, 0.664), glm::vec3(0,0,-1)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335), glm::vec3(0,0,-1)),
         // Right
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(-1, 0, 0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664), glm::vec3(-1, 0, 0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664), glm::vec3(-1, 0, 0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.664), glm::vec3(-1, 0, 0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.745, 0.335), glm::vec3(-1, 0, 0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(-1, 0, 0)),
         // Top
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.999)),
-        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.999)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.251, 0.999)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0.664), glm::vec3(0,-1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(0,-1,0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.999), glm::vec3(0,-1,0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.999), glm::vec3(0,-1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(0,-1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, skyboxRadius), glm::vec2(0.251, 0.999), glm::vec3(0,-1,0)),
         // Floor
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.25, 0)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.335)),
-        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.335)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.25, 0)),
-        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.25, 0.335)),
-
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.499, 0), glm::vec3(0,1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.25, 0), glm::vec3(0,1,0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(0,1,0)),
+        Vertex3DUV(glm::vec3(skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.499, 0.335), glm::vec3(0,1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.25, 0), glm::vec3(0,1,0)),
+        Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, skyboxRadius), glm::vec2(0.25, 0.335), glm::vec3(0,1,0))
     };
 
     glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(Vertex3DUV), skybox, GL_STATIC_DRAW);
