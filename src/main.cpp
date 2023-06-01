@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
 
     // Boids
     Boids boids(Parameters::get(), Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex);
-    // GLuint vaoB = initOpenGLBoids();
 
     // Tracker
     Tracker tracker(
@@ -124,7 +123,6 @@ int main(int argc, char* argv[])
         // shader.set("uNormalMatrix", matrixView._NormalMatrix);
 
         // Islands
-        // Islands
         shader.use();
         mainIsland.drawIsland(&shaderTex, matrixView._ProjMatrix, matView);
         islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter());
@@ -135,7 +133,7 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
-        std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float)camera.m_fDistance << std::endl;
+        // std::cout << walker.getCenter().x << walker.getCenter().y << walker.getCenter().z << " " << (float)camera.m_fDistance << std::endl;
         boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), boids._boids, islands._islands, mainIsland);
 
         // Walker
