@@ -15,19 +15,19 @@ class Boids {
 public:
     std::vector<Boid> _boids;
     MultiResObjRenderer renderer;
-    Light light;
+    LightProperties light;
 
     /* Methods */
 public:
     // Constructors
     Boids() = default;
     Boids(Parameters& params, float floor_low_medium, float floor_medium_high, const p6::Shader* shader);
-    Boids(Parameters& params, float floor_low_medium, float floor_medium_high, const p6::Shader* shader, glm::vec3 diffuse, glm::vec3 specular, float shininess);
+    Boids(Parameters& params, float floor_low_medium, float floor_medium_high, const p6::Shader* shader, LightProperties light);
 
     // Draw
-    void drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position, glm::vec3 lightpos, glm::vec3 lightIntensity);
+    void drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position,  Light sun, Light walker);
 
-    void drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float cam_distance, glm::vec3 lightpos, glm::vec3 lightIntensity);
+    void drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float cam_distance,  Light sun, Light walker);
 
     // Update
     void updateBoidsAcc(Tracker* tracker, Parameters& params);

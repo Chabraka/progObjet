@@ -14,11 +14,11 @@ uniform mat4 uNormalMatrix;
 
 void main() {
     vFragPosition = aVertexPosition;
-    vFragNormal = aVertexNormal;
+    vFragNormal = vec3(uNormalMatrix*vec4(aVertexNormal,0));
     vFragTex = aVertexTex;
 
     vec4 vertexPos = vec4(aVertexPosition, 1);
-    vFragPosition = vec3(uMVMatrix * vertexPos);
+    vFragPosition = vec3(uMVPMatrix * vertexPos);
 
     gl_Position = uMVPMatrix * vertexPos;
 }
