@@ -4,7 +4,7 @@
 #include <vector>
 
 /* ----- Draw ----- */
-void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix)
+void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
     T           = glm::translate(T, this->getCenter());
@@ -113,46 +113,60 @@ void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& bo
 }
 
 /* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Walker::updatePosition(const p6::Context& ctx, const float border, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
-    float dt = ctx.delta_time() * 0.5;
+    float     dt = ctx.delta_time() * 0.5;
+    glm::vec3 acceleration(0.0, 0.0, 0.0);
+    acceleration -= _speed * 5.0f;
+
+    if (ctx.mouse_button_is_pressed(p6::Button::Left))
+    {
+        _orientation += ctx.mouse_delta().x;
+    }
+
+    float r_orientation = _orientation;
 
     if (ctx.key_is_pressed(GLFW_KEY_A) || ctx.key_is_pressed(GLFW_KEY_LEFT))
     {
-        _center.x -= _speed.x * dt + _acceleration.x * dt * dt * 0.5f;
-        _speed.x += _acceleration.x * dt;
+        // acceleration -=  20.0f * glm::vec3(cos(r_orientation) * 0.5f, 0.0 , sin(r_orientation) * 0.5f);
+        _orientation -= 5.0f * dt;
     }
 
     if (ctx.key_is_pressed(GLFW_KEY_D) || ctx.key_is_pressed(GLFW_KEY_RIGHT))
     {
-        _center.x += _speed.x * dt + _acceleration.x * dt * dt * 0.5f;
-        _speed.x += _acceleration.x * dt;
+        // acceleration +=  20.0f * glm::vec3(cos(r_orientation) * 0.5f, 0.0 , sin(r_orientation) * 0.5f);
+        _orientation += 5.0 * dt;
     }
 
     if (ctx.key_is_pressed(GLFW_KEY_W) || ctx.key_is_pressed(GLFW_KEY_UP))
     {
-        _center.z -= _speed.z * dt + _acceleration.z * dt * dt * 0.5f;
-        _speed.z += _acceleration.z * dt;
+        acceleration -= 10.0f * glm::vec3(-sin(r_orientation) * 0.5f, 0.0, cos(r_orientation) * 0.5f);
     }
 
     if (ctx.key_is_pressed(GLFW_KEY_S) || ctx.key_is_pressed(GLFW_KEY_DOWN))
     {
-        _center.z += _speed.z * dt + _acceleration.z * dt * dt * 0.5f;
-        _speed.z += _acceleration.z * dt;
+        acceleration += 10.0f * glm::vec3(-sin(r_orientation) * 0.5f, 0.0, cos(r_orientation) * 0.5f);
     }
 
     if (ctx.key_is_pressed(GLFW_KEY_SPACE))
     {
-        _center.y += _speed.y * dt + _acceleration.y * dt * dt * 0.5f;
-        _speed.y += _acceleration.y * dt;
-    }
-    else if (ctx.key_is_pressed(GLFW_KEY_LEFT_SHIFT))
-    {
-        _center.y -= _speed.y * dt + _acceleration.y * dt * dt * 0.5;
-        _speed.y += _acceleration.y * dt;
+        acceleration.y += 10.0f;
     }
 
-    this->restrictSpeed(0.1, 0.5);
-    this->calculateCollisions(params.BOID_NB, boids, islands, mainIsland);
-    this->restrictArea(params.BOX_SIZE);
+    if (ctx.shift())
+    {
+        acceleration.y -= 10.0f;
+    }
+
+    _center += _speed * dt + acceleration * dt * dt;
+    _speed += acceleration * dt;
+
+    this->restrictSpeed(0.001, 1.);
+    this->calculateCollisions(boids.size(), boids, islands, mainIsland);
+    this->restrictArea(border);
+}
+
+Light Walker::getLight()
+{
+    return this->_lamp;
 }
