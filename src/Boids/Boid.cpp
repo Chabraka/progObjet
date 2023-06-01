@@ -2,8 +2,6 @@
 #include <sys/types.h>
 #include "../OpenGL/OpenGL.hpp"
 
-
-
 /* ----- Restrictions ----- */
 
 void Boid::restrictArea(const float& border)
@@ -90,10 +88,38 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numspeedboids
 }
 
 /* ----- Updates ----- */
-
-void Boid::updatePosition(Parameters& params, float dt)
+void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
+    /*float distance = glm::distance(_center, mainIsland.getCenter());
+    if (distance <= (_radius + mainIsland.getRadius() * 2.))
+    {
+        _center -= glm::vec3(0.2f);
+        _speed = glm::vec3(0.01f);
+    }*/
+    for (unsigned int j = 0; j < boidsNb; j++)
+    {
+        // With the other boids
+        float distance = glm::distance(_center, boids[j].getCenter());
+        if (distance <= (2 * _radius) && distance != 0)
+        {
+            //_center -= boids[j].getCenter() * glm::vec3(0.000005f / (distance * distance));
+            _center -= glm::normalize(_center) * glm::vec3(0.001f);
+        }
+    } /*
+     for (unsigned int j = 0; j < islands.size(); j++)
+     {
+         // With obstacles
+         float distance = glm::distance(_center, islands[j].getCenter());
+         if (distance <= (_radius + islands[j].getRadius()))
+         {
+             _center -= islands[j].getCenter() * glm::vec3(0.05f / (distance * distance));
+             _speed = glm::vec3(0.01f);
+         }
+     } */
+}
 
+void Boid::updatePosition(Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+{
     // Calcul of the position
     _center.x += _speed.x * dt + _acceleration.x * dt * dt / 2;
     _center.y += _speed.y * dt + _acceleration.y * dt * dt / 2;
@@ -105,7 +131,9 @@ void Boid::updatePosition(Parameters& params, float dt)
     _speed.z += _acceleration.z * dt;
 
     // Restrict the position
+
     restrictSpeed(params.MIN_SPEED, params.MAX_SPEED);
+    calculateCollisions(params.BOID_NB, boids, islands, mainIsland);
     restrictArea(params.BOX_SIZE);
 }
 

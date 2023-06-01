@@ -4,6 +4,7 @@
 #include "../Light.hpp"
 #include "../Boids/Boids.hpp"
 #include "../Obstacles/Islands.hpp"
+#include "../Obstacles/MainIsland.hpp"
 #include "../OpenGL/OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -48,10 +49,10 @@ public:
     // Restrictions
     void restrictArea(const float border);
     void restrictSpeed(float minSpeed, float maxSpeed);
-    void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands);
+    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 
 	Light getLight();
 
     // Update
-    void updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands);
+    void updatePosition(const p6::Context& ctx, const float border, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 };

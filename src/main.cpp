@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     // Texture
-    img::Image skyTex     = p6::load_image_buffer("assets/textures/skybox.png");
+    img::Image skyTex = p6::load_image_buffer("assets/textures/skybox.png");
 
     /***************************
      *   INITIALIZATION CODE   *
@@ -58,12 +58,14 @@ int main(int argc, char* argv[])
     TrackballCamera camera;
 
     // Islands
+
     MainIsland  mainIsland(&shaderTex);
-    Islands islands(50, Parameters::get().BOX_SIZE, 3.0, 0.4, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
+
+    Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
 
     // Boids
-    Boids  boids(Parameters::get(), 3.0,0.4, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
-    //GLuint vaoB = initOpenGLBoids();
+    Boids boids(Parameters::get(), Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1) , glm::vec3(0), 0.f));
+
 
     // Tracker
     Tracker tracker(
@@ -77,10 +79,10 @@ int main(int argc, char* argv[])
     // Loaded model
     // pour test
     // Model model("assets/models/main_island.obj", "assets/textures/floating_island.png", &shaderTex);
-    //Model model;
-    //model._vertex_size  = 2961;
-    //GLuint vaomodel     = initOpenGLModel();
-    //GLuint modelTexture = initTex(modelImage);
+    // Model model;
+    // model._vertex_size  = 2961;
+    // GLuint vaomodel     = initOpenGLModel();
+    // GLuint modelTexture = initTex(modelImage);
 
     /**************************
      *     RENDERING CODE     *
@@ -97,6 +99,8 @@ int main(int argc, char* argv[])
         ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
         ImGui::SliderFloat("Max Repulsion", &Parameters::get().MAX_REPULSION, -1.f, -4.f);
         ImGui::SliderFloat("Attraction (tracker)", &Parameters::get().FACTOR_ATTRACT_TRACKER, 0.01f, 0.3f);
+        ImGui::SliderFloat("Floor between low and medium LOD", &Parameters::get().FLOOR_LOW_MEDIUM, 1.f, 5.f);
+        ImGui::SliderFloat("Floor between medium and high LOD", &Parameters::get().FLOOR_MEDIUM_HIGH, 0.1f, 0.7f);
 
         ImGui::End();
     };
@@ -106,10 +110,10 @@ int main(int argc, char* argv[])
     // Infinite update loop
     ctx.update = [&]() {
         // mesure du temps écoulé pour une boucle
-        auto end = std::chrono::high_resolution_clock::now();
+        auto                          end     = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed = end - start;
-        float dt = elapsed.count();
-        start = end;
+        float                         dt      = elapsed.count();
+        start                                 = end;
         // std::cout << "Temps de rendu : " << renderTime << " secondes" << std::endl;
         // Clear window
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -144,12 +148,14 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc(&tracker, Parameters::get());
+
         std::cout << "# " << walker.getCenter().x << " : " << walker.getCenter().y << " : " << walker.getCenter().z << " " <<  std::endl;
 		std::cout << "~ " << walker.getLight().position.y << "\n\n";
-        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), sun, walker.getLight());
+        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(),boids._boids, islands._islands, mainIsland, sun, walker.getLight());
+
 
         // Walker
-        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, boids._boids, islands._islands);
+        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, Parameters::get(), boids._boids, islands._islands, mainIsland);
 		// std::cout << glm::degrees(walker._orientation) <<"\n";
         walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView, lightposition, lightIntensity);
 

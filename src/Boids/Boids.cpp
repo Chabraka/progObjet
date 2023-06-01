@@ -16,24 +16,29 @@ Boids::Boids(Parameters& params, float floor_low_medium, float floor_medium_high
     for (int i = 0; i < params.MAX_BOID_NB; i++)
     {
         Boid boid(
-            0.05f, // radius
-            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f)), p6::random::number(-(params.BOX_SIZE - 0.05f), (params.BOX_SIZE - 0.05f))), //speed
-            glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)), //acceleration
-            glm::vec3(0.0)
+            0.3f,                                                                                                                                                                                                                                 // radius
+            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f))), // center
+            glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),                                                                                                                                                                   // speed
+            glm::vec3(0.0)                                                                                                                                                                                                                        // acceleration
         );
         _boids.push_back(boid);
     }
 }
 
 /* ----- Draw ----- */
-void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position, Light sun, Light walker)
+
+
+//collision boid
+void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Parameters& params, float dt, glm::vec3 cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland,Light sun, Light walker)
+
 {
     for (int j = 0; j < params.BOID_NB; j++)
     {
         float cam_distance = glm::distance(_boids[j]._center, cam_position);
         // std::cout << cam_distance <<"=cam_distance" << std::endl;
+
         this->drawBoid(&_boids[j],ProjMatrix, ViewMatrix, cam_distance, sun, walker);
-        _boids[j].updatePosition(params, dt);
+        _boids[j].updatePosition(params, dt, boids, islands, mainIsland);
     }
 }
 
@@ -41,7 +46,7 @@ void Boids::drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, flo
 {
 
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(boid->_center.x, boid->_center.y, boid->_center.z));
+    T           = glm::translate(T, boid->getCenter());
     // Orientation du boid:
     glm::vec3 axis = glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));
     float angle = glm::acos(glm::dot(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));
@@ -65,7 +70,6 @@ void Boids::drawBoid(Boid *boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, flo
 
     this->renderer.draw(cam_distance);
 }
-
 
 /* ----- Updates ----- */
 void Boids::updateBoidsAcc(Tracker* tracker, Parameters& params)

@@ -19,7 +19,7 @@ float floor_low_medium, float floor_medium_high, const p6::Shader* shader)
     for (uint i = 0; i < islandNb; i++)
     {
         Island island(
-            glm::vec3(p6::random::number(-(border - 0.1f), border - 0.1f), p6::random::number(-(border - 0.01f), border - 0.1f), p6::random::number(-(border - 0.1f), border - 0.1f))
+            glm::vec3(p6::random::number(-(border - 0.1f), border - 0.1f), p6::random::number(-(border - 0.1f), border - 0.1f), p6::random::number(-(border - 0.1f), border - 0.1f))
         );
         _islands.push_back(island);
     }
@@ -41,10 +41,11 @@ void Islands::drawIsland(Island *island, glm::mat4 ProjMatrix, glm::mat4 ViewMat
 
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
     T           = glm::translate(T, glm::vec3(island->getCenter()));
+
     // Orientation de l'island:
     // glm::vec3 axis = glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));
     // float angle = glm::acos(glm::dot(glm::vec3(0.0f, 0.0f, -1.0f), -boid->_speed));
-    T           = glm::rotate(T, glm::radians(island->_angle), glm::vec3(0.0, 1.0, 0.0));
+    T = glm::rotate(T, glm::radians(island->_angle), glm::vec3(0.0, 1.0, 0.0));
 
 	this->renderer.low_renderer.shader->use();
     this->renderer.low_renderer.shader->set("uMVMatrix", T);

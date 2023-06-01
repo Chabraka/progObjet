@@ -94,32 +94,37 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
 	}
 }
 
-void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands)
+void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
-	for (unsigned int j = 0; j < boids.size(); j++)
-	{
-		/* With boids */
-		float distance = glm::distance(_center, boids[j].getCenter());
-		if (distance <= (_radius + boids[j]._radius) * 1.25f)
-		{
-			_center = _center - boids[j].getCenter() * glm::vec3(0.05f);
-		}
-	}
-	for (unsigned int j = 0; j < islands.size(); j++)
-	{
-		/* With obstacles */
-		float distance = glm::distance(_center, islands[j].getCenter());
-		if (distance <= (_radius + islands[j].getRadius()) * 1.25f)
-		{
-			_center -= islands[j].getCenter() * glm::vec3(0.05f);
-		}
-	}
+    float distance = glm::distance(_center, mainIsland.getCenter());
+    if (distance <= (_radius + mainIsland.getRadius()))
+    {
+        _center -= glm::vec3(0.03f);
+        _speed -= 0.005;
+    }
+    for (unsigned int j = 0; j < boidsNb; j++)
+    {
+        /* With boids */
+        float distance = glm::distance(_center, boids[j].getCenter());
+        if (distance <= (_radius + boids[j]._radius))
+        {
+            _center -= boids[j].getCenter() * glm::vec3(0.0005f / (distance * distance));
+        }
+    }
+    for (unsigned int j = 0; j < islands.size(); j++)
+    {
+        /* With obstacles */
+        float distance = glm::distance(_center, islands[j].getCenter());
+        if (distance <= (_radius + islands[j].getRadius()))
+        {
+            _center -= islands[j].getCenter() * glm::vec3(0.0005f / (distance * distance));
+            _speed -= 0.005;
+        }
+    }
 }
 
 /* --- Update --- */
-
-/* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands)
+void Walker::updatePosition(const p6::Context& ctx, const float border, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     float dt = ctx.delta_time() * 0.5;
     glm::vec3 acceleration(0.0, 0.0, 0.0);
@@ -164,8 +169,6 @@ void Walker::updatePosition(const p6::Context& ctx, const float border, const st
         acceleration.y -=  10.0f;
     }
     
-    
-    
 
     _center += _speed * dt + acceleration * dt * dt;
     _speed +=  acceleration * dt;
@@ -173,66 +176,10 @@ void Walker::updatePosition(const p6::Context& ctx, const float border, const st
     this->_lamp.position = this->_center; // +glm::vec3(cos(-this->_orientation), 0.00, sin(-this->_orientation)) * 0.05;
 
     //this->restrictSpeed(0.0, 0.7);
-    this->calculateCollisions(boids, islands);
+    this->calculateCollisions(boids.size(), boids, islands, mainIsland);
     this->restrictArea(border);
 }
 
-
-
-
-// void Walker::updatePosition(const p6::Context& ctx, const float border, const std::vector<Boid>& boids, const std::vector<Island>& islands)
-// {
-// 	float dt = ctx.delta_time() * 0.5;
-// 	if (ctx.mouse_button_is_pressed(p6::Button::Left))
-// 	{
-// 		_orientation += ctx.mouse_delta().x;
-// 	}
-
-// 	if (ctx.key_is_pressed(GLFW_KEY_A) || ctx.key_is_pressed(GLFW_KEY_LEFT))
-// 	{
-// 		_center.x -= _speed.x * dt + _acceleration.x * dt * dt * 0.5f;
-// 		_speed.x += _acceleration.x * dt;
-// 	}
-
-// 	if (ctx.key_is_pressed(GLFW_KEY_D) || ctx.key_is_pressed(GLFW_KEY_RIGHT))
-// 	{
-// 		_center.x += _speed.x * dt + _acceleration.x * dt * dt * 0.5f;
-// 		_speed.x += _acceleration.x * dt;
-// 	}
-
-// 	if (ctx.key_is_pressed(GLFW_KEY_W) || ctx.key_is_pressed(GLFW_KEY_UP))
-// 	{
-// 		_center.z -= _speed.z * dt + _acceleration.z * dt * dt * 0.5f;
-// 		_speed.z += _acceleration.z * dt;
-// 	}
-
-// 	if (ctx.key_is_pressed(GLFW_KEY_S) || ctx.key_is_pressed(GLFW_KEY_DOWN))
-// 	{
-// 		_center.z += _speed.z * dt + _acceleration.z * dt * dt * 0.5f;
-// 		_speed.z += _acceleration.z * dt;
-// 	}
-
-// 	if (ctx.key_is_pressed(GLFW_KEY_SPACE))
-// 	{
-// 		_center.y += _speed.y * dt + _acceleration.y * dt * dt * 0.5f;
-// 		_speed.y += _acceleration.y * dt;
-// 	}
-// 	if (ctx.shift())
-// 	{
-// 		_center.y -= (_speed.y * dt + _acceleration.y * dt * dt * 0.5f) * 0.5;
-// 		_speed.y += _acceleration.y * dt;
-// 	}
-
-
-// 	//essai pour orienter la lampe
-// 	//this->_lamp.position = this->_center+glm::vec3(cos(-this->_orientation), 0.05, sin(-this->_orientation));
-// 	//this->_lamp.position = this->_center + glm::vec3(cos(glm::radians(-this->_orientation)), 0.05, sin(glm::radians(-this->_orientation)));
-
-
-// 	this->restrictSpeed(0.5, 1.7);
-// 	this->calculateCollisions(boids, islands);
-// 	this->restrictArea(border);
-// }
 
 Light Walker::getLight(){
 	return this->_lamp;
