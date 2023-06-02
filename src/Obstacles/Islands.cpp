@@ -9,7 +9,7 @@ Islands::Islands(const uint islandNb, const p6::Shader* shader, LightProperties 
 
 Islands::Islands(const uint islandNb, const p6::Shader* shader)
 {
-    this->renderer     = MultiResObjRenderer("assets/models/floating_island_low.obj", "assets/models/floating_island_medium.obj", "assets/models/floating_island.obj", "assets/textures/floating_island.png", shader, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH);
+    this->renderer     = MultiResObjRenderer("assets/models/floating_island_low.obj", "assets/models/floating_island_medium.obj", "assets/models/floating_island.obj", "assets/textures/floating_island.png", shader);
     const float border = Parameters::get().BOX_SIZE;
     for (uint i = 0; i < islandNb; i++)
     {
