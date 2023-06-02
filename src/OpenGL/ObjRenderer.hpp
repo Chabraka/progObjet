@@ -3,7 +3,8 @@
 #include <cstddef>
 #include <cstdlib>
 #include <vector>
-#include "ObjLoader.hpp"
+#include "../ObjLoader.hpp"
+#include "SkyboxOpenGL.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "img/src/Image.h"
 #include "p6/p6.h"

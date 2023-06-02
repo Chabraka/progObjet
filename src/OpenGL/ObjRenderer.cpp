@@ -1,7 +1,4 @@
 #include "ObjRenderer.hpp"
-#include <vector>
-#include "../ObjLoader.hpp"
-#include "../OpenGL/OpenGL.hpp"
 
 /* --- ObjRenderer --- */
 

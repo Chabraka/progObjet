@@ -10,15 +10,6 @@
 
 glm::mat4 translate(float tx, float ty, float tz);
 
-struct Vertex3DColor {
-    glm::vec3 _position;
-    glm::vec3 _color;
-
-    Vertex3DColor() = default;
-    Vertex3DColor(glm::vec3 p, glm::vec3 c)
-        : _position(p), _color(c){};
-};
-
 struct Vertex3DUV {
     glm::vec3 _position;
     glm::vec2 _coordTex;
@@ -41,14 +32,7 @@ struct MatrixView {
     void setMatrix();
 };
 
-/*
-ObjRenderer est une classe destinée à recevoir toutes les variables et méthodes nécessaires
-au rendu OpenGL.*/
-
 GLuint initOpenGLSkybox(const float& skyboxRadius);
-GLuint initOpenGLTracker();
 GLuint initTex(const img::Image& image);
 
-void drawOpenGL(GLuint vao);
 void drawOpenGLSkybox(GLuint vao, GLuint texture);
-void drawOpenGLBoids(GLuint vao);

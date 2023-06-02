@@ -2,8 +2,7 @@
 
 #include <cstdlib>
 #include "../Light.hpp"
-#include "../OpenGL/OpenGL.hpp"
-#include "OpenGL/ObjRenderer.hpp"
+#include "../OpenGL/ObjRenderer.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 

@@ -7,7 +7,7 @@
 #include "Light.hpp"
 #include "Obstacles/Islands.hpp"
 #include "Obstacles/MainIsland.hpp"
-#include "OpenGL/OpenGL.hpp"
+#include "OpenGL/SkyboxOpenGL.hpp"
 #include "Walker/Walker.hpp"
 #include "imgui.h"
 #define DOCTEST_CONFIG_IMPLEMENT

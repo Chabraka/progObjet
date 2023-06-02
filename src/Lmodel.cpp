@@ -2,7 +2,6 @@
 
 #include "Lmodel.hpp"
 #include <sys/types.h>
-#include "OpenGL/OpenGL.hpp"
 
 /* ----- Draw ----- */
 void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix)
@@ -16,15 +15,11 @@ void Model::drawModel(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 
     shader->set("uTexture", 0);
     // shader->set("uColor", glm::vec3(0.0, 0.5, 0.5));
     this->_objrenderer.draw();
-
-}   
+}
 
 /* ----- Restrictions ----- */
 
-
 /* ----- Behaviors ----- */
-
-
 
 /* ----- Updates ----- */
 
@@ -44,4 +39,3 @@ void Model::updatePosition(float minSpeed, float maxSpeed)
 
     // Restrict the position
 }
-

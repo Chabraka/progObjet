@@ -1,8 +1,10 @@
 #pragma once
 
+#include <sys/types.h>
 #include <cstdlib>
 #include "../Obstacles/Island.hpp"
 #include "../Obstacles/MainIsland.hpp"
+#include "../Parameters.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 

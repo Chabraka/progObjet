@@ -1,6 +1,4 @@
 #include "Boid.hpp"
-#include <sys/types.h>
-#include "../OpenGL/OpenGL.hpp"
 
 /* ----- Restrictions ----- */
 
