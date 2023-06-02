@@ -8,10 +8,10 @@
 #include "Obstacles/Islands.hpp"
 #include "Obstacles/MainIsland.hpp"
 #include "OpenGL/OpenGL.hpp"
+
 #include "Walker/Walker.hpp"
 #include "imgui.h"
 #define DOCTEST_CONFIG_IMPLEMENT
-
 #include <Lmodel.hpp>
 #include <common.hpp>
 #include "doctest/doctest.h"

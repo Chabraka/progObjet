@@ -5,6 +5,7 @@
 #include "glm/fwd.hpp"
 #include "../Light.hpp"
 #include "p6/p6.h"
+#include "OpenGL/ObjRenderer.hpp"
 
 class MainIsland {
     /* Attributes */

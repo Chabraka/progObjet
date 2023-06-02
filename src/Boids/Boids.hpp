@@ -11,6 +11,7 @@
 #include "glm/glm.hpp"
 #include "p6/p6.h"
 #include "../Light.hpp"
+#include "OpenGL/ObjRenderer.hpp"
 
 class Boids {
     /* Attributes */
