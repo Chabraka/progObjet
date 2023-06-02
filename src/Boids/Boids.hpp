@@ -29,7 +29,7 @@ public:
 
     // Draw
     void drawBoid(Boid* boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float cam_distance, Light sun, Light walker);
-    void drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float dt, const glm::vec3& cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland, Light sun, Light walker);
+    void drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float dt, const glm::vec3& cam_position, /*const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland, */ Light sun, Light walker); // Unsatisfying collisions commented
 
     // Update
     void updateBoidsAcc();

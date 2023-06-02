@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 
         // Boids
         boids.updateBoidsAcc();
-        boids.drawBoids(matrixView._ProjMatrix, matView, dt, walker.getCenter(), boids._boids, islands._islands, mainIsland, sun, walker.getLight());
+        boids.drawBoids(matrixView._ProjMatrix, matView, dt, walker.getCenter(), /* boids._boids, islands._islands, mainIsland, */ sun, walker.getLight());
 
         // Walker
         walker.updatePosition(ctx, boids._boids, islands._islands, mainIsland);

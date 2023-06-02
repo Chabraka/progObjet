@@ -95,7 +95,7 @@ void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vect
         _center -= glm::vec3(0.03f);
         _speed -= 0.005;
     }
-    for (unsigned int j = 0; j < Parameters::get().BOID_NB; j++)
+    for (int j = 0; j < Parameters::get().BOID_NB; j++)
     {
         /* With boids */
         float distance = glm::distance(_center, boids[j].getCenter());
@@ -104,7 +104,7 @@ void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vect
             _center -= boids[j].getCenter() * glm::vec3(0.0005f / (distance * distance));
         }
     }
-    for (unsigned int j = 0; j < islands.size(); j++)
+    for (int j = 0; j < (int)islands.size(); j++)
     {
         /* With obstacles */
         float distance = glm::distance(_center, islands[j].getCenter());

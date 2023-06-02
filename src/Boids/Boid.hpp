@@ -31,7 +31,7 @@ public:
 
     // Update
     void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
-    void updatePosition(float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updatePosition(float dt /*, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland */); // Unsatisfying collisions commented
     void updateAcc(std::vector<Boid> boids, unsigned int i);
 
 private:

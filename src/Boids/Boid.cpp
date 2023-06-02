@@ -85,6 +85,8 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numSpeedBoids
 }
 
 /* ----- Updates ----- */
+
+// Unsatisfying collisions
 void Boid::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     // With the main island
@@ -104,7 +106,7 @@ void Boid::calculateCollisions(const std::vector<Boid>& boids, const std::vector
         }
     }
     // With obstacles
-    for (int j = 0; j < islands.size(); j++)
+    for (int j = 0; j < (int)islands.size(); j++)
     {
         float distance = glm::distance(_center, islands[j].getCenter());
         if (distance <= (_radius + islands[j].getRadius()))
@@ -115,7 +117,7 @@ void Boid::calculateCollisions(const std::vector<Boid>& boids, const std::vector
     }
 }
 
-void Boid::updatePosition(float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Boid::updatePosition(float dt /* , const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland */) // Unsatisfying collisions
 {
     // Center position
     _center.x += _speed.x * dt + _acceleration.x * dt * dt / 2;
@@ -129,7 +131,7 @@ void Boid::updatePosition(float dt, const std::vector<Boid>& boids, const std::v
 
     // Restrict the position
     restrictSpeed();
-    //calculateCollisions(boids, islands, mainIsland);
+    //  calculateCollisions(boids, islands, mainIsland);
     restrictArea();
 }
 

@@ -52,13 +52,13 @@ void Boids::drawBoid(Boid* boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, flo
     this->renderer.draw(cam_distance);
 }
 
-void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float dt, const glm::vec3& cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland, Light sun, Light walker)
+void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float dt, const glm::vec3& cam_position, /* const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland,*/ Light sun, Light walker) // Unsatisfying collisions commented
 {
     for (int j = 0; j < Parameters::get().BOID_NB; j++)
     {
         float cam_distance = glm::distance(_boids[j]._center, cam_position);
         this->drawBoid(&_boids[j], ProjMatrix, ViewMatrix, cam_distance, sun, walker);
-        _boids[j].updatePosition(dt, boids, islands, mainIsland);
+        _boids[j].updatePosition(dt /*, boids, islands, mainIsland */); // Unsatisfying collisions commented
     }
 }
 
