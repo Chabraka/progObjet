@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
     // Islands
     MainIsland mainIsland(&shaderTex);
-    Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
+    Islands    islands(50, &shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
 
     // Boids
     Boids boids(&shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));

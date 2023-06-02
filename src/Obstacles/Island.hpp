@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdlib>
-#include "../OpenGL/OpenGL.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
@@ -32,7 +31,4 @@ public:
     // Getter
     glm::vec3 getCenter() const { return _center; };
     float     getRadius() const { return _radius; };
-
-    // Draw
-    void drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);
 };
