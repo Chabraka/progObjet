@@ -101,8 +101,6 @@ static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
         {
         }
     }
-
-    // Build final vertex array
     vertices.resize(vPosInd.size(), glimac::ShapeVertex());
 
     for (size_t i = 0; i < vPosInd.size(); i++)
