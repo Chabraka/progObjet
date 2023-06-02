@@ -5,7 +5,8 @@
 #include "../Light.hpp"
 #include "../Obstacles/Islands.hpp"
 #include "../Obstacles/MainIsland.hpp"
-#include "../OpenGL/OpenGL.hpp"
+//#include "../OpenGL/OpenGL.hpp"
+#include "OpenGL/ObjRenderer.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 

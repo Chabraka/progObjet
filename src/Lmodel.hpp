@@ -2,6 +2,7 @@
 #include "Tracker/Tracker.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
+#include "OpenGL/ObjRenderer.hpp"
 
 class Model {
     /* Attributes */

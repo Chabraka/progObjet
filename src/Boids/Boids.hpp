@@ -7,6 +7,7 @@
 #include "../Obstacles/MainIsland.hpp"
 #include "../Parameters.hpp"
 #include "Boid.hpp"
+#include "OpenGL/ObjRenderer.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
 #include "glm/glm.hpp"
