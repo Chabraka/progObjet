@@ -129,7 +129,7 @@ void Boid::updatePosition(float dt, const std::vector<Boid>& boids, const std::v
 
     // Restrict the position
     restrictSpeed();
-    calculateCollisions(boids, islands, mainIsland);
+    //calculateCollisions(boids, islands, mainIsland);
     restrictArea();
 }
 
