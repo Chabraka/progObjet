@@ -7,12 +7,22 @@
 void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, this->getCenter());
+    T           = glm::translate(T, glm::vec3(this->_center.x, this->_center.y, this->_center.z));
+    T           = glm::rotate(T, this->_orientation, glm::vec3(0, -1, 0));
 
+    shader->use();
     shader->set("uMVMatrix", T);
     shader->set("uMVPMatrix", ProjMatrix * ViewMatrix * T);
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uTexture", 0);
+
+    this->_objboat.shader->set("uKd", this->_lightProperties.diffuse);
+    this->_objboat.shader->set("uKs", this->_lightProperties.specular);
+    this->_objboat.shader->set("uShininess", this->_lightProperties.shininess);
+    this->_objboat.shader->set("uSunPosition", lightpos);
+    this->_objboat.shader->set("uSunIntensity", lightIntensity);
+    this->_objboat.shader->set("uWalkerPosition", this->_lamp.position);
+    this->_objboat.shader->set("uWalkerIntensity", this->_lamp.intensity);
 
     this->_objboat.draw();
     this->_objpirate.draw();
