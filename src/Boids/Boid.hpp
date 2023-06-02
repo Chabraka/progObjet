@@ -28,17 +28,17 @@ public:
     glm::vec3 getCenter() const { return _center; };
 
     // Update
-    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
-    void updatePosition(const Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
-    void updateAcc(const Parameters& params, std::vector<Boid> boids, unsigned int i);
+    void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updatePosition(float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updateAcc(std::vector<Boid> boids, unsigned int i);
 
 private:
     // Restrictions
-    void restrictArea(const float& border);
-    void restrictSpeed(const float& minSpeed, const float& maxSpeed);
+    void restrictArea();
+    void restrictSpeed();
 
     // Behaviours
-    glm::vec3 attraction(const glm::vec3& direction, const float& distance, const float& factorAttraction);
-    glm::vec3 repulsion(const glm::vec3& direction, const float& distance, const float& factorRepulsion, const float& maxRepulsion);
+    glm::vec3 attraction(const glm::vec3& direction, const float& distance);
+    glm::vec3 repulsion(const glm::vec3& direction, const float& distance);
     glm::vec3 adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numSpeedBoids);
 };

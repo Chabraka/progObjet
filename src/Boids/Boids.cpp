@@ -1,23 +1,23 @@
 #include "Boids.hpp"
 
 /* ----- Constructor ----- */
-Boids::Boids(const Parameters& params, const p6::Shader* shader, const LightProperties& lightprop)
-    : Boids(params, shader)
+Boids::Boids(const p6::Shader* shader, const LightProperties& lightprop)
+    : Boids(shader)
 {
     light = lightprop;
 }
 
-Boids::Boids(const Parameters& params, const p6::Shader* shader)
+Boids::Boids(const p6::Shader* shader)
 {
-    this->renderer = MultiResObjRenderer("assets/models/baleine_low.obj", "assets/models/baleine_medium.obj", "assets/models/baleine_high.obj", "assets/textures/baleine.jpg", shader, params.FLOOR_LOW_MEDIUM, params.FLOOR_MEDIUM_HIGH);
+    this->renderer = MultiResObjRenderer("assets/models/baleine_low.obj", "assets/models/baleine_medium.obj", "assets/models/baleine_high.obj", "assets/textures/baleine.jpg", shader, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH);
     // Creation of boids
-    for (int i = 0; i < params.MAX_BOID_NB; i++)
+    for (unsigned int i = 0; i < Parameters::get().MAX_BOID_NB; i++)
     {
         Boid boid(
-            0.3f,                                                                                                                                                                                                                                 // radius
-            glm::vec3(p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f)), p6::random::number(-(params.BOX_SIZE - 0.3f), (params.BOX_SIZE - 0.3f))), // center
-            glm::vec3(p6::random::number(-params.MAX_SPEED, params.MAX_SPEED)),                                                                                                                                                                   // speed
-            glm::vec3(0.0)                                                                                                                                                                                                                        // acceleration
+            0.3f,                                                                                                                                                                                                                                                                                                   // radius
+            glm::vec3(p6::random::number(-(Parameters::get().BOX_SIZE - 0.3f), (Parameters::get().BOX_SIZE - 0.3f)), p6::random::number(-(Parameters::get().BOX_SIZE - 0.3f), (Parameters::get().BOX_SIZE - 0.3f)), p6::random::number(-(Parameters::get().BOX_SIZE - 0.3f), (Parameters::get().BOX_SIZE - 0.3f))), // center
+            glm::vec3(p6::random::number(-Parameters::get().MAX_SPEED, Parameters::get().MAX_SPEED)),                                                                                                                                                                                                               // speed
+            glm::vec3(0.0)                                                                                                                                                                                                                                                                                          // acceleration
         );
         _boids.push_back(boid);
     }
@@ -52,21 +52,39 @@ void Boids::drawBoid(Boid* boid, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, flo
     this->renderer.draw(cam_distance);
 }
 
-void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, const Parameters& params, float dt, const glm::vec3& cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland, Light sun, Light walker)
+void Boids::drawBoids(glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, float dt, const glm::vec3& cam_position, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland, Light sun, Light walker)
 {
-    for (int j = 0; j < params.BOID_NB; j++)
+    for (int j = 0; j < Parameters::get().BOID_NB; j++)
     {
         float cam_distance = glm::distance(_boids[j]._center, cam_position);
         this->drawBoid(&_boids[j], ProjMatrix, ViewMatrix, cam_distance, sun, walker);
-        _boids[j].updatePosition(params, dt, boids, islands, mainIsland);
+        _boids[j].updatePosition(dt, boids, islands, mainIsland);
     }
 }
 
 /* ----- Updates ----- */
-void Boids::updateBoidsAcc(const Parameters& params)
+
+void Boids::updateBoidsAcc()
 {
-    for (int i = 0; i < params.BOID_NB; i++)
+    for (int i = 0; i < Parameters::get().BOID_NB; i++)
     {
-        _boids.at(i).updateAcc(params, _boids, i);
+        _boids.at(i).updateAcc(_boids, i);
     }
+}
+
+/* ----- ImGui ----- */
+
+void boidsImGui()
+{
+    ImGui::Begin("Parameters");
+
+    ImGui::SliderInt("Boids number", &Parameters::get().BOID_NB, 10, Parameters::get().MAX_BOID_NB);
+    ImGui::SliderFloat("Max speed", &Parameters::get().MAX_SPEED, 0.1, 1.);
+    ImGui::SliderFloat("Min distance of cohesion", &Parameters::get().MIN_DIST, 0.1, 1.);
+    ImGui::SliderFloat("Attraction", &Parameters::get().FACTOR_ATTRACTION, 0.001, 0.01);
+    ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
+    ImGui::SliderFloat("Floor between low and medium LOD", &Parameters::get().FLOOR_LOW_MEDIUM, 1.1f, 6.f);
+    ImGui::SliderFloat("Floor between medium and high LOD", &Parameters::get().FLOOR_MEDIUM_HIGH, 0.1f, 1.f);
+
+    ImGui::End();
 }

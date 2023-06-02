@@ -5,8 +5,7 @@
 #include "../Light.hpp"
 #include "../Obstacles/Islands.hpp"
 #include "../Obstacles/MainIsland.hpp"
-//#include "../OpenGL/OpenGL.hpp"
-#include "OpenGL/ObjRenderer.hpp"
+#include "../OpenGL/ObjRenderer.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
@@ -16,13 +15,13 @@ public:
     const float _radius;
 
 private:
-    LightProperties _lightProperties;
-    Light           _lamp;
-    float           _orientation;
     glm::vec3       _center;
     glm::vec3       _speed;
     ObjRenderer     _objboat;
     ObjRenderer     _objpirate;
+    Light           _lamp;
+    LightProperties _lightProperties;
+    float           _orientation;
 
     /* Methods */
 public:

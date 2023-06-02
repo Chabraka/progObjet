@@ -4,8 +4,10 @@
 
 /* ----- Restrictions ----- */
 
-void Boid::restrictArea(const float& border)
+void Boid::restrictArea()
 {
+    const float border = Parameters::get().BOX_SIZE;
+
     /* If the Boid hits the walls, change direction */
     // Left wall
     if (_center.x - _radius < -border)
@@ -45,32 +47,32 @@ void Boid::restrictArea(const float& border)
     }
 }
 
-void Boid::restrictSpeed(const float& minSpeed, const float& maxSpeed)
+void Boid::restrictSpeed()
 {
     float currentSpeed = glm::length(_speed);
     if (currentSpeed > 0.001) // Speed > 0
     {
-        if (currentSpeed > maxSpeed)
+        if (currentSpeed > Parameters::get().MAX_SPEED)
         {
-            _speed = glm::normalize(_speed) * maxSpeed;
+            _speed = glm::normalize(_speed) * Parameters::get().MAX_SPEED;
         }
-        if (currentSpeed < minSpeed)
+        if (currentSpeed < Parameters::get().MIN_SPEED)
         {
-            _speed = glm::normalize(_speed) * minSpeed;
+            _speed = glm::normalize(_speed) * Parameters::get().MIN_SPEED;
         }
     }
 }
 
 /* ----- Behaviors ----- */
 
-glm::vec3 Boid::attraction(const glm::vec3& direction, const float& distance, const float& factorAttraction)
+glm::vec3 Boid::attraction(const glm::vec3& direction, const float& distance)
 {
-    return direction * factorAttraction / distance;
+    return direction * Parameters::get().FACTOR_ATTRACTION / distance;
 }
 
-glm::vec3 Boid::repulsion(const glm::vec3& direction, const float& distance, const float& factorRepulsion, const float& maxRepulsion)
+glm::vec3 Boid::repulsion(const glm::vec3& direction, const float& distance)
 {
-    return direction * std::max((1 / (distance * distance)) * (0.01f * factorRepulsion), maxRepulsion);
+    return direction * std::max((1 / (distance * distance)) * (0.01f * Parameters::get().FACTOR_REPULSION), Parameters::get().MAX_REPULSION);
 }
 
 glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numSpeedBoids)
@@ -85,7 +87,7 @@ glm::vec3 Boid::adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numSpeedBoids
 }
 
 /* ----- Updates ----- */
-void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Boid::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     // With the main island
     float distance = glm::distance(_center, mainIsland.getCenter());
@@ -95,7 +97,7 @@ void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boid
         _speed -= glm::vec3(0.08f);
     }
     // With the other boids
-    for (unsigned int j = 0; j < boidsNb; j++)
+    for (int j = 0; j < Parameters::get().BOID_NB; j++)
     {
         float distance = glm::distance(_center, boids[j].getCenter());
         if (distance <= (2 * _radius) && distance != 0)
@@ -104,7 +106,7 @@ void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boid
         }
     }
     // With obstacles
-    for (unsigned int j = 0; j < islands.size(); j++)
+    for (int j = 0; j < islands.size(); j++)
     {
         float distance = glm::distance(_center, islands[j].getCenter());
         if (distance <= (_radius + islands[j].getRadius()))
@@ -115,7 +117,7 @@ void Boid::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boid
     }
 }
 
-void Boid::updatePosition(const Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Boid::updatePosition(float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     // Center position
     _center.x += _speed.x * dt + _acceleration.x * dt * dt / 2;
@@ -128,12 +130,12 @@ void Boid::updatePosition(const Parameters& params, float dt, const std::vector<
     _speed.z += _acceleration.z * dt;
 
     // Restrict the position
-    restrictSpeed(params.MIN_SPEED, params.MAX_SPEED);
-    calculateCollisions(params.BOID_NB, boids, islands, mainIsland);
-    restrictArea(params.BOX_SIZE);
+    restrictSpeed();
+    calculateCollisions(boids, islands, mainIsland);
+    restrictArea();
 }
 
-void Boid::updateAcc(const Parameters& params, std::vector<Boid> boids, unsigned int i)
+void Boid::updateAcc(std::vector<Boid> boids, unsigned int i)
 {
     glm::vec3 acc(0.f);
     glm::vec3 sumSpeed(0.f);     // sum speed of neighbors
@@ -156,10 +158,10 @@ void Boid::updateAcc(const Parameters& params, std::vector<Boid> boids, unsigned
             continue;
         }
         glm::vec3 direction = (neighbour->_center - _center) / distance;
-        acc += attraction(direction, distance, params.FACTOR_ATTRACTION) + repulsion(direction, distance, params.FACTOR_REPULSION, params.MAX_REPULSION);
+        acc += attraction(direction, distance) + repulsion(direction, distance);
 
         // Exclude those who are too far away
-        if (distance < params.MIN_DIST) // Minimal distance to adjust : 0.7 it's a big crowd, 0.2 you have little groups
+        if (distance < Parameters::get().MIN_DIST) // Minimal distance to adjust : 0.7 it's a big crowd, 0.2 you have little groups
         {
             sumSpeed = sumSpeed + neighbour->_speed;
             numSpeedBoids += 1;

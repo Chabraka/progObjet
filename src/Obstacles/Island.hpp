@@ -30,8 +30,8 @@ public:
     };
 
     // Getter
-    const glm::vec3 getCenter() const { return _center; };
-    const float     getRadius() const { return _radius; };
+    glm::vec3 getCenter() const { return _center; };
+    float     getRadius() const { return _radius; };
 
     // Draw
     void drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, GLuint vao);

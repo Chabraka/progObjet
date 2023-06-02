@@ -8,7 +8,6 @@
 #include "Obstacles/Islands.hpp"
 #include "Obstacles/MainIsland.hpp"
 #include "OpenGL/OpenGL.hpp"
-
 #include "Walker/Walker.hpp"
 #include "imgui.h"
 #define DOCTEST_CONFIG_IMPLEMENT
@@ -62,7 +61,7 @@ int main(int argc, char* argv[])
     Islands    islands(50, Parameters::get().BOX_SIZE, Parameters::get().FLOOR_LOW_MEDIUM, Parameters::get().FLOOR_MEDIUM_HIGH, &shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
 
     // Boids
-    Boids boids(Parameters::get(), &shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
+    Boids boids(&shaderTex, LightProperties(glm::vec3(1), glm::vec3(0), 0.f));
 
     /**************************
      *     RENDERING CODE     *
@@ -70,17 +69,7 @@ int main(int argc, char* argv[])
 
     ctx.imgui = [&]() {
         /* Parameters' window */
-        ImGui::Begin("Parameters");
-
-        ImGui::SliderInt("Boids number", &Parameters::get().BOID_NB, 10, Parameters::get().MAX_BOID_NB);
-        ImGui::SliderFloat("Max speed", &Parameters::get().MAX_SPEED, 0.1, 1.);
-        ImGui::SliderFloat("Min distance of cohesion", &Parameters::get().MIN_DIST, 0.1, 1.);
-        ImGui::SliderFloat("Attraction", &Parameters::get().FACTOR_ATTRACTION, 0.001, 0.01);
-        ImGui::SliderFloat("Repulsion", &Parameters::get().FACTOR_REPULSION, -0.2, -0.001);
-        ImGui::SliderFloat("Floor between low and medium LOD", &Parameters::get().FLOOR_LOW_MEDIUM, 1.1f, 6.f);
-        ImGui::SliderFloat("Floor between medium and high LOD", &Parameters::get().FLOOR_MEDIUM_HIGH, 0.1f, 1.f);
-
-        ImGui::End();
+        boidsImGui();
     };
 
     auto start = std::chrono::high_resolution_clock::now();
@@ -112,8 +101,8 @@ int main(int argc, char* argv[])
         islands.drawIslands(matrixView._ProjMatrix, matView, walker.getCenter(), sun, walker.getLight());
 
         // Boids
-        boids.updateBoidsAcc(Parameters::get());
-        boids.drawBoids(matrixView._ProjMatrix, matView, Parameters::get(), dt, walker.getCenter(), boids._boids, islands._islands, mainIsland, sun, walker.getLight());
+        boids.updateBoidsAcc();
+        boids.drawBoids(matrixView._ProjMatrix, matView, dt, walker.getCenter(), boids._boids, islands._islands, mainIsland, sun, walker.getLight());
 
         // Walker
         walker.updatePosition(ctx, Parameters::get().BOX_SIZE, Parameters::get(), boids._boids, islands._islands, mainIsland);
