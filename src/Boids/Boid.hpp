@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include "../Obstacles/Island.hpp"
 #include "../Obstacles/MainIsland.hpp"
-#include "../Tracker/Tracker.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
@@ -29,10 +28,9 @@ public:
     glm::vec3 getCenter() const { return _center; };
 
     // Update
-    void      calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
-    void      updatePosition(Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
-    void      updateAcc(std::vector<Boid> boids, unsigned int i, const float& minDistance, const float& factorAttraction, const float& factorRepulsion, const float& maxRepulsion, Tracker* tracker, const float& factorAttractTracker);
-    glm::vec3 attractionTracker(Tracker* tracker, const float& factorAttractTracker);
+    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updatePosition(const Parameters& params, float dt, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updateAcc(const Parameters& params, std::vector<Boid> boids, unsigned int i);
 
 private:
     // Restrictions
@@ -42,5 +40,5 @@ private:
     // Behaviours
     glm::vec3 attraction(const glm::vec3& direction, const float& distance, const float& factorAttraction);
     glm::vec3 repulsion(const glm::vec3& direction, const float& distance, const float& factorRepulsion, const float& maxRepulsion);
-    glm::vec3 adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numspeedboids);
+    glm::vec3 adjustSpeed(glm::vec3 acc, glm::vec3 sumSpeed, int numSpeedBoids);
 };
