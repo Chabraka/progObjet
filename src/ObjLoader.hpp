@@ -1,41 +1,29 @@
+#pragma once
+
 /*
     loader of .obj files.
-
     Warning ! This simple parser support only triangulate faces.
               (Blender quaternon are not allowed. Select triangulate option when exporting model )
 */
 
-#pragma once
-
 #include <stddef.h>
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-
-// OpenGL
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/fwd.hpp"
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
-
-// glimac
 #include "common.hpp"
 #include "p6/p6.h"
 
 static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
 {
-    // Vertex coord
-    std::vector<glm::vec3> vertexPositions;
-    std::vector<glm::vec3> vertexNormals;
-    std::vector<glm::vec2> vertexTexCoords;
-
-    // Face
-    std::vector<GLuint> vertexPosIndices;
-    std::vector<GLuint> vertexNormalIndices;
-    std::vector<GLuint> vertexTexCoordIndices;
+    std::vector<glm::vec3> vPos;
+    std::vector<glm::vec3> vNorm;
+    std::vector<glm::vec2> vTex;
+    std::vector<GLuint> vPosInd;
+    std::vector<GLuint> vNormInd;
+    std::vector<GLuint> vTexInd;
 
     // Vertex array
     std::vector<glimac::ShapeVertex> vertices;
@@ -43,9 +31,9 @@ static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
     std::stringstream ss;
     std::ifstream     inFile(fileName);
     std::string       line   = "";
-    std::string       prefix = "";
-    glm::vec3         tempVec3;
-    glm::vec2         tempVec2;
+    std::string       word = "";
+    glm::vec3         vec3Temp;
+    glm::vec2         vec2Temp;
     GLint             tempGLint = 0;
 
     // Check error
@@ -60,87 +48,64 @@ static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
         // Get prefix of the line (v, vt, vn...)
         ss.clear();
         ss.str(line);
-        ss >> prefix;
+        ss >> word;
 
-        if (prefix == "#")
+        if (word == "v")
         {
+            ss >> vec3Temp.x >> vec3Temp.y >> vec3Temp.z;
+            vPos.push_back(vec3Temp);
         }
-        else if (prefix == "o")
+        else if (word == "vt")
         {
+            ss >> vec2Temp.x >> vec2Temp.y;
+            vTex.push_back(vec2Temp);
         }
-        else if (prefix == "s")
+        else if (word == "vn")
         {
+            ss >> vec3Temp.x >> vec3Temp.y >> vec3Temp.z;
+            vNorm.push_back(vec3Temp);
         }
-        else if (prefix == "use_mtl")
+        else if (word == "f")
         {
-        }
-        // Vertex position
-        else if (prefix == "v")
-        {
-            ss >> tempVec3.x >> tempVec3.y >> tempVec3.z;
-            vertexPositions.push_back(tempVec3);
-        }
-        // Vertex TexCoord
-        else if (prefix == "vt")
-        {
-            ss >> tempVec2.x >> tempVec2.y;
-            vertexTexCoords.push_back(tempVec2);
-        }
-        // Vertex Normal
-        else if (prefix == "vn")
-        {
-            ss >> tempVec3.x >> tempVec3.y >> tempVec3.z;
-            vertexNormals.push_back(tempVec3);
-        }
-        else if (prefix == "f")
-        {
-            int counter = 0;
+            int read = 0;
             while (ss >> tempGLint)
             {
-                // Pushing indices into arrays
-                if (counter == 0)
+                if (read == 0)
                 {
-                    vertexPosIndices.push_back(tempGLint);
+                    vPosInd.push_back(tempGLint);
                 }
-                else if (counter == 1)
+                else if (read == 1)
                 {
-                    vertexTexCoordIndices.push_back(tempGLint);
+                    vTexInd.push_back(tempGLint);
                 }
-                else if (counter == 2)
+                else if (read == 2)
                 {
-                    vertexNormalIndices.push_back(tempGLint);
+                    vNormInd.push_back(tempGLint);
                 }
-                // Ignoring character
                 if (ss.peek() == '/')
                 {
-                    ++counter;
+                    read++;
                     ss.ignore(1, '/');
                 }
                 else if (ss.peek() == ' ')
                 {
-                    ++counter;
+                    read++;
                     ss.ignore(1, ' ');
                 }
-                // Reset counter
-                if (counter > 2)
-                {
-                    counter = 0;
-                }
+                read %=3;
             }
         }
         else
         {
         }
     }
+    vertices.resize(vPosInd.size(), glimac::ShapeVertex());
 
-    // Build final vertex array
-    vertices.resize(vertexPosIndices.size(), glimac::ShapeVertex());
-
-    for (size_t i = 0; i < vertexPosIndices.size(); i++)
+    for (size_t i = 0; i < vPosInd.size(); i++)
     {
-        vertices[i].position  = vertexPositions[vertexPosIndices[i] - 1];
-        vertices[i].normal    = vertexNormals[vertexNormalIndices[i] - 1];
-        vertices[i].texCoords = vertexTexCoords[vertexTexCoordIndices[i] - 1];
+        vertices[i].position  = vPos[vPosInd[i] - 1];
+        vertices[i].normal    = vNorm[vNormInd[i] - 1];
+        vertices[i].texCoords = vTex[vTexInd[i] - 1];
     }
     std::cout << "OBJ file loaded" << std::endl;
     return vertices;
