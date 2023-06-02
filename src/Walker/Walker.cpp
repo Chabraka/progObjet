@@ -30,43 +30,40 @@ void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat
 
 /* --- Restrictions --- */
 
-void Walker::restrictArea(const float border)
+void Walker::restrictArea()
 {
+    const float border = Parameters::get().BOX_SIZE;
+
     // Left wall
     if (this->_center.x - this->_radius < -border)
     {
         this->_center.x = -border + this->_radius;
         this->_speed.x  = 0.1;
     }
-
     // Right wall
     else if (this->_center.x + this->_radius > border)
     {
         this->_center.x = border - this->_radius;
         this->_speed.x  = 0.1;
     }
-
     // Bottom wall
     if (this->_center.y - this->_radius < -border)
     {
         this->_center.y = -border + this->_radius;
         this->_speed.y  = 0.1;
     }
-
     // Top wall
     else if (this->_center.y + this->_radius > border)
     {
         this->_center.y = border - this->_radius;
         this->_speed.y  = 0.1;
     }
-
     // Back wall
     if (this->_center.z - this->_radius < -border)
     {
         this->_center.z = -border + this->_radius;
         this->_speed.z  = 0.1;
     }
-
     // Front wall
     else if (this->_center.z + this->_radius > border)
     {
@@ -75,7 +72,7 @@ void Walker::restrictArea(const float border)
     }
 }
 
-void Walker::restrictSpeed(float minSpeed, float maxSpeed)
+void Walker::restrictSpeed(const float& minSpeed, const float& maxSpeed)
 {
     float currentSpeed = glm::length(this->_speed);
 
@@ -93,7 +90,7 @@ void Walker::restrictSpeed(float minSpeed, float maxSpeed)
     }
 }
 
-void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Walker::calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     float distance = glm::distance(_center, mainIsland.getCenter());
     if (distance <= (_radius + mainIsland.getRadius()))
@@ -101,7 +98,7 @@ void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& bo
         _center -= glm::vec3(0.03f);
         _speed -= 0.005;
     }
-    for (unsigned int j = 0; j < boidsNb; j++)
+    for (unsigned int j = 0; j < Parameters::get().BOID_NB; j++)
     {
         /* With boids */
         float distance = glm::distance(_center, boids[j].getCenter());
@@ -123,7 +120,7 @@ void Walker::calculateCollisions(const int& boidsNb, const std::vector<Boid>& bo
 }
 
 /* --- Update --- */
-void Walker::updatePosition(const p6::Context& ctx, const float border, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
+void Walker::updatePosition(const p6::Context& ctx, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland)
 {
     float     dt = ctx.delta_time() * 0.5;
     glm::vec3 acceleration(0.0, 0.0, 0.0);
@@ -138,13 +135,11 @@ void Walker::updatePosition(const p6::Context& ctx, const float border, const Pa
 
     if (ctx.key_is_pressed(GLFW_KEY_A) || ctx.key_is_pressed(GLFW_KEY_LEFT))
     {
-        // acceleration -=  20.0f * glm::vec3(cos(r_orientation) * 0.5f, 0.0 , sin(r_orientation) * 0.5f);
         _orientation -= 5.0f * dt;
     }
 
     if (ctx.key_is_pressed(GLFW_KEY_D) || ctx.key_is_pressed(GLFW_KEY_RIGHT))
     {
-        // acceleration +=  20.0f * glm::vec3(cos(r_orientation) * 0.5f, 0.0 , sin(r_orientation) * 0.5f);
         _orientation += 5.0 * dt;
     }
 
@@ -172,8 +167,8 @@ void Walker::updatePosition(const p6::Context& ctx, const float border, const Pa
     _speed += acceleration * dt;
 
     this->restrictSpeed(0.001, 1.);
-    this->calculateCollisions(boids.size(), boids, islands, mainIsland);
-    this->restrictArea(border);
+    this->calculateCollisions(boids, islands, mainIsland);
+    this->restrictArea();
 }
 
 Light Walker::getLight()

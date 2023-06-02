@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
         boids.drawBoids(matrixView._ProjMatrix, matView, dt, walker.getCenter(), boids._boids, islands._islands, mainIsland, sun, walker.getLight());
 
         // Walker
-        walker.updatePosition(ctx, Parameters::get().BOX_SIZE, Parameters::get(), boids._boids, islands._islands, mainIsland);
+        walker.updatePosition(ctx, boids._boids, islands._islands, mainIsland);
         walker.drawWalker(&shaderTex, matrixView._ProjMatrix, matView, lightposition, lightIntensity);
 
         // Skybox

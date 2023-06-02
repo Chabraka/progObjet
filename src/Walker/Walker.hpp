@@ -44,12 +44,12 @@ public:
     void drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity);
 
     // Restrictions
-    void restrictArea(const float border);
-    void restrictSpeed(float minSpeed, float maxSpeed);
-    void calculateCollisions(const int& boidsNb, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void restrictArea();
+    void restrictSpeed(const float& minSpeed, const float& maxSpeed);
+    void calculateCollisions(const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 
     Light getLight();
 
     // Update
-    void updatePosition(const p6::Context& ctx, const float border, const Parameters& params, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
+    void updatePosition(const p6::Context& ctx, const std::vector<Boid>& boids, const std::vector<Island>& islands, const MainIsland& mainIsland);
 };
