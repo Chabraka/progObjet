@@ -4,7 +4,7 @@
 void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity)
 {
     glm::mat4 T = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
-    T           = glm::translate(T, glm::vec3(this->_center.x, this->_center.y, this->_center.z));
+    T           = glm::translate(T, glm::vec3(_center.x, _center.y, _center.z));
     T           = glm::rotate(T, this->_orientation, glm::vec3(0, -1, 0));
 
     shader->use();
@@ -32,40 +32,40 @@ void Walker::restrictArea()
     const float border = Parameters::get().BOX_SIZE - 0.08f;
 
     // Left wall
-    if (this->_center.x - this->_radius < -border)
+    if (_center.x - _radius < -border)
     {
-        this->_center.x = -border + this->_radius;
-        this->_speed.x  = 0.1;
+        _center.x = -border + _radius;
+        _speed.x  = 0.1;
     }
     // Right wall
-    else if (this->_center.x + this->_radius > border)
+    else if (_center.x + _radius > border)
     {
-        this->_center.x = border - this->_radius;
-        this->_speed.x  = 0.1;
+        _center.x = border - _radius;
+        _speed.x  = 0.1;
     }
     // Bottom wall
-    if (this->_center.y - this->_radius < -border)
+    if (_center.y - _radius < -border)
     {
-        this->_center.y = -border + this->_radius;
-        this->_speed.y  = 0.1;
+        _center.y = -border + _radius;
+        _speed.y  = 0.1;
     }
     // Top wall
-    else if (this->_center.y + this->_radius > border)
+    else if (_center.y + _radius > border)
     {
-        this->_center.y = border - this->_radius;
-        this->_speed.y  = 0.1;
+        _center.y = border - _radius;
+        _speed.y  = 0.1;
     }
     // Back wall
-    if (this->_center.z - this->_radius < -border)
+    if (_center.z - _radius < -border)
     {
-        this->_center.z = -border + this->_radius;
-        this->_speed.z  = 0.1;
+        _center.z = -border + _radius;
+        _speed.z  = 0.1;
     }
     // Front wall
-    else if (this->_center.z + this->_radius > border)
+    else if (_center.z + _radius > border)
     {
-        this->_center.z = border - this->_radius;
-        this->_speed.z  = 0.1;
+        _center.z = border - _radius;
+        _speed.z  = 0.1;
     }
 }
 
