@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
      ***************************/
 
     // Skybox
-    Skybox skybox(Parameters::get());
+    Skybox skybox;
     GLuint vaoS = initOpenGLSkybox(Parameters::get().BOX_SIZE);
     GLuint texS = initTex(skyTex);
 
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
         skybox.drawSkybox(&shaderSkybox, matrixView._ProjMatrix, matView, vaoS, texS);
 
         // Camera
-        camera.updatePosition(walker.getCenter(), walker.getOrientation(), Parameters::get().BOX_SIZE);
+        camera.updatePosition(walker.getCenter(), walker.getOrientation());
         cameraControls(ctx, camera);
         ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
             (scroll.dy > 0) ? camera.moveFront(-0.1) : camera.moveFront(0.1); // Zoom when scrolling
