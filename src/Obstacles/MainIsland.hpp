@@ -1,7 +1,8 @@
 #pragma once
 
+#include <sys/types.h>
 #include <cstdlib>
-#include "../Light.hpp"
+#include "../Light/Light.hpp"
 #include "../OpenGL/ObjRenderer.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
@@ -19,9 +20,9 @@ private:
 public:
     // Constructors
     MainIsland(const p6::Shader* shader)
-        : _radius(0.7f), _center(glm::vec3(0.0f)), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)), lightProp(LightProperties(glm::vec3(1), glm::vec3(0), 0.f)){};
+        : _radius(0.4f), _center(glm::vec3(0.0f)), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)), lightProp(LightProperties(glm::vec3(1), glm::vec3(0), 0.f)){};
     MainIsland(glm::vec3 center, const p6::Shader* shader)
-        : _radius(0.1f), _center(center), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)), lightProp(LightProperties(glm::vec3(1), glm::vec3(0), 0.f)){};
+        : _radius(0.4f), _center(center), _objrenderer(ObjRenderer("assets/models/main_island_light.obj", "assets/textures/floating_island.png", shader)), lightProp(LightProperties(glm::vec3(1), glm::vec3(0), 0.f)){};
 
     // Getter
     glm::vec3 getCenter() const { return _center; };

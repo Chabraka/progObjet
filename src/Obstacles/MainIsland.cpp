@@ -1,8 +1,7 @@
 #include "MainIsland.hpp"
-#include <sys/types.h>
 
 /* ----- Draw ----- */
-void MainIsland::drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix,  Light sun, Light walker)
+void MainIsland::drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, Light sun, Light walker)
 {
     glm::mat4 T = translate(glm::mat4(1), glm::vec3(0, 0, 0));
     T           = translate(T, this->getCenter());
@@ -12,14 +11,13 @@ void MainIsland::drawIsland(const p6::Shader* shader, glm::mat4 ProjMatrix, glm:
     shader->set("uNormalMatrix", glm::transpose(glm::inverse(T)));
     shader->set("uTexture", 0);
 
-	shader->set("uKd", this->lightProp.diffuse);
+    shader->set("uKd", this->lightProp.diffuse);
     shader->set("uKs", this->lightProp.specular);
     shader->set("uShininess", this->lightProp.shininess);
 
-
-	shader->set("uSunPosition", sun.position);
+    shader->set("uSunPosition", sun.position);
     shader->set("uSunIntensity", sun.intensity);
-	shader->set("uWalkerPosition", walker.position);
+    shader->set("uWalkerPosition", walker.position);
     shader->set("uWalkerIntensity", walker.intensity);
 
     this->_objrenderer.draw();

@@ -1,5 +1,4 @@
 #include "SkyboxOpenGL.hpp"
-#include <vector>
 
 glm::mat4 translate(float tx, float ty, float tz)
 {
@@ -8,7 +7,7 @@ glm::mat4 translate(float tx, float ty, float tz)
 
 /* --- Init --- */
 
-GLuint initOpenGLSkybox(const float& skyboxRadius)
+GLuint initOpenGLSkybox()
 {
     /* --- VBO --- */
     GLuint vbo;
@@ -16,7 +15,8 @@ GLuint initOpenGLSkybox(const float& skyboxRadius)
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     //  Tab with coordinates
-    Vertex3DUV skybox[] = {
+    const float skyboxRadius = Parameters::get().BOX_SIZE;
+    Vertex3DUV  skybox[]     = {
         // Back
         Vertex3DUV(glm::vec3(-skyboxRadius, -skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.335), glm::vec3(0, 0, 1)),
         Vertex3DUV(glm::vec3(-skyboxRadius, skyboxRadius, -skyboxRadius), glm::vec2(0.251, 0.664), glm::vec3(0, 0, 1)),

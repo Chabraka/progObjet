@@ -1,7 +1,4 @@
 #include "Walker.hpp"
-#include <sys/types.h>
-#include <cstdlib>
-#include <vector>
 
 /* ----- Draw ----- */
 void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, glm::vec3 lightpos, glm::vec3 lightIntensity)
@@ -32,7 +29,7 @@ void Walker::drawWalker(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat
 
 void Walker::restrictArea()
 {
-    const float border = Parameters::get().BOX_SIZE;
+    const float border = Parameters::get().BOX_SIZE - 0.08f;
 
     // Left wall
     if (this->_center.x - this->_radius < -border)

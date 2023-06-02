@@ -11,7 +11,7 @@ Boids::Boids(const p6::Shader* shader)
 {
     this->renderer = MultiResObjRenderer("assets/models/baleine_low.obj", "assets/models/baleine_medium.obj", "assets/models/baleine_high.obj", "assets/textures/baleine.jpg", shader);
     // Creation of boids
-    for (unsigned int i = 0; i < Parameters::get().MAX_BOID_NB; i++)
+    for (int i = 0; i < Parameters::get().MAX_BOID_NB; i++)
     {
         Boid boid(
             0.3f,                                                                                                                                                                                                                                                                                                   // radius

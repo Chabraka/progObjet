@@ -1,9 +1,4 @@
-#include "glm/ext/matrix_transform.hpp"
-#define GLM_FORCE_RADIANS
-
 #include "TrackballCamera.hpp"
-#include "glm/gtx/transform.hpp"
-#include "glm/trigonometric.hpp"
 
 TrackballCamera::TrackballCamera(float distance, float angleX, float angleY)
     : m_fDistance(distance), m_fAngleX(angleX), m_fAngleY(angleY) {}

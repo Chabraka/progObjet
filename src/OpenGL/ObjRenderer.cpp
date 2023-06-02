@@ -44,8 +44,8 @@ ObjRenderer::ObjRenderer()
 
 ObjRenderer::ObjRenderer(const char* obj_path, const char* image_path, const p6::Shader* shader)
 {
-    std::vector<glimac::ShapeVertex> vertices = LoadOBJ(obj_path);
-    this->shader                              = shader;
+    std::vector<ShapeVertex> vertices = LoadOBJ(obj_path);
+    this->shader                      = shader;
     this->_initGL(obj_path); // via ObjLoader
 
     img::Image image = p6::load_image_buffer(image_path); // load texture
@@ -54,8 +54,8 @@ ObjRenderer::ObjRenderer(const char* obj_path, const char* image_path, const p6:
 
 ObjRenderer::ObjRenderer(const char* obj_path, GLuint texture, const p6::Shader* shader)
 {
-    std::vector<glimac::ShapeVertex> vertices = LoadOBJ(obj_path);
-    this->shader                              = shader;
+    std::vector<ShapeVertex> vertices = LoadOBJ(obj_path);
+    this->shader                      = shader;
     this->_initGL(obj_path); // via ObjLoader
 
     this->texture = texture;
@@ -63,7 +63,7 @@ ObjRenderer::ObjRenderer(const char* obj_path, GLuint texture, const p6::Shader*
 
 void ObjRenderer::_initGL(const char* obj_path)
 {
-    std::vector<glimac::ShapeVertex> shapevertexes = LoadOBJ(obj_path);
+    std::vector<ShapeVertex> shapevertexes = LoadOBJ(obj_path);
     std::cout << "shapevertexes"
               << " " << shapevertexes.size() << std::endl;
 

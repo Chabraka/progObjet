@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdlib>
+#include "../Light/Light.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
