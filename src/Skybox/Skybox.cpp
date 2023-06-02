@@ -1,6 +1,4 @@
 #include "Skybox.hpp"
-#include <sys/types.h>
-#include <cstdlib>
 
 /* ----- Draw ----- */
 void Skybox::drawSkybox(const p6::Shader* shader, glm::mat4 ProjMatrix, glm::mat4 ViewMatrix, const GLuint& vao, const GLuint& texture)

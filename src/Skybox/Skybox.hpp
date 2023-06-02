@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sys/types.h>
 #include <cstdlib>
 #include "../OpenGL/SkyboxOpenGL.hpp"
 #include "../Parameters.hpp"

@@ -1,4 +1,3 @@
-
 #pragma once
 
 /*
@@ -15,24 +14,29 @@
 #include <string>
 #include <vector>
 #include "glm/glm.hpp"
-#include "common.hpp"
 #include "p6/p6.h"
 
-static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
+struct ShapeVertex {
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec2 texCoords;
+};
+
+static std::vector<ShapeVertex> LoadOBJ(const char* fileName)
 {
     std::vector<glm::vec3> vPos;
     std::vector<glm::vec3> vNorm;
     std::vector<glm::vec2> vTex;
-    std::vector<GLuint> vPosInd;
-    std::vector<GLuint> vNormInd;
-    std::vector<GLuint> vTexInd;
+    std::vector<GLuint>    vPosInd;
+    std::vector<GLuint>    vNormInd;
+    std::vector<GLuint>    vTexInd;
 
     // Vertex array
-    std::vector<glimac::ShapeVertex> vertices;
+    std::vector<ShapeVertex> vertices;
 
     std::stringstream ss;
     std::ifstream     inFile(fileName);
-    std::string       line   = "";
+    std::string       line = "";
     std::string       word = "";
     glm::vec3         vec3Temp;
     glm::vec2         vec2Temp;
@@ -94,14 +98,14 @@ static std::vector<glimac::ShapeVertex> LoadOBJ(const char* fileName)
                     read++;
                     ss.ignore(1, ' ');
                 }
-                read %=3;
+                read %= 3;
             }
         }
         else
         {
         }
     }
-    vertices.resize(vPosInd.size(), glimac::ShapeVertex());
+    vertices.resize(vPosInd.size(), ShapeVertex());
 
     for (size_t i = 0; i < vPosInd.size(); i++)
     {

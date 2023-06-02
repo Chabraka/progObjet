@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 #include <vector>
-#include "../Light.hpp"
+#include "../Light/Light.hpp"
 #include "../Obstacles/Island.hpp"
 #include "../Obstacles/MainIsland.hpp"
 #include "../Parameters.hpp"

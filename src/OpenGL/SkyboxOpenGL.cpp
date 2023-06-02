@@ -1,5 +1,4 @@
 #include "SkyboxOpenGL.hpp"
-#include <vector>
 
 glm::mat4 translate(float tx, float ty, float tz)
 {

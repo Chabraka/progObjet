@@ -1,8 +1,10 @@
 #pragma once
 
+#include <sys/types.h>
 #include <cstdlib>
+#include <vector>
 #include "../Boids/Boids.hpp"
-#include "../Light.hpp"
+#include "../Light/Light.hpp"
 #include "../Obstacles/Islands.hpp"
 #include "../Obstacles/MainIsland.hpp"
 #include "../OpenGL/ObjRenderer.hpp"

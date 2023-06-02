@@ -1,7 +1,8 @@
 #pragma once
 
+#include <sys/types.h>
 #include <cstdlib>
-#include "../Light.hpp"
+#include "../Light/Light.hpp"
 #include "../OpenGL/ObjRenderer.hpp"
 #include "glm/fwd.hpp"
 #include "p6/p6.h"

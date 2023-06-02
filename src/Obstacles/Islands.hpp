@@ -3,7 +3,6 @@
 #include <sys/types.h>
 #include <cstdlib>
 #include <vector>
-#include "../Light.hpp"
 #include "../OpenGL/ObjRenderer.hpp"
 #include "../Parameters.hpp"
 #include "Island.hpp"

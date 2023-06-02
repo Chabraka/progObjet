@@ -4,15 +4,13 @@
 #include <vector>
 #include "Boids/Boids.hpp"
 #include "Camera/TrackballCamera.hpp"
-#include "Light.hpp"
+#include "Light/Light.hpp"
 #include "Obstacles/Islands.hpp"
 #include "Obstacles/MainIsland.hpp"
 #include "OpenGL/SkyboxOpenGL.hpp"
 #include "Walker/Walker.hpp"
 #include "imgui.h"
 #define DOCTEST_CONFIG_IMPLEMENT
-#include <Lmodel.hpp>
-#include <common.hpp>
 #include "doctest/doctest.h"
 
 int main(int argc, char* argv[])

@@ -1,6 +1,11 @@
 #pragma once
 
+#include "glm/ext/matrix_transform.hpp"
+#define GLM_FORCE_RADIANS
+
 #include "Walker/Walker.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/trigonometric.hpp"
 #include "p6/p6.h"
 
 class TrackballCamera {
